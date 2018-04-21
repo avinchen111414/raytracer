@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="app">
+      <UniqueIdentifier>{3e5dfab3-41a6-4592-bc02-ea38ef1858f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="brdfs">
+      <UniqueIdentifier>{d04e1876-9642-404f-9f1e-068b01b9c5d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="camera">
+      <UniqueIdentifier>{d7df81c9-c05e-4248-a4ab-4c8457652eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometricobjects">
+      <UniqueIdentifier>{c780b7cf-d654-47cf-902e-bfb6d882a163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lights">
+      <UniqueIdentifier>{3811f74c-97fb-4cfc-9d6d-f21c0a3e4916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="materials">
+      <UniqueIdentifier>{dc441e0a-4ae6-4f9d-9c74-4119509ff966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sampler">
+      <UniqueIdentifier>{a7be1f93-fa40-430e-a0c1-188a9c2f06c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tracer">
+      <UniqueIdentifier>{45375330-6ecd-4f08-9f43-0dde30491e8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utilities">
+      <UniqueIdentifier>{d064e705-8a34-4b6e-9fc8-c1ffb907ed9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="world">
+      <UniqueIdentifier>{b7550e61-36db-4061-822c-64e1f1249458}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\app\wxraytracer.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\BRDF.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\glossyspecular.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\lambertian.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\camera\camera.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\camera\pinhole.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\geometricobject.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\plane.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\rectangle.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\sphere.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lights\ambient.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lights\ambientoccluder.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lights\arealight.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lights\direction.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lights\light.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lights\point.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\emissive.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\material.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\matte.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\phong.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\viewplane.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\world\world.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\matrix.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\normal.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\point2d.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\point3d.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\ray.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\rgbcolor.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\shaderec.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\utility.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\vector3d.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tracer\arealighting.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tracer\multipleobjects.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tracer\singlesphere.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tracer\tracer.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sampler\hammersley.cpp">
+      <Filter>sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sampler\jittered.cpp">
+      <Filter>sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sampler\sampler.cpp">
+      <Filter>sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tracer\raycast.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\app\wxraytracer.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\BRDF.h">
+      <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\glossyspecular.h">
+      <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\lambertian.h">
+      <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\camera\camera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\camera\pinhole.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\geometricobject.h">
+      <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\plane.h">
+      <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\rectangle.h">
+      <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\sphere.h">
+      <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\ambient.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\ambientoccluder.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\arealight.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\direction.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\light.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\point.h">
+      <Filter>lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\emissive.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\material.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\matte.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\phong.h">
+      <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\world\viewplane.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\world\world.h">
+      <Filter>world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\matrix.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\normal.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\point2d.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\point3d.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\ray.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\rgbcolor.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\shaderec.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\utility.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utilities\vector3d.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\arealighting.h">
+      <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\multipleobjects.h">
+      <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\singlesphere.h">
+      <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\tracer.h">
+      <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampler\hammersley.h">
+      <Filter>sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampler\jittered.h">
+      <Filter>sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampler\sampler.h">
+      <Filter>sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\raycast.h">
+      <Filter>tracer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

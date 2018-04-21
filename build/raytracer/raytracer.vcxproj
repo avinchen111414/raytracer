@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AD805ABF-61AE-4C4A-9B4B-D82103445725}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>raytracer</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="raytracer.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="raytracer.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(WXWIDGETS)include;$(WXWIDGETS)include\msvc;$(WXWIDGETS)lib\vc_lib;$(SourceRoot);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(WXWIDGETS)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\app\wxraytracer.cpp" />
+    <ClCompile Include="..\..\src\brdfs\BRDF.cpp" />
+    <ClCompile Include="..\..\src\brdfs\glossyspecular.cpp" />
+    <ClCompile Include="..\..\src\brdfs\lambertian.cpp" />
+    <ClCompile Include="..\..\src\camera\camera.cpp" />
+    <ClCompile Include="..\..\src\camera\pinhole.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\geometricobject.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\plane.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\rectangle.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\sphere.cpp" />
+    <ClCompile Include="..\..\src\lights\ambient.cpp" />
+    <ClCompile Include="..\..\src\lights\ambientoccluder.cpp" />
+    <ClCompile Include="..\..\src\lights\arealight.cpp" />
+    <ClCompile Include="..\..\src\lights\direction.cpp" />
+    <ClCompile Include="..\..\src\lights\light.cpp" />
+    <ClCompile Include="..\..\src\lights\point.cpp" />
+    <ClCompile Include="..\..\src\materials\emissive.cpp" />
+    <ClCompile Include="..\..\src\materials\material.cpp" />
+    <ClCompile Include="..\..\src\materials\matte.cpp" />
+    <ClCompile Include="..\..\src\materials\phong.cpp" />
+    <ClCompile Include="..\..\src\sampler\hammersley.cpp" />
+    <ClCompile Include="..\..\src\sampler\jittered.cpp" />
+    <ClCompile Include="..\..\src\sampler\sampler.cpp" />
+    <ClCompile Include="..\..\src\tracer\arealighting.cpp" />
+    <ClCompile Include="..\..\src\tracer\multipleobjects.cpp" />
+    <ClCompile Include="..\..\src\tracer\raycast.cpp" />
+    <ClCompile Include="..\..\src\tracer\singlesphere.cpp" />
+    <ClCompile Include="..\..\src\tracer\tracer.cpp" />
+    <ClCompile Include="..\..\src\utilities\matrix.cpp" />
+    <ClCompile Include="..\..\src\utilities\normal.cpp" />
+    <ClCompile Include="..\..\src\utilities\point2d.cpp" />
+    <ClCompile Include="..\..\src\utilities\point3d.cpp" />
+    <ClCompile Include="..\..\src\utilities\ray.cpp" />
+    <ClCompile Include="..\..\src\utilities\rgbcolor.cpp" />
+    <ClCompile Include="..\..\src\utilities\shaderec.cpp" />
+    <ClCompile Include="..\..\src\utilities\utility.cpp" />
+    <ClCompile Include="..\..\src\utilities\vector3d.cpp" />
+    <ClCompile Include="..\..\src\world\viewplane.cpp" />
+    <ClCompile Include="..\..\src\world\world.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\app\wxraytracer.h" />
+    <ClInclude Include="..\..\src\brdfs\BRDF.h" />
+    <ClInclude Include="..\..\src\brdfs\glossyspecular.h" />
+    <ClInclude Include="..\..\src\brdfs\lambertian.h" />
+    <ClInclude Include="..\..\src\camera\camera.h" />
+    <ClInclude Include="..\..\src\camera\pinhole.h" />
+    <ClInclude Include="..\..\src\geometricobjects\geometricobject.h" />
+    <ClInclude Include="..\..\src\geometricobjects\plane.h" />
+    <ClInclude Include="..\..\src\geometricobjects\rectangle.h" />
+    <ClInclude Include="..\..\src\geometricobjects\sphere.h" />
+    <ClInclude Include="..\..\src\lights\ambient.h" />
+    <ClInclude Include="..\..\src\lights\ambientoccluder.h" />
+    <ClInclude Include="..\..\src\lights\arealight.h" />
+    <ClInclude Include="..\..\src\lights\direction.h" />
+    <ClInclude Include="..\..\src\lights\light.h" />
+    <ClInclude Include="..\..\src\lights\point.h" />
+    <ClInclude Include="..\..\src\materials\emissive.h" />
+    <ClInclude Include="..\..\src\materials\material.h" />
+    <ClInclude Include="..\..\src\materials\matte.h" />
+    <ClInclude Include="..\..\src\materials\phong.h" />
+    <ClInclude Include="..\..\src\sampler\hammersley.h" />
+    <ClInclude Include="..\..\src\sampler\jittered.h" />
+    <ClInclude Include="..\..\src\sampler\sampler.h" />
+    <ClInclude Include="..\..\src\tracer\arealighting.h" />
+    <ClInclude Include="..\..\src\tracer\multipleobjects.h" />
+    <ClInclude Include="..\..\src\tracer\raycast.h" />
+    <ClInclude Include="..\..\src\tracer\singlesphere.h" />
+    <ClInclude Include="..\..\src\tracer\tracer.h" />
+    <ClInclude Include="..\..\src\utilities\matrix.h" />
+    <ClInclude Include="..\..\src\utilities\normal.h" />
+    <ClInclude Include="..\..\src\utilities\point2d.h" />
+    <ClInclude Include="..\..\src\utilities\point3d.h" />
+    <ClInclude Include="..\..\src\utilities\ray.h" />
+    <ClInclude Include="..\..\src\utilities\rgbcolor.h" />
+    <ClInclude Include="..\..\src\utilities\shaderec.h" />
+    <ClInclude Include="..\..\src\utilities\utility.h" />
+    <ClInclude Include="..\..\src\utilities\vector3d.h" />
+    <ClInclude Include="..\..\src\world\viewplane.h" />
+    <ClInclude Include="..\..\src\world\world.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

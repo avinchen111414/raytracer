@@ -36,7 +36,7 @@ class GeometricObject {
 
 		// for area light
 		virtual Point3D sample();
-		virtual float pdf(ShadeRec& sr);
+		virtual float pdf(const ShadeRec& sr);
 		virtual Normal get_normal(const Point3D& p);
 	
 	protected:

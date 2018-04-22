@@ -7,15 +7,25 @@
 
 class Sampler;
 
-class Rectangle: GeometricObject
+namespace raytracer{
+
+class Rectangle: public GeometricObject
 {
 public:
 	Rectangle();
-	Rectangle(const Point3D& p0, const Vector3D& a, const Vector3D& b);
-	
-	virtual bool hit(const Ray& ray, double& t, ShadeRec& sr) const;
+	Rectangle(const Point3D& _p0, const Vector3D& _a, const Vector3D& _b);
+	Rectangle(const Rectangle& other);
+
+	virtual bool hit(const Ray& ray, double& tmin, ShadeRec& sr) const;
 	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
 	virtual GeometricObject* clone() const;
+
+	virtual Point3D sample();
+	virtual float pdf(const ShadeRec& sr);
+	virtual Normal get_normal(const Point3D& p);
+
+	void set_sampler(Sampler* sampler);
+
 
 private:
 	Point3D p0;	// left-down corner vertex
@@ -33,5 +43,8 @@ private:
 	static const double kEpsilon;
 
 };
+
+
+}
 
 #endif

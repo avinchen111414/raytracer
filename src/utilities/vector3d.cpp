@@ -92,7 +92,7 @@ Vector3D::operator= (const Point3D& rhs) {
 // length of the vector
 
 double													
-Vector3D::length(void) {
+Vector3D::length(void) const {
 	return (sqrt(x * x + y * y + z * z));
 }
 

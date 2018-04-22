@@ -44,7 +44,7 @@ Point3D GeometricObject::sample()
 	return Point3D(0.0f);
 }
 
-float GeometricObject::pdf(ShadeRec& sr)
+float GeometricObject::pdf(const ShadeRec& sr)
 {
 	throw "Calling GeometricObject::pdf does not make sense";
 	return 0.0f;

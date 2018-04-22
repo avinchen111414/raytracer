@@ -40,10 +40,10 @@ class Vector3D {
 		operator- (void) const;									
 				
 		double													// length
-		length(void);
+		length(void) const;
 		
 		double													// square of the length
-		len_squared(void);
+		len_squared(void) const;
 		
 		Vector3D												// multiplication by a double on the right
 		operator* (const double a) const;
@@ -91,7 +91,7 @@ Vector3D::operator- (void) const {
 // the square of the length
 
 inline double													
-Vector3D::len_squared(void) {	
+Vector3D::len_squared(void) const {	
 	return (x * x + y * y + z * z);
 }
 

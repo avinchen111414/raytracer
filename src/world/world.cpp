@@ -5,6 +5,8 @@
 #include "utilities/point2d.h"
 
 #include "geometricobjects/plane.h"
+#include "geometricobjects/rectangle.h"
+
 #include "world/world.h"
 
 #include "tracer/tracer.h"
@@ -21,8 +23,10 @@
 #include "lights/ambient.h"
 #include "lights/ambientoccluder.h"
 #include "lights/point.h"
+
 #include "materials/matte.h"
 #include "materials/phong.h"
+#include "materials/emissive.h"
 
 
 World::World(void)
@@ -151,47 +155,36 @@ void World::build()
 	vp.set_vres(400);
 	vp.set_pixel_size(1);
 	vp.set_gamma(1.0);
-	//vp.show_out_of_gamut = true;
 
-	const int num_samples = 64; // recommend 25
-	Sampler* sampler_ptr = new Jittered(num_samples);
+	const int num_samples = 24;
+	Sampler* sampler_ptr = new Hammersley(num_samples, 16);
 	vp.set_sampler(sampler_ptr);
 
-	AmbientOccluder* ambient_ptr = new AmbientOccluder;
-	ambient_ptr->set_sampler(sampler_ptr);
-	ambient_ptr->set_radiance(1.0f);
-	ambient_ptr->set_color(1.0f);
-	ambient_ptr->set_min_amount(0.0f);
-	set_ambient_light(ambient_ptr);
-
-	/*
 	Ambient* ambient_ptr = new Ambient;
-	ambient_ptr->scale_radiance(1.0);
+	ambient_ptr->scale_radiance(0.1f);
 	set_ambient_light(ambient_ptr);
-	*/
 
 	PinHole* camera_ptr = new PinHole;
-	camera_ptr->eye = Point3D(0, 300, 600);
+	camera_ptr->eye = Point3D(300, 300, 600);
 	camera_ptr->lookat = Point3D(0, 0, 0);
 	camera_ptr->d = 400;
 	camera_ptr->compute_uvw();
 	set_camera(camera_ptr);
-
 	
 	Point* point_light = new Point;
 	point_light->set_location(Point3D(70, 100, 100));
-	point_light->scale_radiance(3.0);
+	point_light->scale_radiance(0.5);
 	point_light->set_cast_shadow(true);
 	add_light(point_light);
-	
-	
-	Direction* dir_light = new Direction;
-	dir_light->set_direction(Vector3D(-1.0f, -1.0f, -1.0f));
-	dir_light->scale_radiance(3.0f);
-	//add_light(dir_light);
 
 	background_color = RGBColor(0.0f);
 	tracer_ptr = new RayCast(this);
+
+	raytracer::Rectangle* rect = new raytracer::Rectangle(Point3D(0.0f, 0.0f, -300.0f),
+		Vector3D(100.0f, 0.0f, 0.0f), Vector3D(0.0f, 100.0f, 0.0f));
+	Emissive* emissive_ptr = new Emissive;
+	rect->set_material(emissive_ptr);
+	add_object(rect);
 
 	Matte* matte_ptr = new Matte;
 	matte_ptr->set_ka(1.0f);
@@ -202,38 +195,20 @@ void World::build()
 	Phong* phong_ptr = new Phong;
 	phong_ptr->set_ka(0.5f);
 	phong_ptr->set_kd(0.75f);
-	phong_ptr->set_cd(RGBColor(0.7f, 0.7f, 0.7f));
+	phong_ptr->set_cd(RGBColor(1.0f, 1.0f, 0.0f));
 	phong_ptr->set_ks(0.15f);
-	phong_ptr->set_cs(RGBColor(0.7f, 0.7f, 0.7f));
+	phong_ptr->set_cs(RGBColor(1.0f, 1.0f, 0.0f));
 	phong_ptr->set_exp(1);
 	phong_ptr->enable_recv_shadow(true);
 
 	Sphere* sphere_ptr = nullptr;
-	sphere_ptr = new Sphere(Point3D(0, 0, 0), 60);
+	sphere_ptr = new Sphere(Point3D(0, 60, 0), 60);
 	sphere_ptr->set_material(phong_ptr);
 	add_object(sphere_ptr);
 
-	Plane* plane_ptr = new Plane(Point3D(0.0f, -70.0f, 0.0f), Normal(0, 1, 0));
+	Plane* plane_ptr = new Plane(Point3D(0.0f, 0.0f, 0.0f), Normal(0, 1, 0));
 	plane_ptr->set_material(matte_ptr);
 	add_object(plane_ptr);
-
-	
-	Plane* left_plane_ptr = new Plane(Point3D(-140.0f, 0.0f, 0.0f), Normal(1, 0, 0));
-	left_plane_ptr->set_material(matte_ptr);
-	//add_object(left_plane_ptr);
-	
-
-	/*
-	Plane* right_plane_ptr = new Plane(Point3D(140.0f, 0.0f, 0.0f), Normal(-1, 0, 0));
-	right_plane_ptr->set_material(matte_ptr);
-	add_object(right_plane_ptr);
-	*/
-
-	
-	Plane* behind_plane_ptr = new Plane(Point3D(0.0f, 0.0f, -200.0f), Normal(0, 0, 1));
-	behind_plane_ptr->set_material(matte_ptr);
-	//add_object(behind_plane_ptr);
-	
 }
 
 ShadeRec World::hit_bare_bones_objects(const Ray& ray)

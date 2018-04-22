@@ -110,3 +110,8 @@ float AreaLight::G(const ShadeRec& sr) const
 	float d2 = static_cast<float>(sample_point.d_squared(sr.hit_point));
 	return ndotd / d2;
 }
+
+float AreaLight::pdf(const ShadeRec& sr) const
+{
+	return object_ptr->pdf(sr);
+}

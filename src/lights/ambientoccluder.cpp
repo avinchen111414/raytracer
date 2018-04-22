@@ -11,7 +11,7 @@ AmbientOccluder::AmbientOccluder():
 	ls(1.0f),
 	color(1.0f)
 {
-
+	sampler_ptr->map_samples_to_hemisphere(1);
 }
 
 AmbientOccluder::AmbientOccluder(const AmbientOccluder& ao):
@@ -25,6 +25,9 @@ AmbientOccluder::AmbientOccluder(const AmbientOccluder& ao):
 		sampler_ptr = ao.sampler_ptr->clone();
 	else
 		sampler_ptr = nullptr;
+
+	if (sampler_ptr)
+		sampler_ptr->map_samples_to_hemisphere(1);
 }
 
 AmbientOccluder& AmbientOccluder::operator=(const AmbientOccluder& rhs)
@@ -46,6 +49,9 @@ AmbientOccluder& AmbientOccluder::operator=(const AmbientOccluder& rhs)
 	sampler_ptr = nullptr;
 	if (rhs.sampler_ptr)
 		sampler_ptr = rhs.sampler_ptr->clone();
+
+	if (sampler_ptr)
+		sampler_ptr->map_samples_to_hemisphere(1);
 
 	return *this;
 }

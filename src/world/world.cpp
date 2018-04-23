@@ -151,64 +151,47 @@ World::clamp_to_color(const RGBColor& raw_color) const {
 
 void World::build()
 {
+	int num_samples = 256;
+
 	vp.set_hres(400);
 	vp.set_vres(400);
-	vp.set_pixel_size(1);
-	vp.set_gamma(1.0);
+	vp.set_samples(num_samples);
 
-	const int num_samples = 24;
-	Sampler* sampler_ptr = new Hammersley(num_samples, 16);
-	vp.set_sampler(sampler_ptr);
-
-	Ambient* ambient_ptr = new Ambient;
-	ambient_ptr->scale_radiance(0.1f);
-	set_ambient_light(ambient_ptr);
-
-	PinHole* camera_ptr = new PinHole;
-	camera_ptr->eye = Point3D(300, 300, 600);
-	camera_ptr->lookat = Point3D(0, 0, 0);
-	camera_ptr->d = 400;
-	camera_ptr->compute_uvw();
-	set_camera(camera_ptr);
-	
-	Point* point_light = new Point;
-	point_light->set_location(Point3D(70, 100, 100));
-	point_light->scale_radiance(0.5);
-	point_light->set_cast_shadow(true);
-	add_light(point_light);
-
-	background_color = RGBColor(0.0f);
 	tracer_ptr = new RayCast(this);
 
-	raytracer::Rectangle* rect = new raytracer::Rectangle(Point3D(0.0f, 0.0f, -300.0f),
-		Vector3D(100.0f, 0.0f, 0.0f), Vector3D(0.0f, 100.0f, 0.0f));
-	Emissive* emissive_ptr = new Emissive;
-	rect->set_material(emissive_ptr);
-	add_object(rect);
+	Jittered* sampler_ptr = new Jittered(num_samples);
 
-	Matte* matte_ptr = new Matte;
-	matte_ptr->set_ka(1.0f);
-	matte_ptr->set_kd(0.75f);
-	matte_ptr->set_cd(RGBColor(0.5, 0.5, 0.5));
-	matte_ptr->enable_recv_shadow(true);
+	AmbientOccluder* occluder = new AmbientOccluder;
+	occluder->set_radiance(1.0f);
+	occluder->set_color(1.0f);
+	occluder->set_min_amount(0.0f);
+	occluder->set_sampler(sampler_ptr);
+	set_ambient_light(occluder);
 
-	Phong* phong_ptr = new Phong;
-	phong_ptr->set_ka(0.5f);
-	phong_ptr->set_kd(0.75f);
-	phong_ptr->set_cd(RGBColor(1.0f, 1.0f, 0.0f));
-	phong_ptr->set_ks(0.15f);
-	phong_ptr->set_cs(RGBColor(1.0f, 1.0f, 0.0f));
-	phong_ptr->set_exp(1);
-	phong_ptr->enable_recv_shadow(true);
+	PinHole* camera = new PinHole;
+	camera->eye = Point3D(25, 20, 45);
+	camera->lookat = Point3D(0, 1, 0);
+	camera->d = 5000;
+	camera->compute_uvw();
+	set_camera(camera);
 
-	Sphere* sphere_ptr = nullptr;
-	sphere_ptr = new Sphere(Point3D(0, 60, 0), 60);
-	sphere_ptr->set_material(phong_ptr);
-	add_object(sphere_ptr);
+	Matte* matte_ptr0 = new Matte;
+	matte_ptr0->set_ka(0.75);
+	matte_ptr0->set_kd(0);
+	matte_ptr0->set_cd(RGBColor(1, 1, 0));
 
-	Plane* plane_ptr = new Plane(Point3D(0.0f, 0.0f, 0.0f), Normal(0, 1, 0));
-	plane_ptr->set_material(matte_ptr);
-	add_object(plane_ptr);
+	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
+	sphere0->set_material(matte_ptr0);
+	add_object(sphere0);
+
+	Matte* matte_ptr1 = new Matte;
+	matte_ptr1->set_ka(0.75);
+	matte_ptr1->set_kd(0);
+	matte_ptr1->set_cd(RGBColor(1, 1, 1));
+
+	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
+	plane->set_material(matte_ptr1);
+	add_object(plane);
 }
 
 ShadeRec World::hit_bare_bones_objects(const Ray& ray)

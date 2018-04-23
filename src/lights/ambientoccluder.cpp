@@ -6,7 +6,7 @@
 
 AmbientOccluder::AmbientOccluder():
 	Light(),
-	sampler_ptr(new Jittered(32, 2)),
+	sampler_ptr(new Jittered(36, 2)),
 	min_amount(0.2f, 0.2f, 0.2f),
 	ls(1.0f),
 	color(1.0f)

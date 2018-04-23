@@ -17,7 +17,6 @@ public:
 	virtual Vector3D get_direction(ShadeRec& rc);
 	virtual RGBColor L(ShadeRec& sr);
 	void set_sampler(Sampler* sp);
-	void set_uvw(const Vector3D& u, const Vector3D& v, const Vector3D& w);
 	bool in_shadow(const Ray& ray, const ShadeRec& sr);
 	inline void set_radiance(const float b) {ls = b;};
 	inline void set_color(const RGBColor& c) {color = c;};

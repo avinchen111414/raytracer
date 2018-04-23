@@ -160,7 +160,6 @@ void World::build()
 	tracer_ptr = new RayCast(this);
 
 	Jittered* sampler_ptr = new Jittered(num_samples);
-
 	AmbientOccluder* occluder = new AmbientOccluder;
 	occluder->set_radiance(1.0f);
 	occluder->set_color(1.0f);

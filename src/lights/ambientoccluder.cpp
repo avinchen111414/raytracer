@@ -6,12 +6,12 @@
 
 AmbientOccluder::AmbientOccluder():
 	Light(),
-	sampler_ptr(new Jittered(36, 2)),
+	sampler_ptr(nullptr),
 	min_amount(0.2f, 0.2f, 0.2f),
 	ls(1.0f),
 	color(1.0f)
 {
-	sampler_ptr->map_samples_to_hemisphere(1);
+	
 }
 
 AmbientOccluder::AmbientOccluder(const AmbientOccluder& ao):
@@ -25,9 +25,6 @@ AmbientOccluder::AmbientOccluder(const AmbientOccluder& ao):
 		sampler_ptr = ao.sampler_ptr->clone();
 	else
 		sampler_ptr = nullptr;
-
-	if (sampler_ptr)
-		sampler_ptr->map_samples_to_hemisphere(1);
 }
 
 AmbientOccluder& AmbientOccluder::operator=(const AmbientOccluder& rhs)
@@ -49,9 +46,6 @@ AmbientOccluder& AmbientOccluder::operator=(const AmbientOccluder& rhs)
 	sampler_ptr = nullptr;
 	if (rhs.sampler_ptr)
 		sampler_ptr = rhs.sampler_ptr->clone();
-
-	if (sampler_ptr)
-		sampler_ptr->map_samples_to_hemisphere(1);
 
 	return *this;
 }
@@ -80,11 +74,6 @@ void AmbientOccluder::set_sampler(Sampler* sp)
 		sampler_ptr = sp;
 		sampler_ptr->map_samples_to_hemisphere(1);
 	}
-}
-
-void AmbientOccluder::set_uvw(const Vector3D& u, const Vector3D& v, const Vector3D& w)
-{
-	this->u = u; this->v = v; this->w = w;
 }
 
 bool AmbientOccluder::in_shadow(const Ray& ray, const ShadeRec& sr)

@@ -51,7 +51,12 @@ public:
 	ShadeRec hit_bare_bones_objects(const Ray& ray);
 	
 	ShadeRec hit_object(const Ray& ray);
-	
+
+	// -- build samples --
+protected:
+	void build_ao_scene();
+	void build_area_lights_scene();
+	// -- --
 
 private:
 	void del_objects();

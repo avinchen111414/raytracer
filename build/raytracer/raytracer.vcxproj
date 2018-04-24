@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\src\utilities\vector3d.cpp" />
     <ClCompile Include="..\..\src\world\viewplane.cpp" />
     <ClCompile Include="..\..\src\world\world.cpp" />
+    <ClCompile Include="..\..\src\world\worldbuild.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h" />

@@ -150,6 +150,9 @@
     <ClCompile Include="..\..\src\tracer\raycast.cpp">
       <Filter>tracer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\world\worldbuild.cpp">
+      <Filter>world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">

@@ -117,4 +117,10 @@ Normal Rectangle::get_normal(const Point3D& p)
 {
 	return normal;
 }
+
+void Rectangle::set_sampler(Sampler* sampler)
+{
+	sampler_ptr = sampler;
+}
+
 }

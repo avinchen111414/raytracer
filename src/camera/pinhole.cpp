@@ -49,7 +49,7 @@ void PinHole::render_scene(const World& w)
 				pp.y = (float)(vp.s * (r - 0.5 * (vp.vres - 1) + sp.y));
 
 				ray.d = ray_direction(pp);
-				L += w.tracer_ptr->trace_ray(ray);
+				L += w.tracer_ptr->trace_ray(ray, 0);
 			}
 			L /= (float)vp.num_samples;
 			L *= exposure_time;

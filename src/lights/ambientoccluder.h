@@ -23,7 +23,6 @@ public:
 	inline void set_min_amount(const RGBColor& ma) {min_amount = ma;};
 private:
 
-	Vector3D u, v, w;
 	Sampler* sampler_ptr;
 	RGBColor min_amount;
 	float ls;

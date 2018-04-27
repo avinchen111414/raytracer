@@ -16,7 +16,6 @@ AmbientOccluder::AmbientOccluder():
 
 AmbientOccluder::AmbientOccluder(const AmbientOccluder& ao):
 	Light(ao),
-	u(ao.u), v(ao.v), w(ao.w),
 	min_amount(ao.min_amount),
 	ls(ao.ls),
 	color(ao.color)
@@ -34,9 +33,6 @@ AmbientOccluder& AmbientOccluder::operator=(const AmbientOccluder& rhs)
 
 	Light::operator=(rhs);
 
-	u = rhs.u;
-	v = rhs.v;
-	w = rhs.w;
 	min_amount = rhs.min_amount;
 	ls = rhs.ls;
 	color = rhs.color;
@@ -57,6 +53,12 @@ Light* AmbientOccluder::clone() const
 
 Vector3D AmbientOccluder::get_direction(ShadeRec& sr)
 {
+	Vector3D u, v, w;
+	w = sr.normal;
+	v = w ^ Vector3D(0.0072f, 1.0f, 0.0034f);
+	v.normalize();
+	u = v ^ w;
+
 	Point3D p = sampler_ptr->sample_hemisphere();
 	return p.x * u + p.y * v + p.z * w;
 }
@@ -92,11 +94,6 @@ bool AmbientOccluder::in_shadow(const Ray& ray, const ShadeRec& sr)
 
 RGBColor AmbientOccluder::L(ShadeRec& sr)
 {
-	w = sr.normal;
-	v = w ^ Vector3D(0.0072f, 1.0f, 0.0034f);
-	v.normalize();
-	u = v ^ w;
-
 	Ray shadow_ray;
 	shadow_ray.o = sr.hit_point;
 	shadow_ray.d = get_direction(sr);

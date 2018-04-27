@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\src\lights\ambientoccluder.cpp" />
     <ClCompile Include="..\..\src\lights\arealight.cpp" />
     <ClCompile Include="..\..\src\lights\direction.cpp" />
+    <ClCompile Include="..\..\src\lights\environmentlight.cpp" />
     <ClCompile Include="..\..\src\lights\light.cpp" />
     <ClCompile Include="..\..\src\lights\point.cpp" />
     <ClCompile Include="..\..\src\materials\emissive.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="..\..\src\lights\ambientoccluder.h" />
     <ClInclude Include="..\..\src\lights\arealight.h" />
     <ClInclude Include="..\..\src\lights\direction.h" />
+    <ClInclude Include="..\..\src\lights\environmentlight.h" />
     <ClInclude Include="..\..\src\lights\light.h" />
     <ClInclude Include="..\..\src\lights\point.h" />
     <ClInclude Include="..\..\src\materials\emissive.h" />

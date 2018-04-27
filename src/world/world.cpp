@@ -154,7 +154,8 @@ World::clamp_to_color(const RGBColor& raw_color) const {
 void World::build()
 {
 	//this->build_ao_scene();
-	this->build_area_lights_scene();
+	//this->build_area_lights_scene();
+	this->build_env_light_scene();
 }
 
 ShadeRec World::hit_bare_bones_objects(const Ray& ray)

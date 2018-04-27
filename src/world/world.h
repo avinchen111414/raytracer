@@ -56,6 +56,7 @@ public:
 protected:
 	void build_ao_scene();
 	void build_area_lights_scene();
+	void build_env_light_scene();
 	// -- --
 
 private:

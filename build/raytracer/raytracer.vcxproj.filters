@@ -153,6 +153,9 @@
     <ClCompile Include="..\..\src\world\worldbuild.cpp">
       <Filter>world</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\lights\environmentlight.cpp">
+      <Filter>lights</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\tracer\raycast.h">
       <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lights\environmentlight.h">
+      <Filter>lights</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

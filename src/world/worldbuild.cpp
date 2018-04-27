@@ -5,6 +5,7 @@
 #include "tracer/arealighting.h"
 #include "lights/ambientoccluder.h"
 #include "lights/arealight.h"
+#include "lights/environmentlight.h"
 #include "camera/pinhole.h"
 #include "materials/matte.h"
 #include "materials/emissive.h"
@@ -114,4 +115,18 @@ void World::build_area_lights_scene()
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
 	plane->set_material(matte_ptr1);
 	add_object(plane);
+}
+
+void World::build_env_light_scene()
+{
+	build_area_lights_scene();
+
+	Emissive* env_emissive_mtl = new Emissive;
+	env_emissive_mtl->set_ce(RGBColor(0.8f, 0.3f, 0.1f));
+	env_emissive_mtl->set_ls(1.0f);
+
+	EnvironmentLight* env_light = new EnvironmentLight;
+	env_light->set_sampler(new Jittered(256));
+	env_light->set_material(env_emissive_mtl);
+	add_light(env_light);
 }

@@ -57,13 +57,12 @@ void World::build_ao_scene()
 
 void World::build_area_lights_scene()
 {
-	int num_samples = 1;
+	int num_samples = 256;
 
 	vp.set_hres(400);
 	vp.set_vres(400);
 	vp.set_samples(num_samples);
 
-	//tracer_ptr = new RayCast(this);
 	tracer_ptr = new AreaLighting(this);
 
 	Jittered* sampler_ptr = new Jittered(num_samples);
@@ -75,11 +74,11 @@ void World::build_area_lights_scene()
 	set_ambient_light(occluder);
 
 	Emissive* emmisvie_ptr = new Emissive;
-	emmisvie_ptr->set_ls(40.0f);
+	emmisvie_ptr->set_ls(5.0f);
 	emmisvie_ptr->set_ce(RGBColor(1.0f));
 
 	Jittered* rectangle_sampler_ptr = new Jittered(num_samples);
-	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-2.0f, 0.0f, -2.0f),
+	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-2.0f, 1.0f, -2.0f),
 		Vector3D(0.0f, 3.0f, 0.0f), Vector3D(-1.7f, 0.0f, 1.7f));
 	rectangle_ptr->set_material(emmisvie_ptr);
 	rectangle_ptr->set_sampler(rectangle_sampler_ptr);
@@ -99,8 +98,8 @@ void World::build_area_lights_scene()
 	set_camera(camera);
 
 	Matte* matte_ptr0 = new Matte;
-	matte_ptr0->set_ka(0.75);
-	matte_ptr0->set_kd(0);
+	matte_ptr0->set_ka(0.25);
+	matte_ptr0->set_kd(0.75);
 	matte_ptr0->set_cd(RGBColor(1, 1, 0));
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
@@ -108,8 +107,8 @@ void World::build_area_lights_scene()
 	add_object(sphere0);
 
 	Matte* matte_ptr1 = new Matte;
-	matte_ptr1->set_ka(0.75);
-	matte_ptr1->set_kd(0);
+	matte_ptr1->set_ka(0.25);
+	matte_ptr1->set_kd(0.75);
 	matte_ptr1->set_cd(RGBColor(1, 1, 1));
 
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));

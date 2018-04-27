@@ -21,6 +21,7 @@ public:
 	virtual RGBColor shade(ShadeRec& sr);
 	virtual RGBColor area_light_shade(ShadeRec& sr);
 
+	RGBColor get_le(ShadeRec& sr) const { return ls * ce; }
 	void set_ls(const float ls) { this->ls = ls; };
 	void set_ce(const RGBColor& ce) {this->ce = ce; };
 

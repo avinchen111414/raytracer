@@ -159,6 +159,9 @@
     <ClCompile Include="..\..\src\utilities\bbox.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\box.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\utilities\bbox.h">
       <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\box.h">
+      <Filter>geometricobjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

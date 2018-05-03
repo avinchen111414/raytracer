@@ -90,6 +90,7 @@
     <ClCompile Include="..\..\src\brdfs\lambertian.cpp" />
     <ClCompile Include="..\..\src\camera\camera.cpp" />
     <ClCompile Include="..\..\src\camera\pinhole.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\box.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\geometricobject.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\plane.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\rectangle.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="..\..\src\brdfs\lambertian.h" />
     <ClInclude Include="..\..\src\camera\camera.h" />
     <ClInclude Include="..\..\src\camera\pinhole.h" />
+    <ClInclude Include="..\..\src\geometricobjects\box.h" />
     <ClInclude Include="..\..\src\geometricobjects\geometricobject.h" />
     <ClInclude Include="..\..\src\geometricobjects\plane.h" />
     <ClInclude Include="..\..\src\geometricobjects\rectangle.h" />

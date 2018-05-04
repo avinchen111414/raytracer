@@ -11,6 +11,7 @@
 #include "materials/emissive.h"
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
+#include "geometricobjects/box.h"
 
 void World::build_ao_scene()
 {
@@ -115,6 +116,10 @@ void World::build_area_lights_scene()
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
 	plane->set_material(matte_ptr1);
 	add_object(plane);
+
+	Box* box = new Box(Point3D(1, 0, 1), Point3D(2, 1, 2));
+	box->set_material(matte_ptr1);
+	add_object(box);
 }
 
 void World::build_env_light_scene()

@@ -8,16 +8,19 @@ const float Box::kEpsilon = 0.001f;
 
 Box::Box(float _x0, float _y0, float _z0,
 		 float _x1, float _y1, float _z1)
-		 : x0(_x0), y0(_y0), z0(_z0), x1(_x1), y1(_y1), z1(_z1)
+		 : GeometricObject(), 
+		 x0(_x0), y0(_y0), z0(_z0), x1(_x1), y1(_y1), z1(_z1)
 {}
 
 Box::Box(const Point3D& p0, const Point3D& p1)
-	: x0(p0.x), y0(p0.y), z0(p0.z),
+	: GeometricObject(),
+	x0(p0.x), y0(p0.y), z0(p0.z),
 	x1(p1.x), y1(p1.y), z1(p1.z)
 {}
 
 Box::Box(const Box& other)
-	: x0(other.x0), y0(other.y0), z0(other.z0),
+	: GeometricObject(other),
+	x0(other.x0), y0(other.y0), z0(other.z0),
 	x1(other.x1), y1(other.y1), z1(other.z1)
 {}
 
@@ -25,8 +28,11 @@ Box& Box::operator= (const Box& rhs)
 {
 	if (this == &rhs)
 		return *this;
+
+	GeometricObject::operator=(rhs);
 	x0 = rhs.x0; y0 = rhs.y0; z0 = rhs.z0;
 	x1 = rhs.x1; y1 = rhs.y1; z1 = rhs.z1;
+
 	return *this;
 }
 

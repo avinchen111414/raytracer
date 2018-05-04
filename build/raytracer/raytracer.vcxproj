@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\src\geometricobjects\plane.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\rectangle.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\sphere.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\triangle.cpp" />
     <ClCompile Include="..\..\src\lights\ambient.cpp" />
     <ClCompile Include="..\..\src\lights\ambientoccluder.cpp" />
     <ClCompile Include="..\..\src\lights\arealight.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="..\..\src\geometricobjects\plane.h" />
     <ClInclude Include="..\..\src\geometricobjects\rectangle.h" />
     <ClInclude Include="..\..\src\geometricobjects\sphere.h" />
+    <ClInclude Include="..\..\src\geometricobjects\triangle.h" />
     <ClInclude Include="..\..\src\lights\ambient.h" />
     <ClInclude Include="..\..\src\lights\ambientoccluder.h" />
     <ClInclude Include="..\..\src\lights\arealight.h" />

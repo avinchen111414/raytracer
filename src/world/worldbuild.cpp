@@ -12,6 +12,7 @@
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
 #include "geometricobjects/box.h"
+#include "geometricobjects/triangle.h"
 
 void World::build_ao_scene()
 {
@@ -59,7 +60,7 @@ void World::build_ao_scene()
 
 void World::build_area_lights_scene()
 {
-	int num_samples = 256;
+	int num_samples = 16;
 
 	vp.set_hres(400);
 	vp.set_vres(400);
@@ -106,7 +107,7 @@ void World::build_area_lights_scene()
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
 	sphere0->set_material(matte_ptr0);
-	add_object(sphere0);
+	//add_object(sphere0);
 
 	Matte* matte_ptr1 = new Matte;
 	matte_ptr1->set_ka(0.25);
@@ -120,6 +121,11 @@ void World::build_area_lights_scene()
 	Box* box = new Box(Point3D(1, 0, 1), Point3D(2, 1, 2));
 	box->set_material(matte_ptr1);
 	add_object(box);
+
+	Triangle* triangle = new Triangle(Point3D(0, 0, 0),
+		Point3D(1, 0, 0), Point3D(0.5, 1, 0));
+	triangle->set_material(matte_ptr1);
+	add_object(triangle);
 }
 
 void World::build_env_light_scene()

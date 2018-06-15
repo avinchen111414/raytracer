@@ -6,13 +6,16 @@
 #include "lights/ambientoccluder.h"
 #include "lights/arealight.h"
 #include "lights/environmentlight.h"
+#include "lights/point.h"
 #include "camera/pinhole.h"
 #include "materials/matte.h"
 #include "materials/emissive.h"
+#include "materials/phong.h"
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
 #include "geometricobjects/box.h"
 #include "geometricobjects/triangle.h"
+#include "geometricobjects/instance.h"
 
 void World::build_ao_scene()
 {
@@ -121,11 +124,6 @@ void World::build_area_lights_scene()
 	Box* box = new Box(Point3D(1, 0, 1), Point3D(2, 1, 2));
 	box->set_material(matte_ptr1);
 	add_object(box);
-
-	Triangle* triangle = new Triangle(Point3D(0, 0, 0),
-		Point3D(1, 0, 0), Point3D(0.5, 1, 0));
-	triangle->set_material(matte_ptr1);
-	add_object(triangle);
 }
 
 void World::build_env_light_scene()
@@ -140,4 +138,41 @@ void World::build_env_light_scene()
 	env_light->set_sampler(new Jittered(256));
 	env_light->set_material(env_emissive_mtl);
 	add_light(env_light);
+}
+
+void World::build_instance_test_scene()
+{
+	int num_samples = 16;
+
+	vp.set_hres(400);
+	vp.set_vres(400);
+	vp.set_samples(num_samples);
+
+	tracer_ptr = new AreaLighting(this);
+
+	PinHole* camera = new PinHole;
+	camera->eye = Point3D(100, 0, 100);
+	camera->lookat = Point3D(0, 1, 0);
+	camera->d = 8000;
+	camera->compute_uvw();
+	set_camera(camera);
+
+	Point* point_light = new Point();
+	point_light->set_location(Point3D(50.0, 50.0, 1.0));
+	point_light->scale_radiance(3.0f);
+	add_light(point_light);
+
+	Phong* phong = new Phong;
+	phong->set_cd(0.75);
+	phong->set_ka(0.25);
+	phong->set_kd(0.8);
+	phong->set_ks(0.15);
+	phong->set_exp(50);
+
+	Instance* ellipsoid = new Instance(new Sphere);
+	ellipsoid->set_material(phong);
+	ellipsoid->scale(2, 3, 1);
+	ellipsoid->rotate_x(-45);
+	ellipsoid->translate(0, 1, 0);
+	add_object(ellipsoid);
 }

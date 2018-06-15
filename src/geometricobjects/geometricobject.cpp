@@ -3,12 +3,13 @@
 const double GeometricObject::m_eplison = 0.000001;
 
 GeometricObject::GeometricObject(void)
-	: m_color(0.0), m_shadow(true)
+	: m_color(0.0), m_shadow(true), m_material(nullptr)
 {}
 
 GeometricObject::GeometricObject (const GeometricObject& object) {
 	m_color = object.m_color;
 	m_shadow = object.m_shadow;
+	m_material = object.m_material;
 }	
 
 GeometricObject& GeometricObject::operator= (const GeometricObject& rhs) {
@@ -17,6 +18,7 @@ GeometricObject& GeometricObject::operator= (const GeometricObject& rhs) {
 
 	m_color = rhs.m_color;
 	m_shadow = rhs.m_shadow;
+	m_material = rhs.m_material;
 	return (*this);
 }
 

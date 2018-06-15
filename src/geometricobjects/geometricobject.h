@@ -28,7 +28,7 @@ class GeometricObject {
 		virtual void set_color(const RGBColor& color); 
 
 		Material* get_material() const;
-		virtual void set_material(Material* m);
+		void set_material(Material* m);
 
 		virtual bool shadow_hit(const Ray& ray, float& tmin) const;
 		

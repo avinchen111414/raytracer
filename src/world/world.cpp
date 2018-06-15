@@ -36,7 +36,11 @@ World::World(void)
 		tracer_ptr(NULL),
 		camera_ptr(nullptr),
 		ambient_ptr(new Ambient)
-{}
+{
+	Ambient* ap = dynamic_cast<Ambient*>(ambient_ptr);
+	if (ap)
+		ap->set_color(0);
+}
 
 World::~World(void) {	
 	
@@ -155,7 +159,8 @@ void World::build()
 {
 	//this->build_ao_scene();
 	//this->build_area_lights_scene();
-	this->build_env_light_scene();
+	//this->build_env_light_scene();
+	this->build_instance_test_scene();
 }
 
 ShadeRec World::hit_bare_bones_objects(const Ray& ray)

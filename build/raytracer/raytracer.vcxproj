@@ -91,6 +91,7 @@
     <ClCompile Include="..\..\src\camera\camera.cpp" />
     <ClCompile Include="..\..\src\camera\pinhole.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\box.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\compound.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\geometricobject.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\instance.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\plane.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="..\..\src\camera\camera.h" />
     <ClInclude Include="..\..\src\camera\pinhole.h" />
     <ClInclude Include="..\..\src\geometricobjects\box.h" />
+    <ClInclude Include="..\..\src\geometricobjects\compound.h" />
     <ClInclude Include="..\..\src\geometricobjects\geometricobject.h" />
     <ClInclude Include="..\..\src\geometricobjects\instance.h" />
     <ClInclude Include="..\..\src\geometricobjects\plane.h" />

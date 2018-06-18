@@ -3,6 +3,7 @@
 
 class Ray;
 class ShadeRec;
+class BBox;
 
 #include "utilities/rgbcolor.h"
 #include "utilities/point3d.h"
@@ -28,11 +29,13 @@ class GeometricObject {
 		virtual void set_color(const RGBColor& color); 
 
 		Material* get_material() const;
-		void set_material(Material* m);
+		virtual void set_material(Material* m);
 
 		virtual bool shadow_hit(const Ray& ray, float& tmin) const;
 		
 		inline void enable_shadow(bool enable) {m_shadow = enable;};
+
+		virtual const BBox* get_bounding_box() const;
 
 		// for area light
 		virtual Point3D sample();

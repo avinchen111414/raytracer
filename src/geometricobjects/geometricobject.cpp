@@ -58,3 +58,8 @@ Normal GeometricObject::get_normal(const Point3D& p)
 	return Normal(0.0f);
 }
 
+const BBox* GeometricObject::get_bounding_box() const
+{
+	return nullptr;
+}
+

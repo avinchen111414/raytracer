@@ -10,4 +10,13 @@ const double 	invPI 		= 0.3183098861837906715;
 const double 	invTWO_PI 	= 0.1591549430918953358;
 const float		kEpsilon	= 0.001f;
 
+inline double clamp(double value, double max, double min)
+{
+	if (value < min)
+		return min;
+	if (value > max)
+		return max;
+	return value;
+}
+
 #endif

@@ -93,6 +93,7 @@
     <ClCompile Include="..\..\src\geometricobjects\box.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\compound.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\geometricobject.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\grid.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\instance.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\plane.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\rectangle.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="..\..\src\geometricobjects\box.h" />
     <ClInclude Include="..\..\src\geometricobjects\compound.h" />
     <ClInclude Include="..\..\src\geometricobjects\geometricobject.h" />
+    <ClInclude Include="..\..\src\geometricobjects\grid.h" />
     <ClInclude Include="..\..\src\geometricobjects\instance.h" />
     <ClInclude Include="..\..\src\geometricobjects\plane.h" />
     <ClInclude Include="..\..\src\geometricobjects\rectangle.h" />

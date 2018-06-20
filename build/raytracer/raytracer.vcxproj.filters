@@ -171,6 +171,9 @@
     <ClCompile Include="..\..\src\geometricobjects\compound.cpp">
       <Filter>geometricobjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\grid.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -306,6 +309,9 @@
       <Filter>geometricobjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\geometricobjects\compound.h">
+      <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\grid.h">
       <Filter>geometricobjects</Filter>
     </ClInclude>
   </ItemGroup>

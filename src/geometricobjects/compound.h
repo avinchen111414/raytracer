@@ -17,7 +17,7 @@ public:
 	virtual void set_material(Material* m);
 	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
 	
-	void add_object(GeometricObject* object);
+	virtual void add_object(GeometricObject* object);
 	size_t get_object_num() const;
 
 protected:

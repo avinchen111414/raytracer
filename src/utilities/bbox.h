@@ -14,6 +14,7 @@ public:
 	~BBox();
 
 	bool hit (const Ray& ray) const;
+	bool inside(const Point3D& p) const;
 
 public:
 	double x0, y0, z0, x1, y1, z1;

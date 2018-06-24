@@ -3,6 +3,7 @@
 
 #include "geometricobject.h"
 #include "utilities/matrix.h"
+#include "utilities/bbox.h"
 
 class Ray;
 class ShadeRec;
@@ -20,6 +21,7 @@ public:
 	virtual GeometricObject* clone() const;
 	virtual bool hit(const Ray& ray, double& t, ShadeRec& s) const;
 	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
+	virtual const BBox* get_bounding_box() const;
 
 	void set_object(GeometricObject* object);
 	
@@ -40,13 +42,17 @@ public:
 	void rotate_z(double r);
 
 	void shear(const Matrix& s);
+	void end_transform();
 
 protected:
+	void update_bbox();
 
 private:
 	GeometricObject* m_object;
 	Matrix m_inv_matrix;
+	Matrix m_forward_matrix;
 	bool transform_the_texture;
+	BBox m_bbox;
 };
 
 #endif

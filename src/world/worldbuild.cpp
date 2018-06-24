@@ -16,6 +16,7 @@
 #include "geometricobjects/box.h"
 #include "geometricobjects/triangle.h"
 #include "geometricobjects/instance.h"
+#include "geometricobjects/grid.h"
 
 void World::build_ao_scene()
 {
@@ -175,4 +176,47 @@ void World::build_instance_test_scene()
 	ellipsoid->rotate_x(-45);
 	ellipsoid->translate(0, 1, 0);
 	add_object(ellipsoid);
+}
+
+void World::build_grid_test_scene()
+{
+	int num_samples = 16;
+
+	vp.set_hres(400);
+	vp.set_vres(400);
+	vp.set_samples(num_samples);
+
+	tracer_ptr = new AreaLighting(this);
+
+	PinHole* camera = new PinHole;
+	camera->eye = Point3D(100, 0, 100);
+	camera->lookat = Point3D(0, 1, 0);
+	camera->d = 8000;
+	camera->compute_uvw();
+	set_camera(camera);
+
+	Point* point_light = new Point();
+	point_light->set_location(Point3D(50.0, 50.0, 1.0));
+	point_light->scale_radiance(3.0f);
+	add_light(point_light);
+
+	Phong* phong = new Phong;
+	phong->set_cd(0.75);
+	phong->set_ka(0.25);
+	phong->set_kd(0.8);
+	phong->set_ks(0.15);
+	phong->set_exp(50);
+
+	Instance* ellipsoid = new Instance(new Sphere);
+	ellipsoid->set_material(phong);
+	ellipsoid->scale(2, 3, 1);
+	ellipsoid->rotate_x(-45);
+	ellipsoid->translate(0, 1, 0);
+	ellipsoid->end_transform();
+
+	Grid* grid = new Grid;
+	grid->add_object(ellipsoid);
+	
+	grid->setup_cells();
+	add_object(grid);
 }

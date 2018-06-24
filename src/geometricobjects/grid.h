@@ -2,6 +2,7 @@
 #define __GRID_H__
 
 #include "compound.h"
+#include "utilities/bbox.h"
 
 class BBox;
 

@@ -9,19 +9,22 @@ const float Box::kEpsilon = 0.001f;
 Box::Box(float _x0, float _y0, float _z0,
 		 float _x1, float _y1, float _z1)
 		 : GeometricObject(), 
-		 x0(_x0), y0(_y0), z0(_z0), x1(_x1), y1(_y1), z1(_z1)
+		 x0(_x0), y0(_y0), z0(_z0), x1(_x1), y1(_y1), z1(_z1),
+		 m_bbox(_x0, _y0, _z0, _x1 , _y1, _z1)
 {}
 
 Box::Box(const Point3D& p0, const Point3D& p1)
 	: GeometricObject(),
 	x0(p0.x), y0(p0.y), z0(p0.z),
-	x1(p1.x), y1(p1.y), z1(p1.z)
+	x1(p1.x), y1(p1.y), z1(p1.z),
+	m_bbox(p0, p1)
 {}
 
 Box::Box(const Box& other)
 	: GeometricObject(other),
 	x0(other.x0), y0(other.y0), z0(other.z0),
-	x1(other.x1), y1(other.y1), z1(other.z1)
+	x1(other.x1), y1(other.y1), z1(other.z1),
+	m_bbox(other.m_bbox)
 {}
 
 Box& Box::operator= (const Box& rhs)
@@ -32,6 +35,7 @@ Box& Box::operator= (const Box& rhs)
 	GeometricObject::operator=(rhs);
 	x0 = rhs.x0; y0 = rhs.y0; z0 = rhs.z0;
 	x1 = rhs.x1; y1 = rhs.y1; z1 = rhs.z1;
+	m_bbox = rhs.m_bbox;
 
 	return *this;
 }
@@ -258,4 +262,9 @@ Normal Box::get_normal(int face_hit) const
 
 	// impossible reach here
 	return Normal(0.0f, 0.0f, 0.0f);
+}
+
+const BBox* Box::get_bounding_box() const
+{
+	return &m_bbox;
 }

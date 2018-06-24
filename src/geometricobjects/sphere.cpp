@@ -7,11 +7,15 @@ const double Sphere::m_epsilon = 0.001;
 
 Sphere::Sphere(void)
 	: m_center(0.0), m_radius(1.0)
-{}
+{
+	update_bbox();
+}
 
 Sphere::Sphere(const Point3D& center, const float radius)
 	: m_center(center), m_radius(radius)
-{}
+{
+	update_bbox();
+}
 
 bool Sphere::hit(const Ray& ray, double& tmin, ShadeRec& sr)const
 {
@@ -86,4 +90,19 @@ bool Sphere::shadow_hit(const Ray& ray, float& tmin) const
 GeometricObject* Sphere::clone() const
 {
 	return (new Sphere(*this));
+}
+
+const BBox* Sphere::get_bounding_box() const
+{
+	return &m_bbox;
+}
+
+void Sphere::update_bbox()
+{
+	m_bbox.x0 = m_center.x - m_radius;
+	m_bbox.y0 = m_center.y - m_radius;
+	m_bbox.z0 = m_center.z - m_radius;
+	m_bbox.x1 = m_center.x + m_radius;
+	m_bbox.y1 = m_center.y + m_radius;
+	m_bbox.z1 = m_center.z + m_radius;
 }

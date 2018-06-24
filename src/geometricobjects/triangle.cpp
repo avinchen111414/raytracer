@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "triangle.h"
 #include "utilities/utility.h"
 #include "utilities/ray.h"
@@ -8,13 +9,14 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2)
 {
 	normal = (v1 - v0) ^ (v2 - v0);
 	normal.normalize();
+	update_bbox();
 }
 
 Triangle::Triangle(const Triangle& other)
 	: GeometricObject(other), 
 	v0(other.v0), v1(other.v1), v2(other.v2), normal(other.normal)
 {
-
+	update_bbox();
 }
 
 Triangle& Triangle::operator= (const Triangle& rhs)
@@ -25,6 +27,7 @@ Triangle& Triangle::operator= (const Triangle& rhs)
 	GeometricObject::operator=(rhs);
 	v0 = rhs.v0; v1 = rhs.v1; v2 = rhs.v2;
 	normal = rhs.normal;
+	m_bbox = rhs.m_bbox;
 
 	return *this;
 }
@@ -123,4 +126,20 @@ bool Triangle::shadow_hit(const Ray& ray, float& tmin) const
 	tmin 				= t;
 
 	return (true);	
+}
+
+const BBox* Triangle::get_bounding_box() const
+{
+	return &m_bbox;
+}
+
+void Triangle::update_bbox()
+{
+	double delta = 0.000001;
+	m_bbox.x0 = std::min(std::min(v0.x, v1.x), v2.x);
+	m_bbox.y0 = std::min(std::min(v0.y, v1.y), v2.y);
+	m_bbox.z0 = std::min(std::min(v0.z, v1.z), v2.z);
+	m_bbox.x1 = std::max(std::max(v0.x, v1.x), v2.x);
+	m_bbox.y1 = std::max(std::max(v0.y, v1.y), v2.y);
+	m_bbox.z1 = std::max(std::max(v0.z, v1.z), v2.z);
 }

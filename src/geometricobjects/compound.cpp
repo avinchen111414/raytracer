@@ -75,6 +75,7 @@ void Compound::set_material(Material* m)
 void Compound::add_object(GeometricObject* object)
 {
 	m_objects.push_back(object);
+	update_bbox();
 }
 
 size_t Compound::get_object_num() const
@@ -91,6 +92,7 @@ void Compound::delete_objects()
 	}
 
 	m_objects.clear();
+	update_bbox();
 }
 
 void Compound::copy_objects(const std::vector<GeometricObject *>& rhs_objects)
@@ -100,6 +102,7 @@ void Compound::copy_objects(const std::vector<GeometricObject *>& rhs_objects)
 	{
 		m_objects.push_back(rhs_objects[idx]->clone());
 	}
+	update_bbox();
 }
 
 bool Compound::shadow_hit(const Ray& ray, float& tmin) const
@@ -122,4 +125,21 @@ bool Compound::shadow_hit(const Ray& ray, float& tmin) const
 	}
 
 	return hit;
+}
+
+const BBox* Compound::get_bounding_box() const
+{
+	return &m_bbox;
+}
+
+void Compound::update_bbox()
+{
+	m_bbox = BBox();
+	for (size_t idx = 0; idx < m_objects.size(); idx++)
+	{
+		const BBox* obj_bbox = m_objects[idx]->get_bounding_box();
+		if (!obj_bbox)
+			continue;
+		m_bbox.Merge(*obj_bbox);
+	}
 }

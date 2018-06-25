@@ -58,6 +58,7 @@ protected:
 	void build_area_lights_scene();
 	void build_env_light_scene();
 	void build_instance_test_scene();
+	void build_grid_test_scene();
 	// -- --
 
 private:

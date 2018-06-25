@@ -6,6 +6,11 @@
 
 const double BBox::kEpsilon = 0.001;
 
+BBox::BBox()
+	: x0(0), y0(0), z0(0),
+	x1(0), y1(0), z1(0)
+{}
+
 BBox::BBox(double _x0, double _y0, double _z0,
 		   double _x1, double _y1, double _z1)
 		   : x0(_x0), y0(_y0), z0(_z0),
@@ -91,6 +96,19 @@ bool BBox::hit(const Ray& ray) const
 	return (t0 < t1 && t1 > kEpsilon);
 }
 
-bool BBox::inside(const Point3D& p) const {
-		return ((p.x > x0 && p.x < x1) && (p.y > y0 && p.y < y1) && (p.z > z0 && p.z < z1));
-};
+bool BBox::inside(const Point3D& point) const
+{
+	return x0 < point.x && point.x < x1 &&
+		y0 < point.y && point.y < y1 &&
+		z0 < point.z && point.z < z1;
+}
+
+void BBox::Merge(const BBox& other)
+{
+	x0 = std::min(x0, other.x0);
+	y0 = std::min(y0, other.y0);
+	z0 = std::min(z0, other.z0);
+	x1 = std::max(x1, other.x1);
+	y1 = std::max(y1, other.y1);
+	z1 = std::max(z1, other.z1);
+}

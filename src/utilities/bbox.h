@@ -10,11 +10,13 @@ public:
 			double _x1, double _y1, double _z1);
 	BBox(const Point3D& p0, const Point3D& p1);
 	BBox(const BBox& other);
+	BBox();
 	BBox& operator= (const BBox& rhs);
 	~BBox();
 
 	bool hit (const Ray& ray) const;
-	bool inside(const Point3D& p) const;
+	bool inside (const Point3D& point) const;
+	void Merge (const BBox& other);
 
 public:
 	double x0, y0, z0, x1, y1, z1;

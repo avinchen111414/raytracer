@@ -2,6 +2,7 @@
 #define __BOX_H__
 
 #include "geometricobject.h"
+#include "utilities/bbox.h"
 
 class Box: public GeometricObject
 {
@@ -16,12 +17,14 @@ public:
 	virtual GeometricObject* clone() const;
 	virtual bool hit(const Ray& ray, double& t, ShadeRec& s) const;
 	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
+	virtual const BBox* get_bounding_box() const;
 
 protected:
 	Normal get_normal(int face_hit) const;
 
 private:
 	float x0, y0, z0, x1, y1, z1;
+	BBox m_bbox;
 	static const float kEpsilon;
 };
 

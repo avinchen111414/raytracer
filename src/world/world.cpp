@@ -160,7 +160,8 @@ void World::build()
 	//this->build_ao_scene();
 	//this->build_area_lights_scene();
 	//this->build_env_light_scene();
-	this->build_instance_test_scene();
+	//this->build_instance_test_scene();
+	this->build_grid_test_scene();
 }
 
 ShadeRec World::hit_bare_bones_objects(const Ray& ray)
@@ -202,7 +203,8 @@ ShadeRec World::hit_object(const Ray& ray)
 		{
 			sr.hit_an_object = true;
 			tmin = t;
-			sr.material_ptr = objects[i]->get_material();
+			if (objects[i]->get_material())
+				sr.material_ptr = objects[i]->get_material();
 			sr.hit_point = ray.o + t * ray.d;
 			normal = sr.normal;
 			local_hit_point = sr.local_hit_point;

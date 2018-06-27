@@ -124,7 +124,7 @@ bool Triangle::shadow_hit(const Ray& ray, float& tmin) const
 	if (t < kEpsilon) 
 		return (false);
 
-	tmin 				= t;
+	tmin = t;
 
 	return (true);	
 }

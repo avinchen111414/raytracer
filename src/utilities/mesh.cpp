@@ -35,3 +35,8 @@ Mesh& Mesh::operator= (const Mesh& rhs)
 	num_triangles = rhs.num_triangles;
 	return *this;
 }
+
+Mesh* Mesh::clone() const
+{
+	return new Mesh(*this);
+}

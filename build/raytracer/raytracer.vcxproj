@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\src\geometricobjects\geometricobject.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\grid.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\instance.cpp" />
+    <ClCompile Include="..\..\src\geometricobjects\meshtriangle.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\plane.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\rectangle.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\sphere.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="..\..\src\tracer\tracer.cpp" />
     <ClCompile Include="..\..\src\utilities\bbox.cpp" />
     <ClCompile Include="..\..\src\utilities\matrix.cpp" />
+    <ClCompile Include="..\..\src\utilities\mesh.cpp" />
     <ClCompile Include="..\..\src\utilities\normal.cpp" />
     <ClCompile Include="..\..\src\utilities\point2d.cpp" />
     <ClCompile Include="..\..\src\utilities\point3d.cpp" />
@@ -144,6 +146,7 @@
     <ClInclude Include="..\..\src\geometricobjects\geometricobject.h" />
     <ClInclude Include="..\..\src\geometricobjects\grid.h" />
     <ClInclude Include="..\..\src\geometricobjects\instance.h" />
+    <ClInclude Include="..\..\src\geometricobjects\meshtriangle.h" />
     <ClInclude Include="..\..\src\geometricobjects\plane.h" />
     <ClInclude Include="..\..\src\geometricobjects\rectangle.h" />
     <ClInclude Include="..\..\src\geometricobjects\sphere.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="..\..\src\tracer\tracer.h" />
     <ClInclude Include="..\..\src\utilities\bbox.h" />
     <ClInclude Include="..\..\src\utilities\matrix.h" />
+    <ClInclude Include="..\..\src\utilities\mesh.h" />
     <ClInclude Include="..\..\src\utilities\normal.h" />
     <ClInclude Include="..\..\src\utilities\point2d.h" />
     <ClInclude Include="..\..\src\utilities\point3d.h" />

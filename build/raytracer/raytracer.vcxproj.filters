@@ -180,6 +180,9 @@
     <ClCompile Include="..\..\src\utilities\mesh.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\flatmeshtriangle.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\utilities\mesh.h">
       <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\flatmeshtriangle.h">
+      <Filter>geometricobjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,6 +10,11 @@ FlatMeshTriangle::FlatMeshTriangle(const FlatMeshTriangle& other):
 {
 }
 
+FlatMeshTriangle::FlatMeshTriangle(Mesh* _mesh_ptr, const int i1, const int i2, const int i3):
+	MeshTriangle(_mesh_ptr, i1, i2, i3)
+{
+}
+
 GeometricObject* FlatMeshTriangle::clone() const
 {
 	return new FlatMeshTriangle(*this);

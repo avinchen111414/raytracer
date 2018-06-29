@@ -186,6 +186,9 @@
     <ClCompile Include="..\..\src\utilities\ply.cpp">
       <Filter>utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\trianglemesh.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -337,6 +340,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\utilities\ply.h">
       <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\trianglemesh.h">
+      <Filter>geometricobjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

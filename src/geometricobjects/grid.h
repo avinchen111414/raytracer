@@ -27,7 +27,7 @@ private:
 	Grid(const Grid& other);
 	Grid& operator= (const Grid& rhs);
 
-private:
+protected:
 	std::vector<GeometricObject*> m_cells;
 	BBox m_bbox;
 	size_t m_nx, m_ny, m_nz;

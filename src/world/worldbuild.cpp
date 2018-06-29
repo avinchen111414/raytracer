@@ -18,6 +18,8 @@
 #include "geometricobjects/triangle.h"
 #include "geometricobjects/instance.h"
 #include "geometricobjects/grid.h"
+#include "geometricobjects/trianglemesh.h"
+#include "utilities/mesh.h"
 
 void World::build_ao_scene()
 {
@@ -224,4 +226,42 @@ void World::build_grid_test_scene()
 	
 	grid->setup_cells();
 	add_object(grid);
+}
+
+void World::build_triangle_mesh_test_scene()
+{
+	int num_samples = 16;
+
+	vp.set_hres(400);
+	vp.set_vres(400);
+	vp.set_samples(num_samples);
+
+	tracer_ptr = new AreaLighting(this);
+
+	PinHole* camera = new PinHole;
+	camera->eye = Point3D(0, 0, 1000);
+	camera->lookat = Point3D(0, 0, 0);
+	camera->d = 8000;
+	camera->compute_uvw();
+	set_camera(camera);
+
+	Direction* dir = new Direction;
+	dir->set_direction(Vector3D(-1.0f, -1.0f, -1.0f));
+	dir->set_color(1.0f);
+	dir->scale_radiance(1.0f);
+	add_light(dir);
+
+	Phong* phong = new Phong;
+	phong->set_cd(0.75);
+	phong->set_ka(0.25);
+	phong->set_kd(0.8);
+	phong->set_ks(0.15);
+	phong->set_exp(50);
+
+	const char* ply_file_name = "../../res/plys/box.ply";
+	TriangleMesh* mesh = new TriangleMesh(new Mesh);
+	mesh->read_flat_triangle(ply_file_name);
+	mesh->set_material(phong);
+	mesh->setup_cells();
+	add_object(mesh);
 }

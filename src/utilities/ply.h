@@ -58,8 +58,12 @@ extern "C" {
 #define PLY_USHORT     5
 #define PLY_UINT       6
 #define PLY_FLOAT      7
-#define PLY_DOUBLE     8
-#define PLY_END_TYPE   9
+#define PLY_FLOAT32    8
+#define PLY_DOUBLE     9
+#define PLY_UINT8      10
+#define PLY_UINT32     11
+#define PLY_INT32      12
+#define PLY_END_TYPE   13
 
 #define  PLY_SCALAR  0
 #define  PLY_LIST    1

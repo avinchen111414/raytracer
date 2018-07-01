@@ -27,7 +27,7 @@ public:
 	} Face;
 
 public:
-	TriangleMesh(Mesh* mesh);
+	TriangleMesh(Mesh* mesh, bool reverse_normal=false);
 	void read_flat_triangle(const char* ply_filepath);
 	void read_smooth_triangle(const char* ply_filepath);
 

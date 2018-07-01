@@ -1,10 +1,11 @@
+#include <iostream>
 #include "trianglemesh.h"
 #include "utilities/ply.h"
 #include "utilities/mesh.h"
 #include "flatmeshtriangle.h"
 
-TriangleMesh::TriangleMesh(Mesh* mesh)
-	: Grid(), m_mesh(mesh), m_reverse_normal(false)
+TriangleMesh::TriangleMesh(Mesh* mesh, bool reverse_normal)
+	: Grid(), m_mesh(mesh), m_reverse_normal(reverse_normal)
 {}
 
 void TriangleMesh::read_flat_triangle(const char* ply_filepath)
@@ -57,7 +58,7 @@ void TriangleMesh::read_ply_file(const char* ply_filepath, TriangleType type)
 		}
 		else if (equal_strings("face", elem_name))
 		{
-			read_ply_faces(ply, elem_name, vert_props, num_elems, type);
+			read_ply_faces(ply, elem_name, face_props, num_elems, type);
 		}
 	}
 

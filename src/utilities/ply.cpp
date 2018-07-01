@@ -44,7 +44,8 @@ char *type_names[] = {
 "invalid",
 "char", "short", "int",
 "uchar", "ushort", "uint",
-"float", "double",
+"float", "float32", "double",
+"uint8", "uint32", "int32",
 };
 
 int ply_type_size[] = {
@@ -978,6 +979,7 @@ void ply_get_property(
              prop->name, elem_name);
     return;
   }
+
   prop_ptr->internal_type  = prop->internal_type;
   prop_ptr->offset         = prop->offset;
   prop_ptr->count_internal = prop->count_internal;
@@ -1487,7 +1489,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
   int nwords;
   int which_word;
   FILE *fp = plyfile->fp;
-  char *elem_data,*item;
+  char *elem_data,*item = nullptr;
   char *item_ptr;
   int item_size;
   int int_val;
@@ -1497,7 +1499,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
   int store_it;
   char **store_array;
   char *orig_line;
-  char *other_data;
+  char *other_data = nullptr;
   int other_flag;
 
   /* the kind of element we're reading currently */
@@ -1606,7 +1608,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
   PlyElement *elem;
   PlyProperty *prop;
   FILE *fp = plyfile->fp;
-  char *elem_data,*item;
+  char *elem_data,*item = nullptr;
   char *item_ptr;
   int item_size;
   int int_val;
@@ -1615,7 +1617,7 @@ void binary_get_element(PlyFile *plyfile, char *elem_ptr)
   int list_count;
   int store_it;
   char **store_array;
-  char *other_data;
+  char *other_data = nullptr;
   int other_flag;
 
   /* the kind of element we're reading currently */
@@ -2385,7 +2387,18 @@ int get_prop_type(char *type_name)
 
   for (i = PLY_START_TYPE + 1; i < PLY_END_TYPE; i++)
     if (equal_strings (type_name, type_names[i]))
+	{
+	  // PLY_FLOAT32 is the synonym of PLY_FLOAT
+	  if (i == PLY_FLOAT32)
+		  return PLY_FLOAT;
+	  if (i == PLY_UINT8)
+		  return PLY_UCHAR;
+	  if (i == PLY_UINT32)
+		  return PLY_UINT;
+	  if (i == PLY_INT32)
+		  return PLY_INT;
       return (i);
+	}
 
   /* if we get here, we didn't find the type */
   return (0);

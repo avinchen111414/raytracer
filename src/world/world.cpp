@@ -161,7 +161,8 @@ void World::build()
 	//this->build_area_lights_scene();
 	//this->build_env_light_scene();
 	//this->build_instance_test_scene();
-	this->build_grid_test_scene();
+	//this->build_grid_test_scene();
+	this->build_triangle_mesh_test_scene();
 }
 
 ShadeRec World::hit_bare_bones_objects(const Ray& ray)

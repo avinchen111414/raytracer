@@ -68,3 +68,8 @@ bool FlatMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 
 	return (true);
 }
+
+bool FlatMeshTriangle::shadow_hit(const Ray& ray, float& tmin) const
+{
+	return MeshTriangle::shadow_hit(ray, tmin);
+}

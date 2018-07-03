@@ -54,7 +54,7 @@ MeshTriangle& MeshTriangle::operator=(const MeshTriangle& rhs)
 }
 
 // Excatlly same as Triangle::shadow_hit
-bool MeshTriangle::shadow_hit(const Ray& ray, double& tmin) const
+bool MeshTriangle::shadow_hit(const Ray& ray, float& tmin) const
 {
 	const Point3D& v0 = m_mesh->vertices[m_index0];
 	const Point3D& v1 = m_mesh->vertices[m_index1];

@@ -19,7 +19,7 @@ public:
 	MeshTriangle& operator= (const MeshTriangle& rhs);
 
 	virtual bool hit(const Ray& ray, double& tmin, ShadeRec& sr) const = 0;
-	virtual	bool shadow_hit(const Ray& ray, double& tmin) const;
+	virtual	bool shadow_hit(const Ray& ray, float& tmin) const;
 	virtual const BBox* get_bounding_box() const;
 
 	void compute_normal(const bool reverse_normal);

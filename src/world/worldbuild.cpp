@@ -242,7 +242,7 @@ void World::build_triangle_mesh_test_scene()
 	PinHole* pinhole_ptr = new PinHole;
 	pinhole_ptr->eye = Point3D(100, 50, 90);
 	pinhole_ptr->lookat = Point3D(0, -0.5, 0);
-	pinhole_ptr->d = 1600;  	
+	pinhole_ptr->d = 16000;  	
 	pinhole_ptr->compute_uvw();     
 	set_camera(pinhole_ptr);
 
@@ -258,7 +258,7 @@ void World::build_triangle_mesh_test_scene()
 	matte_ptr1->set_cd(RGBColor(0.1, 0.5, 1.0));
 	matte_ptr1->enable_recv_shadow(true);
 	
-	const char* ply_file_name = "../../res/plys/test.ply";
+	const char* ply_file_name = "../../res/plys/TwoTriangles.ply";
 	TriangleMesh* mesh = new TriangleMesh(new Mesh);
 	mesh->read_flat_triangle(ply_file_name);
 	mesh->set_material(matte_ptr1);

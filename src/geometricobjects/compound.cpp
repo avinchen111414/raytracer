@@ -61,7 +61,7 @@ bool Compound::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 		s.t = tmin;
 		s.normal = tmin_normal;
 		s.local_hit_point = tmin_local_hit_point;
-		s.material_ptr = tmin_material;
+		const_cast<Material*>(m_material) = tmin_material;
 	}
 
 	return hit;

@@ -189,6 +189,9 @@
     <ClCompile Include="..\..\src\geometricobjects\trianglemesh.cpp">
       <Filter>geometricobjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\geometricobjects\smoothmeshtriangle.cpp">
+      <Filter>geometricobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -342,6 +345,9 @@
       <Filter>utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\geometricobjects\trianglemesh.h">
+      <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\geometricobjects\smoothmeshtriangle.h">
       <Filter>geometricobjects</Filter>
     </ClInclude>
   </ItemGroup>

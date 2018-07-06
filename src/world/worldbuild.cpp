@@ -21,6 +21,7 @@
 #include "geometricobjects/grid.h"
 #include "geometricobjects/trianglemesh.h"
 #include "utilities/mesh.h"
+#include "utilities/utility.h"
 
 void World::build_ao_scene()
 {
@@ -246,6 +247,14 @@ void World::build_triangle_mesh_test_scene()
 	pinhole_ptr->compute_uvw();     
 	set_camera(pinhole_ptr);
 
+	Jittered* sampler_ptr = new Jittered(num_samples);
+	AmbientOccluder* occluder = new AmbientOccluder;
+	occluder->set_radiance(1.0f);
+	occluder->set_color(1.0f);
+	occluder->set_min_amount(0.5f);
+	occluder->set_sampler(sampler_ptr);
+	set_ambient_light(occluder);
+
 	Direction* directional_ptr = new Direction;
 	directional_ptr->set_direction(Vector3D(-0.75, -1, 0.15));     
 	directional_ptr->scale_radiance(4.5);  
@@ -257,14 +266,48 @@ void World::build_triangle_mesh_test_scene()
 	matte_ptr1->set_kd(0.75);   
 	matte_ptr1->set_cd(RGBColor(0.1, 0.5, 1.0));
 	matte_ptr1->enable_recv_shadow(true);
+
+	Phong* phong = new Phong;
+	phong->set_cd(0.75);
+	phong->set_ka(0.3);
+	phong->set_kd(0.8);
+	phong->set_cs(0.75);
+	phong->set_ks(0.15);
+	phong->set_exp(50);
+	phong->enable_recv_shadow(true);
 	
-	const char* ply_file_name = "../../res/plys/TwoTriangles.ply";
-	TriangleMesh* mesh = new TriangleMesh(new Mesh);
-	mesh->read_flat_triangle(ply_file_name);
-	mesh->set_material(matte_ptr1);
+	const char* ply_file_name = "../../res/plys/Horse2K.ply";
+	TriangleMesh* mesh = new TriangleMesh(new Mesh, true);
+	//mesh->read_flat_triangle(ply_file_name);
+	mesh->read_smooth_triangle(ply_file_name);
+	mesh->set_material(phong);
 	mesh->setup_cells();
 	mesh->enable_shadow(true);
 	add_object(mesh);
+
+	/*
+	Grid* grid = new Grid;
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			Phong* phong_inst = (Phong*)phong->clone();
+			phong_inst->set_cd(RGBColor(rand_float(), rand_float(), rand_float()));
+			phong_inst->set_cs(RGBColor(rand_float(), rand_float(), rand_float()));
+
+			Instance* mesh_inst = new Instance(mesh);
+			mesh_inst->set_material(phong_inst);
+			mesh_inst->translate(i * 1.5, 0, j * 1.5);
+			mesh_inst->end_transform();
+			//add_object(mesh_inst);
+			grid->add_object(mesh_inst);
+		}
+	}
+
+	grid->setup_cells();
+	add_object(grid);
+	*/
 
 	Matte* matte_ptr2 = new Matte;			
 	matte_ptr2->set_cd(RGBColor(1, 0.9, 0.6));
@@ -272,7 +315,7 @@ void World::build_triangle_mesh_test_scene()
 	matte_ptr2->set_kd(0.4);
 	matte_ptr2->enable_recv_shadow(true);
 
-	Plane* plane_ptr1 = new Plane(Point3D(0, -2.0, 0), Normal(0, 1, 0));  
+	Plane* plane_ptr1 = new Plane(Point3D(0, -0.83, 0), Normal(0, 1, 0));  
 	plane_ptr1->set_material(matte_ptr2);
 	plane_ptr1->enable_shadow(true);
 	add_object(plane_ptr1);

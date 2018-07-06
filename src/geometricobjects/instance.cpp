@@ -89,7 +89,6 @@ bool Instance::hit(const Ray& ray, double& t, ShadeRec& s) const
 		s.normal = m_inv_matrix * s.normal;
 		s.normal.normalize();
 		s.local_hit_point = ray.o + t * ray.d;
-		s.material_ptr = get_material();
 		return true;
 	}
 

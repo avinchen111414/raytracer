@@ -3,6 +3,7 @@
 #include "utilities/ply.h"
 #include "utilities/mesh.h"
 #include "flatmeshtriangle.h"
+#include "smoothmeshtriangle.h"
 
 TriangleMesh::TriangleMesh(Mesh* mesh, bool reverse_normal)
 	: Grid(), m_mesh(mesh), m_reverse_normal(reverse_normal)
@@ -114,7 +115,14 @@ void TriangleMesh::read_ply_faces(PlyFile* ply, char* elem_name,
 		}
 		else
 		{
+			SmoothMeshTriangle* triangle = new SmoothMeshTriangle(m_mesh,
+				face->verts[0], face->verts[1], face->verts[2]);
+			triangle->compute_normal(m_reverse_normal);
+			m_objects.push_back(triangle);
 
+			m_mesh->vertex_faces[face->verts[0]].push_back(i);
+			m_mesh->vertex_faces[face->verts[1]].push_back(i);
+			m_mesh->vertex_faces[face->verts[2]].push_back(i);
 		}
 	}
 
@@ -124,7 +132,23 @@ void TriangleMesh::read_ply_faces(PlyFile* ply, char* elem_name,
 
 void TriangleMesh::compute_mesh_normals()
 {
+	m_mesh->normals.reserve(m_mesh->num_verties);
 
+	// iterate the vertices
+	for (int index = 0; index < m_mesh->num_verties; index++)
+	{
+		// iterate the faces that shares the vertex
+		Normal normal;
+		for (int j = 0; j < m_mesh->vertex_faces[index].size(); j++)
+			normal += m_objects[m_mesh->vertex_faces[index][j]]->get_normal();
+
+		if (normal.x == 0.0 && normal.y == 0.0 && normal.z == 0.0)
+			normal.y = 1.0f;
+		else
+			normal.normalize();
+
+		m_mesh->normals.push_back(normal);
+	}
 }
 
 

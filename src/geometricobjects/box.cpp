@@ -145,7 +145,6 @@ bool Box::hit(const Ray& ray, double& t, ShadeRec& s) const
 		}
 
 		s.local_hit_point = ray.o + t * ray.d;
-		s.material_ptr = get_material();
 		return true;
 	}
 	else

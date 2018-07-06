@@ -157,6 +157,7 @@ World::clamp_to_color(const RGBColor& raw_color) const {
 
 void World::build()
 {
+	srand((int)time(0));
 	//this->build_ao_scene();
 	//this->build_area_lights_scene();
 	//this->build_env_light_scene();
@@ -204,8 +205,9 @@ ShadeRec World::hit_object(const Ray& ray)
 		{
 			sr.hit_an_object = true;
 			tmin = t;
-			if (objects[i]->get_material())
-				sr.material_ptr = objects[i]->get_material();
+			if (objects[i]->get_material() == NULL)
+				bool _debug = true;
+			sr.material_ptr = objects[i]->get_material();
 			sr.hit_point = ray.o + t * ray.d;
 			normal = sr.normal;
 			local_hit_point = sr.local_hit_point;

@@ -52,7 +52,13 @@ float GeometricObject::pdf(const ShadeRec& sr)
 	return 0.0f;
 }
 
-Normal GeometricObject::get_normal(const Point3D& p)
+Normal GeometricObject::get_normal(const Point3D& p) const
+{
+	throw "Calling GeometricObject::get_normal does not make sense";
+	return Normal(0.0f);
+}
+
+Normal GeometricObject::get_normal() const
 {
 	throw "Calling GeometricObject::get_normal does not make sense";
 	return Normal(0.0f);

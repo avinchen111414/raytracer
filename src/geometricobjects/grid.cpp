@@ -189,7 +189,10 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 		if (tx_next < ty_next && tx_next < tz_next)
 		{
 			if (object_ptr && object_ptr->hit(ray, tmin, s) && tmin < tx_next)
+			{
+				const_cast<Material*>(m_material) = object_ptr->get_material();
 				return true;
+			}
 
 			tx_next += dtx;
 			ix += ix_step;
@@ -201,7 +204,10 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 			if (ty_next < tz_next)
 			{
 				if (object_ptr && object_ptr->hit(ray, tmin, s) && tmin < ty_next)
+				{
+					const_cast<Material*>(m_material) = object_ptr->get_material();
 					return true;
+				}
 
 				ty_next += dty;
 				iy += iy_step;
@@ -211,7 +217,10 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 			else
 			{
 				if (object_ptr && object_ptr->hit(ray, tmin, s) && tmin < tz_next)
+				{
+					const_cast<Material*>(m_material) = object_ptr->get_material();
 					return true;
+				}
 
 				tz_next += dtz;
 				iz += iz_step;

@@ -25,7 +25,7 @@ public:
 	void compute_normal(const bool reverse_normal);
 	void set_mesh(Mesh* mesh, const int i1, const int i2, const int i3);
 
-	virtual Normal get_normal(void) const;
+	virtual Normal get_normal() const;
 	
 protected:
 	void update_bbox();

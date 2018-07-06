@@ -38,7 +38,6 @@ bool Sphere::hit(const Ray& ray, double& tmin, ShadeRec& sr)const
 			tmin = root;
 			sr.normal = (temp + root * ray.d) / m_radius;
 			sr.local_hit_point = ray.o + root * ray.d;
-			sr.material_ptr = get_material();
 			return true;
 		}
 
@@ -48,7 +47,6 @@ bool Sphere::hit(const Ray& ray, double& tmin, ShadeRec& sr)const
 			tmin = root;
 			sr.normal = (temp + root * ray.d) / m_radius;
 			sr.local_hit_point = ray.o + root * ray.d;
-			sr.material_ptr = get_material();
 			return true;
 		}
 	}

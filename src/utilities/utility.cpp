@@ -1,5 +1,6 @@
 #include "utility.h"
 #include <cstdlib>
+#include <ctime>
 
 float rand_float()
 {

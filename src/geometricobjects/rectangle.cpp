@@ -74,7 +74,6 @@ bool Rectangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 	tmin = t;
 	sr.normal = normal;
 	sr.local_hit_point = p;
-	sr.material_ptr = get_material();
 
 	return true;
 }

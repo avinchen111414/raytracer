@@ -1,26 +1,23 @@
-#include "flatmeshtriangle.h"
-#include "utilities/ray.h"
+#include "smoothmeshtriangle.h"
 #include "utilities/utility.h"
-#include "utilities/shaderec.h"
-#include "utilities/normal.h"
 #include "utilities/mesh.h"
+#include "utilities/ray.h"
+#include "utilities/shaderec.h"
 
-FlatMeshTriangle::FlatMeshTriangle(const FlatMeshTriangle& other):
-	MeshTriangle(other)
+SmoothMeshTriangle::SmoothMeshTriangle(const SmoothMeshTriangle& other)
+	: FlatMeshTriangle(other), m_n0(other.m_n0), m_n1(other.m_n1), m_n2(other.m_n2)
 {
+
 }
 
-FlatMeshTriangle::FlatMeshTriangle(Mesh* _mesh_ptr, const int i1, const int i2, const int i3):
-	MeshTriangle(_mesh_ptr, i1, i2, i3)
+SmoothMeshTriangle::SmoothMeshTriangle(Mesh* _mesh_ptr, const int i1, const int i2, const int i3)
+	: FlatMeshTriangle(_mesh_ptr, i1, i2, i3), m_n0(Normal(0, 1, 0)),
+	m_n1(Normal(0, 1, 0)), m_n2(Normal(0, 1, 0))
 {
+
 }
 
-GeometricObject* FlatMeshTriangle::clone() const
-{
-	return new FlatMeshTriangle(*this);
-}
-
-bool FlatMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
+bool SmoothMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 {
 	const Point3D& v0 = m_mesh->vertices[m_index0];
 	const Point3D& v1 = m_mesh->vertices[m_index1];
@@ -62,13 +59,18 @@ bool FlatMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 		return (false);
 
 	tmin 				= t;
-	sr.normal 			= m_normal;  	
+	sr.normal 			= interpolate_normal(beta, gamma);  	
 	sr.local_hit_point 	= ray.o + t * ray.d;
 
 	return (true);
 }
 
-bool FlatMeshTriangle::shadow_hit(const Ray& ray, float& tmin) const
+Normal SmoothMeshTriangle::interpolate_normal(const float beta, const float gamma) const
 {
-	return MeshTriangle::shadow_hit(ray, tmin);
+	Normal normal((1 - beta - gamma) * m_mesh->normals[m_index0] 
+	+ beta * m_mesh->normals[m_index1] 
+	+ gamma * m_mesh->normals[m_index2]);
+	normal.normalize();
+
+	return(normal);
 }

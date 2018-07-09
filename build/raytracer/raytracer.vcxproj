@@ -88,6 +88,7 @@
     <ClCompile Include="..\..\src\brdfs\BRDF.cpp" />
     <ClCompile Include="..\..\src\brdfs\glossyspecular.cpp" />
     <ClCompile Include="..\..\src\brdfs\lambertian.cpp" />
+    <ClCompile Include="..\..\src\brdfs\perfectspecular.cpp" />
     <ClCompile Include="..\..\src\camera\camera.cpp" />
     <ClCompile Include="..\..\src\camera\pinhole.cpp" />
     <ClCompile Include="..\..\src\geometricobjects\box.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="..\..\src\materials\material.cpp" />
     <ClCompile Include="..\..\src\materials\matte.cpp" />
     <ClCompile Include="..\..\src\materials\phong.cpp" />
+    <ClCompile Include="..\..\src\materials\reflective.cpp" />
     <ClCompile Include="..\..\src\sampler\hammersley.cpp" />
     <ClCompile Include="..\..\src\sampler\jittered.cpp" />
     <ClCompile Include="..\..\src\sampler\sampler.cpp" />
@@ -122,6 +124,7 @@
     <ClCompile Include="..\..\src\tracer\raycast.cpp" />
     <ClCompile Include="..\..\src\tracer\singlesphere.cpp" />
     <ClCompile Include="..\..\src\tracer\tracer.cpp" />
+    <ClCompile Include="..\..\src\tracer\whitte.cpp" />
     <ClCompile Include="..\..\src\utilities\bbox.cpp" />
     <ClCompile Include="..\..\src\utilities\matrix.cpp" />
     <ClCompile Include="..\..\src\utilities\mesh.cpp" />
@@ -143,6 +146,7 @@
     <ClInclude Include="..\..\src\brdfs\BRDF.h" />
     <ClInclude Include="..\..\src\brdfs\glossyspecular.h" />
     <ClInclude Include="..\..\src\brdfs\lambertian.h" />
+    <ClInclude Include="..\..\src\brdfs\perfectspecular.h" />
     <ClInclude Include="..\..\src\camera\camera.h" />
     <ClInclude Include="..\..\src\camera\pinhole.h" />
     <ClInclude Include="..\..\src\geometricobjects\box.h" />
@@ -169,6 +173,7 @@
     <ClInclude Include="..\..\src\materials\material.h" />
     <ClInclude Include="..\..\src\materials\matte.h" />
     <ClInclude Include="..\..\src\materials\phong.h" />
+    <ClInclude Include="..\..\src\materials\reflective.h" />
     <ClInclude Include="..\..\src\sampler\hammersley.h" />
     <ClInclude Include="..\..\src\sampler\jittered.h" />
     <ClInclude Include="..\..\src\sampler\sampler.h" />
@@ -177,6 +182,7 @@
     <ClInclude Include="..\..\src\tracer\raycast.h" />
     <ClInclude Include="..\..\src\tracer\singlesphere.h" />
     <ClInclude Include="..\..\src\tracer\tracer.h" />
+    <ClInclude Include="..\..\src\tracer\whitte.h" />
     <ClInclude Include="..\..\src\utilities\bbox.h" />
     <ClInclude Include="..\..\src\utilities\matrix.h" />
     <ClInclude Include="..\..\src\utilities\mesh.h" />

@@ -13,6 +13,7 @@
 #include "materials/matte.h"
 #include "materials/emissive.h"
 #include "materials/phong.h"
+#include "materials/reflective.h"
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
 #include "geometricobjects/box.h"
@@ -320,4 +321,66 @@ void World::build_triangle_mesh_test_scene()
 	plane_ptr1->enable_shadow(true);
 	add_object(plane_ptr1);
 	
+}
+
+void World::build_reflective_test_scene()
+{
+	int num_samples = 16;
+
+	vp.set_hres(400);
+	vp.set_vres(400);
+	vp.set_max_depth(5);
+	vp.set_samples(num_samples);
+
+	tracer_ptr = new AreaLighting(this);
+
+	PinHole* pinhole_ptr = new PinHole;
+	pinhole_ptr->eye = Point3D(100, 50, 90);
+	pinhole_ptr->lookat = Point3D(0, -0.5, 0);
+	pinhole_ptr->d = 16000;  	
+	pinhole_ptr->compute_uvw();     
+	set_camera(pinhole_ptr);
+
+	Jittered* sampler_ptr = new Jittered(num_samples);
+	AmbientOccluder* occluder = new AmbientOccluder;
+	occluder->set_radiance(1.0f);
+	occluder->set_color(1.0f);
+	occluder->set_min_amount(0.5f);
+	occluder->set_sampler(sampler_ptr);
+	set_ambient_light(occluder);
+
+	Direction* directional_ptr = new Direction;
+	directional_ptr->set_direction(Vector3D(-0.75, -1, 0.15));     
+	directional_ptr->scale_radiance(4.5);  
+	directional_ptr->set_cast_shadow(true);
+	add_light(directional_ptr);
+
+	Reflective* reflective = new Reflective;
+	reflective->set_cr(1);
+	reflective->set_kr(1);
+	reflective->set_kd(0);
+	reflective->set_cd(0);
+	reflective->set_cs(0);
+	reflective->set_ks(0);
+	reflective->enable_recv_shadow(true);
+
+	const char* ply_file_name = "../../res/plys/Horse2K.ply";
+	TriangleMesh* mesh = new TriangleMesh(new Mesh, true);
+	//mesh->read_flat_triangle(ply_file_name);
+	mesh->read_smooth_triangle(ply_file_name);
+	mesh->set_material(reflective);
+	mesh->setup_cells();
+	mesh->enable_shadow(true);
+	add_object(mesh);
+
+	Matte* matte_ptr2 = new Matte;			
+	matte_ptr2->set_cd(RGBColor(1, 0.9, 0.6));
+	matte_ptr2->set_ka(0.25); 
+	matte_ptr2->set_kd(0.4);
+	matte_ptr2->enable_recv_shadow(true);
+
+	Plane* plane_ptr1 = new Plane(Point3D(0, -0.83, 0), Normal(0, 1, 0));  
+	plane_ptr1->set_material(matte_ptr2);
+	plane_ptr1->enable_shadow(true);
+	add_object(plane_ptr1);
 }

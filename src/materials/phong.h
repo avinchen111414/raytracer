@@ -25,7 +25,7 @@ public:
 	void set_cs(const RGBColor& cs);
 	void set_exp(const float exp);
 
-private:
+protected:
 	Lambertian* ambient_brdf;
 	Lambertian* diffuse_brdf;
 	GlossySpecular* specular_brdf;

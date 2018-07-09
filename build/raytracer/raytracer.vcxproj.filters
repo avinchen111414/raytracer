@@ -192,6 +192,15 @@
     <ClCompile Include="..\..\src\geometricobjects\smoothmeshtriangle.cpp">
       <Filter>geometricobjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tracer\whitte.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\perfectspecular.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\reflective.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -349,6 +358,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\geometricobjects\smoothmeshtriangle.h">
       <Filter>geometricobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\whitte.h">
+      <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\perfectspecular.h">
+      <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\reflective.h">
+      <Filter>materials</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

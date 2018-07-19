@@ -21,9 +21,12 @@ public:
 	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, 
 		Vector3D& wi);
 
+	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
+		float& pdf);
+
 	virtual RGBColor rho(const ShadeRec& sr, const Vector3D& wo);
 
-	void set_sampler(Sampler* sampler_ptr);
+	virtual void set_sampler(Sampler* sampler_ptr);
 
 protected:
 	Sampler* sampler_ptr;

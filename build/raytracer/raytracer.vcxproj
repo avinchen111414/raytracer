@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\lights\light.cpp" />
     <ClCompile Include="..\..\src\lights\point.cpp" />
     <ClCompile Include="..\..\src\materials\emissive.cpp" />
+    <ClCompile Include="..\..\src\materials\glossyreflective.cpp" />
     <ClCompile Include="..\..\src\materials\material.cpp" />
     <ClCompile Include="..\..\src\materials\matte.cpp" />
     <ClCompile Include="..\..\src\materials\phong.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="..\..\src\lights\light.h" />
     <ClInclude Include="..\..\src\lights\point.h" />
     <ClInclude Include="..\..\src\materials\emissive.h" />
+    <ClInclude Include="..\..\src\materials\glossyreflective.h" />
     <ClInclude Include="..\..\src\materials\material.h" />
     <ClInclude Include="..\..\src\materials\matte.h" />
     <ClInclude Include="..\..\src\materials\phong.h" />

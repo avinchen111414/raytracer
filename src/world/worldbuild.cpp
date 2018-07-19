@@ -14,6 +14,7 @@
 #include "materials/emissive.h"
 #include "materials/phong.h"
 #include "materials/reflective.h"
+#include "materials/glossyreflective.h"
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
 #include "geometricobjects/box.h"
@@ -325,7 +326,7 @@ void World::build_triangle_mesh_test_scene()
 
 void World::build_reflective_test_scene()
 {
-	int num_samples = 16;
+	int num_samples = 256;
 
 	vp.set_hres(400);
 	vp.set_vres(400);
@@ -335,7 +336,7 @@ void World::build_reflective_test_scene()
 	tracer_ptr = new AreaLighting(this);
 
 	PinHole* pinhole_ptr = new PinHole;
-	pinhole_ptr->eye = Point3D(100, 50, 90);
+	pinhole_ptr->eye = Point3D(200, 50, 200);
 	pinhole_ptr->lookat = Point3D(0, -0.5, 0);
 	pinhole_ptr->d = 16000;  	
 	pinhole_ptr->compute_uvw();     
@@ -357,21 +358,51 @@ void World::build_reflective_test_scene()
 
 	Reflective* reflective = new Reflective;
 	reflective->set_cr(1);
-	reflective->set_kr(1);
+	reflective->set_kr(0.8);
 	reflective->set_kd(0);
 	reflective->set_cd(0);
 	reflective->set_cs(0);
 	reflective->set_ks(0);
+	reflective->set_exp(100.0f);
 	reflective->enable_recv_shadow(true);
+
+	GlossyReflective* glossy_reflective = new GlossyReflective;
+	glossy_reflective->set_cr(1);
+	glossy_reflective->set_kr(0.8);
+	glossy_reflective->set_kd(0);
+	glossy_reflective->set_cd(0);
+	glossy_reflective->set_cs(0);
+	glossy_reflective->set_ks(0);
+	glossy_reflective->set_exp(10.0f);
+	glossy_reflective->set_sampler(new Jittered(num_samples));
+	glossy_reflective->enable_recv_shadow(true);
+
+	Phong* phong = new Phong;
+	phong->set_cd(0.75);
+	phong->set_ka(0.3);
+	phong->set_kd(0.8);
+	phong->set_cs(0.75);
+	phong->set_ks(0.15);
+	phong->set_exp(10);
+	phong->enable_recv_shadow(true);
 
 	const char* ply_file_name = "../../res/plys/Horse2K.ply";
 	TriangleMesh* mesh = new TriangleMesh(new Mesh, true);
 	//mesh->read_flat_triangle(ply_file_name);
 	mesh->read_smooth_triangle(ply_file_name);
-	mesh->set_material(reflective);
+	mesh->set_material(phong);
 	mesh->setup_cells();
 	mesh->enable_shadow(true);
 	add_object(mesh);
+	
+	//raytracer::Rectangle* rect = new raytracer::Rectangle(Point3D(0, -0.83, -2), Vector3D(3, 0, 0), Vector3D(0, 3, 0));
+	//rect->set_material(reflective);
+	//add_object(rect);
+	
+	Sphere* sphere0 = new Sphere(Point3D(1, 0, -2), 1);
+	//sphere0->set_material(reflective);
+	sphere0->set_material(glossy_reflective);
+	add_object(sphere0);
 
 	Matte* matte_ptr2 = new Matte;			
 	matte_ptr2->set_cd(RGBColor(1, 0.9, 0.6));

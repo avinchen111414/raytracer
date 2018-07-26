@@ -12,9 +12,10 @@ public:
 	GlossyReflective(const GlossyReflective& r);
 	virtual Material* clone() const;
 	GlossyReflective& operator= (const GlossyReflective& rhs);
-	void set_sampler(Sampler* sampler);
+	virtual void set_sampler(Sampler* sampler);
 
 	virtual RGBColor area_light_shade(ShadeRec& sr);
+	virtual RGBColor global_shade(ShadeRec& sr);
 
 	void set_kr(const float kr);
 	void set_cr(const float cr);

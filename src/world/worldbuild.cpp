@@ -3,6 +3,7 @@
 #include "sampler/hammersley.h"
 #include "tracer/raycast.h"
 #include "tracer/arealighting.h"
+#include "tracer/globaltracer.h"
 #include "lights/ambient.h"
 #include "lights/ambientoccluder.h"
 #include "lights/arealight.h"
@@ -111,6 +112,7 @@ void World::build_area_lights_scene()
 	camera->compute_uvw();
 	set_camera(camera);
 
+	
 	Matte* matte_ptr0 = new Matte;
 	matte_ptr0->set_ka(0.25);
 	matte_ptr0->set_kd(0.75);
@@ -118,8 +120,9 @@ void World::build_area_lights_scene()
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
 	sphere0->set_material(matte_ptr0);
-	//add_object(sphere0);
-
+	add_object(sphere0);
+	
+	
 	Matte* matte_ptr1 = new Matte;
 	matte_ptr1->set_ka(0.25);
 	matte_ptr1->set_kd(0.75);
@@ -414,4 +417,146 @@ void World::build_reflective_test_scene()
 	plane_ptr1->set_material(matte_ptr2);
 	plane_ptr1->enable_shadow(true);
 	add_object(plane_ptr1);
+}
+
+void World::build_global_test_scene()
+{
+	//    int num_samples = 1;		// for Figure 26.7(a)
+	//	int num_samples = 100;		// for Figure 26.7(b)
+	//	int num_samples = 1000;		// for Figure 26.7(c)
+		int num_samples = 10000;	// for Figure 26.7(d)
+
+	vp.set_hres(300);	  		
+	vp.set_vres(300);
+	vp.set_samples(num_samples); 
+	vp.set_max_depth(5);
+
+	tracer_ptr = new GlobalTracer(this);
+
+	AmbientOccluder* occluder = new AmbientOccluder;
+	occluder->set_radiance(1.0f);
+	occluder->set_color(1.0f);
+	occluder->set_min_amount(0.0f);
+	occluder->set_sampler(new Hammersley(num_samples));
+	set_ambient_light(occluder);
+
+	PinHole* pinhole_ptr = new PinHole;
+	pinhole_ptr->eye = Point3D(27.6, 27.4, -80.0);
+	pinhole_ptr->lookat = Point3D(27.6, 27.4, 0.0);
+	pinhole_ptr->d = (400);      
+	pinhole_ptr->compute_uvw();     
+	set_camera(pinhole_ptr);
+
+
+	Point3D p0;
+	Vector3D a, b;
+	Normal normal;
+
+	// box dimensions
+
+	double width 	= 55.28;   	// x direction
+	double height 	= 54.88;  	// y direction
+	double depth 	= 55.92;	// z direction
+
+
+	// the ceiling light - doesn't need samples
+
+	Emissive* emissive_ptr = new Emissive;
+	emissive_ptr->set_ce(RGBColor(1.0, 0.73, 0.4));
+	emissive_ptr->set_ls(100);
+
+	p0 = Point3D(21.3, height - 0.001, 22.7);
+	a = Vector3D(0.0, 0.0, 10.5);
+	b = Vector3D(13.0, 0.0, 0.0);
+	normal = Normal(0.0, -1.0, 0.0);
+	Hammersley* rectangle_sampler_ptr = new Hammersley(num_samples);
+	raytracer::Rectangle* light_ptr = new raytracer::Rectangle(p0, b, a);
+	light_ptr->set_material(emissive_ptr);
+	light_ptr->set_sampler(rectangle_sampler_ptr);
+	add_object(light_ptr);
+
+	AreaLight* area_light_ptr = new AreaLight;
+	area_light_ptr->set_object(light_ptr);
+	area_light_ptr->set_cast_shadow(true);
+	add_light(area_light_ptr);
+
+
+	// left wall
+
+	Matte* matte_ptr1 = new Matte;
+	matte_ptr1->set_ka(0.0);
+	matte_ptr1->set_kd(0.6); 
+	matte_ptr1->set_cd(RGBColor(.57, 0.025, 0.025));	 // red
+	matte_ptr1->set_sampler(new Hammersley(num_samples));
+
+	p0 = Point3D(width, 0.0, 0.0);
+	a = Vector3D(0.0, 0.0, depth);
+	b = Vector3D(0.0, height, 0.0);
+	normal = Normal(-1.0, 0.0, 0.0);
+	rectangle_sampler_ptr = new Hammersley(num_samples);
+	raytracer::Rectangle* left_wall_ptr = new raytracer::Rectangle(p0, a, b);
+	left_wall_ptr->set_material(matte_ptr1);
+	left_wall_ptr->set_sampler(rectangle_sampler_ptr);
+	add_object(left_wall_ptr);
+
+
+	// right wall
+
+	Matte* matte_ptr2 = new Matte;
+	matte_ptr2->set_ka(0.0);
+	matte_ptr2->set_kd(0.6); 
+	matte_ptr2->set_cd(RGBColor(.37, 0.59, 0.2));	 // green   from Photoshop
+	matte_ptr2->set_sampler(new Hammersley(num_samples));
+
+	p0 = Point3D(0.0, 0.0, 0.0);
+	a = Vector3D(0.0, 0.0, depth);
+	b = Vector3D(0.0, height, 0.0);
+	normal = Normal(1.0, 0.0, 0.0);
+	rectangle_sampler_ptr = new Hammersley(num_samples);
+	raytracer::Rectangle* right_wall_ptr = new raytracer::Rectangle(p0, b, a);
+	right_wall_ptr->set_material(matte_ptr2);
+	right_wall_ptr->set_sampler(rectangle_sampler_ptr);
+	add_object(right_wall_ptr);
+
+
+	// back wall
+
+	Matte* matte_ptr3 = new Matte;
+	matte_ptr3->set_ka(0.0);
+	matte_ptr3->set_kd(0.6); 
+	matte_ptr3->set_cd(1.0);	 // white
+	matte_ptr3->set_sampler(new Hammersley(num_samples));
+
+	p0 = Point3D(0.0, 0.0, depth);
+	a = Vector3D(width, 0.0, 0.0);
+	b = Vector3D(0.0, height, 0.0);
+	normal = Normal(0.0, 0.0, -1.0);
+	raytracer::Rectangle* back_wall_ptr = new raytracer::Rectangle(p0, b, a);
+	back_wall_ptr->set_material(matte_ptr3);
+	back_wall_ptr->set_sampler(new Hammersley(num_samples));
+	add_object(back_wall_ptr);
+
+
+	// floor
+
+	p0 = Point3D(0.0, 0.0, 0.0);
+	a = Vector3D(0.0, 0.0, depth);
+	b = Vector3D(width, 0.0, 0.0);
+	normal = Normal(0.0, 1.0, 0.0);
+	raytracer::Rectangle* floor_ptr = new raytracer::Rectangle(p0, a, b);
+	floor_ptr->set_material(matte_ptr3);
+	floor_ptr->set_sampler(new Hammersley(num_samples));
+	add_object(floor_ptr);
+
+
+	// ceiling
+
+	p0 = Point3D(0.0, height, 0.0);
+	a = Vector3D(0.0, 0.0, depth);
+	b = Vector3D(width, 0.0, 0.0);
+	normal = Normal(0.0, -1.0, 0.0);
+	raytracer::Rectangle* ceiling_ptr = new raytracer::Rectangle(p0, b, a);
+	ceiling_ptr->set_material(matte_ptr3);
+	ceiling_ptr->set_sampler(new Hammersley(num_samples));
+	add_object(ceiling_ptr);
 }

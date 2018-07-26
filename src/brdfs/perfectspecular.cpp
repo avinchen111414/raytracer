@@ -42,3 +42,11 @@ RGBColor PerfectSpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vecto
 	// sr.normal * wi 是为了抵消渲染方程中的cos项
 	return kr * cr / (sr.normal * wi);	
 }
+
+RGBColor PerfectSpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const
+{
+	float ndotwo = sr.normal * wo;
+	wi = -wo + 2.0 * sr.normal * ndotwo; 
+	pdf = sr.normal * wi;
+	return (kr * cr);
+}

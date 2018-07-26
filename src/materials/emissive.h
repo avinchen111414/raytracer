@@ -20,6 +20,8 @@ public:
 
 	virtual RGBColor shade(ShadeRec& sr);
 	virtual RGBColor area_light_shade(ShadeRec& sr);
+	virtual RGBColor global_shade(ShadeRec& sr);
+	virtual void set_sampler(Sampler* sampler_ptr) {};
 
 	RGBColor get_le(ShadeRec& sr) const { return ls * ce; }
 	void set_ls(const float ls) { this->ls = ls; };

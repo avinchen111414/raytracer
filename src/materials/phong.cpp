@@ -2,6 +2,7 @@
 #include "utilities/shaderec.h"
 #include "world/world.h"
 #include "lights/light.h"
+#include "tracer/tracer.h"
 
 Phong::Phong():
 	ambient_brdf(new Lambertian),
@@ -69,6 +70,37 @@ Phong& Phong::operator=(const Phong& rhs)
 	}
 
 	return *this;
+}
+
+RGBColor Phong::global_shade(ShadeRec& sr)
+{
+	RGBColor L;
+
+	if (sr.depth == 0)
+		L = area_light_shade(sr);
+
+	Vector3D wo = -sr.ray.d;
+	Vector3D wi;
+	float pdf;
+	RGBColor f = diffuse_brdf->sample_f(sr, wo, wi, pdf);
+	float ndotwi = sr.normal * wi;
+	Ray reflected_ray(sr.hit_point, wi);
+	L += f * sr.w.tracer_ptr->trace_ray(reflected_ray, sr.depth + 1)
+		* ndotwi / pdf;
+
+	f = specular_brdf->sample_f(sr, wo, wi, pdf);
+	ndotwi = sr.normal * wi;
+	reflected_ray = Ray(sr.hit_point, wi);
+	L += f * sr.w.tracer_ptr->trace_ray(reflected_ray, sr.depth + 1)
+		* ndotwi / pdf;
+
+	return L;
+}
+
+void Phong::set_sampler(Sampler* sampler_ptr)
+{
+	diffuse_brdf->set_sampler(sampler_ptr);
+	specular_brdf->set_sampler(sampler_ptr);
 }
 
 RGBColor Phong::area_light_shade(ShadeRec& sr)

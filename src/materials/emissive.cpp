@@ -46,3 +46,11 @@ RGBColor Emissive::area_light_shade(ShadeRec& sr)
 	else
 		return 0.0;
 }
+
+RGBColor Emissive::global_shade(ShadeRec& sr)
+{
+	if (sr.depth == 1)
+		return 0.0;
+
+	return area_light_shade(sr);
+}

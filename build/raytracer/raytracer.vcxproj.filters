@@ -204,6 +204,9 @@
     <ClCompile Include="..\..\src\materials\glossyreflective.cpp">
       <Filter>materials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tracer\globaltracer.cpp">
+      <Filter>tracer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\materials\glossyreflective.h">
       <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tracer\globaltracer.h">
+      <Filter>tracer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

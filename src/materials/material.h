@@ -4,7 +4,7 @@
 #include "utilities/rgbcolor.h"
 
 class ShadeRec;
-
+class Sampler;
 class Material
 {
 public:
@@ -15,9 +15,11 @@ public:
 	
 	virtual RGBColor shade(ShadeRec& sr);
 	virtual RGBColor area_light_shade(ShadeRec& sr);
+	virtual RGBColor global_shade(ShadeRec& sr);
 
 	inline void enable_recv_shadow(bool enable) {recv_shadow = enable;};
 	virtual RGBColor get_le(ShadeRec& sr) const;
+	virtual void set_sampler(Sampler* sampler_ptr) = 0;
 
 protected:
 	Material& operator= (const Material& rhs);

@@ -17,6 +17,8 @@ public:
 
 	virtual RGBColor shade(ShadeRec& sr);
 	virtual RGBColor area_light_shade(ShadeRec& sr);
+	virtual RGBColor global_shade(ShadeRec& sr);
+	virtual void set_sampler(Sampler* sampler_ptr);
 
 	void set_ka(const float ka);
 	void set_kd(const float kd);

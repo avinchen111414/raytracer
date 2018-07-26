@@ -22,7 +22,7 @@ public:
 
 	virtual Point3D sample();
 	virtual float pdf(const ShadeRec& sr);
-	virtual Normal get_normal(const Point3D& p);
+	virtual Normal get_normal(const Point3D& p) const;
 
 	void set_sampler(Sampler* sampler);
 

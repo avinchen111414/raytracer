@@ -35,7 +35,14 @@ void PinHole::render_scene(const World& w)
 	ray.o = eye;
 
 	for (int r = 0; r < vp.vres; r++)			// up
-		for (int c = 0; c < vp.hres; c++) {		// across 					
+	{
+		if (w.quit_render_tag)
+			break;
+
+		for (int c = 0; c < vp.hres; c++) {		// across
+			if (w.quit_render_tag)
+				break;
+
 			L = RGBColor(0.0f); 
 
 			bool stop;
@@ -44,6 +51,9 @@ void PinHole::render_scene(const World& w)
 
 			for (int i = 0; i != vp.num_samples; i++)
 			{
+				if (w.quit_render_tag)
+					break;
+
 				sp = vp.sampler_ptr->sample_unit_square();
 				pp.x = (float)(vp.s * (c - 0.5 * (vp.hres - 1) + sp.x));
 				pp.y = (float)(vp.s * (r - 0.5 * (vp.vres - 1) + sp.y));
@@ -54,7 +64,8 @@ void PinHole::render_scene(const World& w)
 			L /= (float)vp.num_samples;
 			L *= exposure_time;
 			w.display_pixel(r, c, L);
-		} 
+		}
+	}
 }
 
 Vector3D PinHole::ray_direction(const Point2D& p) const

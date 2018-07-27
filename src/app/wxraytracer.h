@@ -103,6 +103,7 @@ public:
    virtual void *Entry();
    virtual void OnExit();
    virtual void setPixel(int x, int y, int red, int green, int blue);
+   void breakThread();
 
 private:
    void NotifyCanvas();

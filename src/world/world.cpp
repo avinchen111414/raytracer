@@ -35,6 +35,7 @@ World::World(void)
 	:  	background_color(),
 		tracer_ptr(NULL),
 		camera_ptr(nullptr),
+		quit_render_tag(false),
 		ambient_ptr(new Ambient)
 {
 	Ambient* ap = dynamic_cast<Ambient*>(ambient_ptr);
@@ -66,6 +67,7 @@ World::render_scene(void) const {
 	ray.d = Vector3D(0, 0, -1);
 	
 	for (int r = 0; r < vres; r++)			// up
+	{
 		for (int c = 0; c <= hres; c++)		// across
 		{	
 			pixel_color = RGBColor(0.0f);
@@ -80,7 +82,8 @@ World::render_scene(void) const {
 			}
 			pixel_color /= vp.num_samples;
 			display_pixel(r, c, pixel_color);
-		}	
+		}
+	}
 } 
 
 void World::render_perspective() const

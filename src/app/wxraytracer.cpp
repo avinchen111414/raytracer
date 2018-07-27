@@ -212,7 +212,10 @@ RenderCanvas::~RenderCanvas(void)
       delete m_image;
    
    if(thread != NULL)
+   {
+	  thread->breakThread();
       thread->Delete();
+   }
    
    if(w != NULL)
       delete w;
@@ -461,4 +464,9 @@ void *RenderThread::Entry()
    //world->camera_ptr->render_scene(*world);
 
    return NULL;
+}
+
+void RenderThread::breakThread()
+{
+	world->quit_render();
 }

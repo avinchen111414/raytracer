@@ -26,6 +26,7 @@ public:
 
 	float						eye;	// eye point for prospective
 	float						d;		// distance from eye point to viewplane
+	bool						quit_render_tag;
 
 	RenderThread* paintArea;
 
@@ -44,6 +45,7 @@ public:
 
 	void display_pixel(const int row, const int col, 
 			const RGBColor& pixel_c) const;
+	void quit_render() {quit_render_tag = true;};
 	
 	RGBColor max_to_one(const RGBColor& c) const;
 	RGBColor clamp_to_color(const RGBColor& c) const;

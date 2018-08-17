@@ -207,6 +207,9 @@
     <ClCompile Include="..\..\src\tracer\globaltracer.cpp">
       <Filter>tracer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\BTDF.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\tracer\globaltracer.h">
       <Filter>tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\BTDF.h">
+      <Filter>brdfs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -210,6 +210,12 @@
     <ClCompile Include="..\..\src\brdfs\BTDF.cpp">
       <Filter>brdfs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\perfecttransmitter.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\transparent.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -385,6 +391,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\brdfs\BTDF.h">
       <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\perfecttransmitter.h">
+      <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\transparent.h">
+      <Filter>materials</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

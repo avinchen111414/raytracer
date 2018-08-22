@@ -26,7 +26,7 @@ Reflective& Reflective::operator= (const Reflective& rhs)
 	if (this == &rhs)
 		return *this;
 
-	Material::operator=(rhs);
+	Phong::operator=(rhs);
 	reflective_brdf = rhs.reflective_brdf->clone();
 	return *this;
 }

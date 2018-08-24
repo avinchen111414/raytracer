@@ -16,7 +16,7 @@ public:
 	virtual RGBColor global_shade(ShadeRec& sr);
 
 	void set_kr(const float kr);
-	void set_cr(const float cr);
+	void set_cr(const RGBColor& cr);
 
 protected:
 

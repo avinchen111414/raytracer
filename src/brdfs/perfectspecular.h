@@ -20,11 +20,11 @@ public:
 	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const;
 
 	inline void set_kr(float kr) {this->kr = kr;};
-	inline void set_cr(float cr) {this->cr = cr;};
+	inline void set_cr(const RGBColor& cr) {this->cr = cr;};
 
 private:
 	float kr;	// reflection coefficient
-	float cr;	// reflection color
+	RGBColor cr;	// reflection color
 };
 
 #endif

@@ -69,7 +69,7 @@ void Reflective::set_kr(const float kr)
 	specular_brdf->set_ks(kr);
 }
 
-void Reflective::set_cr(const float cr)
+void Reflective::set_cr(const RGBColor& cr)
 {
 	reflective_brdf->set_cr(cr);
 	specular_brdf->set_cs(cr);

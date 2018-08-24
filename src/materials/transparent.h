@@ -14,6 +14,11 @@ public:
 	Transparent& operator= (const Transparent& rhs);
 
 	virtual RGBColor area_light_shade(ShadeRec& sr);
+
+	void set_kr(float kr);
+	void set_cr(const RGBColor& cr);
+	void set_kt(float kt);
+	void set_ior(float ior);
 	
 protected:
 

@@ -67,3 +67,23 @@ RGBColor Transparent::area_light_shade(ShadeRec& sr)
 
 	return L;
 }
+
+void Transparent::set_kr(float kr)
+{
+	reflective_brdf->set_kr(kr);
+}
+
+void Transparent::set_cr(const RGBColor& cr)
+{
+	reflective_brdf->set_cr(cr);
+}
+
+void Transparent::set_kt(float kt)
+{
+	transmitive_btdf->set_kt(kt);
+}
+
+void Transparent::set_ior(float ior)
+{
+	transmitive_btdf->set_ior(ior);
+}

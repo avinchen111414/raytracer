@@ -24,6 +24,9 @@ public:
 
 	bool tir(const ShadeRec& sr) const;
 
+	void set_kt(float kt) { k = kt; };
+	void set_ior(float _ior) { ior = _ior; };
+
 protected:
 	Sampler* sampler_ptr;
 	float k;

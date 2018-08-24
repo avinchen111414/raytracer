@@ -16,6 +16,7 @@
 #include "materials/phong.h"
 #include "materials/reflective.h"
 #include "materials/glossyreflective.h"
+#include "materials/transparent.h"
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
 #include "geometricobjects/box.h"
@@ -329,7 +330,7 @@ void World::build_triangle_mesh_test_scene()
 
 void World::build_reflective_test_scene()
 {
-	int num_samples = 256;
+	int num_samples = 1;
 
 	vp.set_hres(400);
 	vp.set_vres(400);
@@ -380,6 +381,19 @@ void World::build_reflective_test_scene()
 	glossy_reflective->set_sampler(new Jittered(num_samples));
 	glossy_reflective->enable_recv_shadow(true);
 
+	Transparent* transparent = new Transparent;
+	transparent->set_cs(0);
+	transparent->set_ks(0);
+	transparent->set_exp(0);
+	transparent->set_cr(0);
+	transparent->set_kr(0);
+	transparent->set_kd(0);
+	transparent->set_cd(0);
+	transparent->set_kt(1.0f);
+	transparent->set_ior(1.4f);
+	transparent->set_sampler(new Jittered(num_samples));
+	//transparent->enable_recv_shadow(true);
+
 	Phong* phong = new Phong;
 	phong->set_cd(0.75);
 	phong->set_ka(0.3);
@@ -404,7 +418,8 @@ void World::build_reflective_test_scene()
 	
 	Sphere* sphere0 = new Sphere(Point3D(1, 0, -2), 1);
 	//sphere0->set_material(reflective);
-	sphere0->set_material(glossy_reflective);
+	//sphere0->set_material(glossy_reflective);
+	sphere0->set_material(transparent);
 	add_object(sphere0);
 
 	Matte* matte_ptr2 = new Matte;			

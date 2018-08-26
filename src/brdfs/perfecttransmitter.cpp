@@ -20,23 +20,21 @@ RGBColor PerfectTransmitter::sample_f(const ShadeRec& sr, const Vector3D& wo, Ve
 {
 	// 注意射线的方向与能量传输的方向是相反的（P.571
 	// 所以返回值中的eta * eta是作为分母
-	Normal n = sr.normal;
-	float cos_theta = n * wo;
-	float eta = ior;
+	Normal n(sr.normal);
+	float cos_thetai = n * wo;
+	float eta = ior;	
 
-	if (cos_theta < 0.0f)
-	{
-		n = -sr.normal;
-		cos_theta = -cos_theta;
-		eta = 1.0f / eta;
+	if (cos_thetai < 0.0) {			// transmitted ray is outside     
+		cos_thetai = -cos_thetai;
+		n = -n;  					// reverse direction of normal
+		eta = 1.0 / eta; 			// invert ior 
 	}
 
-	float cos_theta_t_pow = 1.0f - 1.0f / (eta * eta) * (1.0f - cos_theta * cos_theta);
-	float cos_theta_t = sqrt(cos_theta_t_pow);
-	wt = -wo / eta - (cos_theta_t - cos_theta / eta) * sr.normal;
+	float temp = 1.0 - (1.0 - cos_thetai * cos_thetai) / (eta * eta);
+	float cos_theta2 = sqrt(temp);
+	wt = -wo / eta - (cos_theta2 - cos_thetai / eta) * n;   
 
-	return k / (eta * eta) / fabs(sr.normal * wt);
-	
+	return (k / (eta * eta) * RGBColor(1.0f) / fabs(sr.normal * wt));
 }
 
 PerfectTransmitter* PerfectTransmitter::clone() const

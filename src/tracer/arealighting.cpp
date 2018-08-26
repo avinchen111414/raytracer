@@ -23,7 +23,7 @@ AreaLighting::~AreaLighting()
 RGBColor AreaLighting::trace_ray(const Ray& ray, const int depth) const
 {
 	if (depth > world_ptr->vp.max_depth)
-		return 0.0f;
+		return world_ptr->background_color;
 
 	ShadeRec sr(world_ptr->hit_object(ray));
 

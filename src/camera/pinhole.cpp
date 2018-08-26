@@ -45,6 +45,9 @@ void PinHole::render_scene(const World& w)
 
 			L = RGBColor(0.0f); 
 
+			if (r == 320 && c == 136)
+				bool _break = true;
+
 			bool stop;
 			if (r == vp.vres/2 && c == vp.hres/2)
 				stop = true;

@@ -578,7 +578,7 @@ void World::build_global_test_scene()
 
 void World::build_transparent_test_scene()
 {
-	int num_samples = 16;
+	int num_samples = 1;
 
 	vp.set_hres(600);	  		
 	vp.set_vres(600);
@@ -633,7 +633,7 @@ void World::build_transparent_test_scene()
 	Transparent* glass_ptr = new Transparent;
 	glass_ptr->set_ks(0.2);
 	glass_ptr->set_exp(2000.0);
-	glass_ptr->set_ior(0.75);		
+	glass_ptr->set_ior(10.0f);		
 	glass_ptr->set_kr(0.1);
 	glass_ptr->set_kt(0.9);
 

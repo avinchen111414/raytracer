@@ -18,7 +18,7 @@ PerfectTransmitter::PerfectTransmitter(const PerfectTransmitter& other):
 
 RGBColor PerfectTransmitter::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wt)
 {
-	// 注意射线的方向与能量传输的方向是相反的（P.571
+	// 注意射线的方向与能量传输的方向是相反的（P.571）
 	// 所以返回值中的eta * eta是作为分母
 	Normal n(sr.normal);
 	float cos_thetai = n * wo;

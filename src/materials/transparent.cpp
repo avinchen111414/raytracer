@@ -49,8 +49,8 @@ RGBColor Transparent::area_light_shade(ShadeRec& sr)
 	
 	if (transmitive_btdf->tir(sr))
 	{
-		L += fr * sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1) * 
-			(sr.normal * wi);
+		L += /*fr * */sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1);// * 
+			//(sr.normal * wi);
 	}
 	else
 	{

@@ -43,3 +43,13 @@ PerfectTransmitter* PerfectTransmitter::clone() const
 {
 	return new PerfectTransmitter(*this);
 }
+
+RGBColor PerfectTransmitter::f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
+{
+	return 0.0f;
+}
+
+RGBColor PerfectTransmitter::rho(const ShadeRec& sr, const Vector3D& wo)
+{
+	return 0.0f;
+}

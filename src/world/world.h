@@ -64,6 +64,7 @@ protected:
 	void build_triangle_mesh_test_scene();
 	void build_reflective_test_scene();
 	void build_global_test_scene();
+	void build_transparent_test_scene();
 	// -- --
 
 private:

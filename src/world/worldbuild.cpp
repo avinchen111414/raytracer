@@ -330,7 +330,7 @@ void World::build_triangle_mesh_test_scene()
 
 void World::build_reflective_test_scene()
 {
-	int num_samples = 1;
+	int num_samples = 36;
 
 	vp.set_hres(400);
 	vp.set_vres(400);
@@ -390,7 +390,7 @@ void World::build_reflective_test_scene()
 	transparent->set_kd(0);
 	transparent->set_cd(0);
 	transparent->set_kt(1.0f);
-	transparent->set_ior(1.4f);
+	transparent->set_ior(0.75f);
 	transparent->set_sampler(new Jittered(num_samples));
 	//transparent->enable_recv_shadow(true);
 
@@ -416,7 +416,7 @@ void World::build_reflective_test_scene()
 	//rect->set_material(reflective);
 	//add_object(rect);
 	
-	Sphere* sphere0 = new Sphere(Point3D(1, 0, -2), 1);
+	Sphere* sphere0 = new Sphere(Point3D(2, 0.5f, 3), 1);
 	//sphere0->set_material(reflective);
 	//sphere0->set_material(glossy_reflective);
 	sphere0->set_material(transparent);
@@ -574,4 +574,96 @@ void World::build_global_test_scene()
 	ceiling_ptr->set_material(matte_ptr3);
 	ceiling_ptr->set_sampler(new Hammersley(num_samples));
 	add_object(ceiling_ptr);
+}
+
+void World::build_transparent_test_scene()
+{
+	int num_samples = 16;
+
+	vp.set_hres(600);	  		
+	vp.set_vres(600);
+	vp.set_samples(num_samples);		
+	vp.set_max_depth(5);		
+
+	background_color = RGBColor(0.0, 0.3, 0.25);
+
+	tracer_ptr = new AreaLighting(this);
+
+	Ambient* ambient_ptr = new Ambient;
+	ambient_ptr->scale_radiance(0.25);
+	set_ambient_light(ambient_ptr);
+
+	PinHole* pinhole_ptr = new PinHole;
+	pinhole_ptr->eye = Point3D(-8, 5.5, 40);   
+	pinhole_ptr->lookat = Point3D(1, 4, 0);    
+	pinhole_ptr->d = (2400.0);  
+	pinhole_ptr->compute_uvw();     
+	set_camera(pinhole_ptr);
+
+
+	// point light 
+
+	Point* light_ptr1 = new Point;
+	light_ptr1->set_location(Point3D(40, 50, 0)); 
+	light_ptr1->scale_radiance(4.5);
+	light_ptr1->set_cast_shadow(true);
+	add_light(light_ptr1);
+
+
+	// point light 
+
+	Point* light_ptr2 = new Point;
+	light_ptr2->set_location(Point3D(-10, 20, 10)); 
+	light_ptr2->scale_radiance(4.5);
+	light_ptr2->set_cast_shadow(true);
+	add_light(light_ptr2);
+
+
+	// directional light 
+
+	Direction* light_ptr3 = new Direction;
+	light_ptr3->set_direction(Vector3D(-1, 0, 0)); 
+	light_ptr3->scale_radiance(4.5);
+	light_ptr3->set_cast_shadow(true);
+	add_light(light_ptr3);
+
+
+	// transparent sphere
+
+	Transparent* glass_ptr = new Transparent;
+	glass_ptr->set_ks(0.2);
+	glass_ptr->set_exp(2000.0);
+	glass_ptr->set_ior(0.75);		
+	glass_ptr->set_kr(0.1);
+	glass_ptr->set_kt(0.9);
+
+	Sphere* sphere_ptr1 = new Sphere(Point3D(0.0, 4.5, 0.0), 3.0);
+	sphere_ptr1->set_material(glass_ptr);
+	add_object(sphere_ptr1);
+
+
+	// red sphere
+
+	Reflective*	reflective_ptr = new Reflective;
+	reflective_ptr->set_ka(0.3);
+	reflective_ptr->set_kd(0.3); 
+	reflective_ptr->set_cd(RGBColor(1.0f, 0.0f, 0.0f)); 
+	reflective_ptr->set_ks(0.2);
+	reflective_ptr->set_exp(2000.0);
+	reflective_ptr->set_kr(0.25);
+
+	Sphere* sphere_ptr2 = new Sphere(Point3D(4, 4, -6), 3);
+	sphere_ptr2->set_material(reflective_ptr);
+	add_object(sphere_ptr2);
+
+	// rectangle
+	Matte* matte_ptr2 = new Matte;			
+	matte_ptr2->set_cd(RGBColor(1, 0.9, 0.6));
+	matte_ptr2->set_ka(0.25); 
+	matte_ptr2->set_kd(0.4);
+	matte_ptr2->enable_recv_shadow(true);
+
+	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-20, -0.001, -100), Vector3D(0, 0, 120), Vector3D(40, 0, 0)); 
+	rectangle_ptr->set_material(matte_ptr2);
+	add_object(rectangle_ptr);		
 }

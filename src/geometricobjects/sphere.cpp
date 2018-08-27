@@ -42,7 +42,7 @@ bool Sphere::hit(const Ray& ray, double& tmin, ShadeRec& sr)const
 			return true;
 		}
 
-		root = (-b + e) * denom;
+		root = (-b + e) / denom;
 		if (root > m_eplison)
 		{
 			tmin = root;

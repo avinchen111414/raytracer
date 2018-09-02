@@ -216,6 +216,9 @@
     <ClCompile Include="..\..\src\materials\transparent.cpp">
       <Filter>materials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\fresnelreflector.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\materials\transparent.h">
       <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\fresnelreflector.h">
+      <Filter>brdfs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

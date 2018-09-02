@@ -87,6 +87,7 @@
     <ClCompile Include="..\..\src\app\wxraytracer.cpp" />
     <ClCompile Include="..\..\src\brdfs\BRDF.cpp" />
     <ClCompile Include="..\..\src\brdfs\BTDF.cpp" />
+    <ClCompile Include="..\..\src\brdfs\fresnelreflector.cpp" />
     <ClCompile Include="..\..\src\brdfs\glossyspecular.cpp" />
     <ClCompile Include="..\..\src\brdfs\lambertian.cpp" />
     <ClCompile Include="..\..\src\brdfs\perfectspecular.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="..\..\src\app\wxraytracer.h" />
     <ClInclude Include="..\..\src\brdfs\BRDF.h" />
     <ClInclude Include="..\..\src\brdfs\BTDF.h" />
+    <ClInclude Include="..\..\src\brdfs\fresnelreflector.h" />
     <ClInclude Include="..\..\src\brdfs\glossyspecular.h" />
     <ClInclude Include="..\..\src\brdfs\lambertian.h" />
     <ClInclude Include="..\..\src\brdfs\perfectspecular.h" />

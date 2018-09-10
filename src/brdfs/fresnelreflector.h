@@ -22,7 +22,7 @@ public:
 
 	float fresnel(const ShadeRec& sr) const;
 
-	inline void set_eta(float eta_in, float eta_out);
+	inline void set_eta(float eta_in, float eta_out) {this->eta_in = eta_in; this->eta_out = eta_out;};
 protected:
 
 private:

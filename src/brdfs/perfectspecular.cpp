@@ -1,3 +1,4 @@
+#include <cmath>
 #include "perfectspecular.h"
 #include "utilities/shaderec.h"
 
@@ -40,7 +41,7 @@ RGBColor PerfectSpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vecto
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2 * ndotwo * sr.normal;
 	// sr.normal * wi 是为了抵消渲染方程中的cos项
-	return kr * cr / (sr.normal * wi);	
+	return kr * cr / fabs(sr.normal * wi);	
 }
 
 RGBColor PerfectSpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const

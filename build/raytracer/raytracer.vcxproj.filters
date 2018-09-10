@@ -219,6 +219,12 @@
     <ClCompile Include="..\..\src\brdfs\fresnelreflector.cpp">
       <Filter>brdfs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\brdfs\fresneltransmitter.cpp">
+      <Filter>brdfs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\materials\dielectric.cpp">
+      <Filter>materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -403,6 +409,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\brdfs\fresnelreflector.h">
       <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\brdfs\fresneltransmitter.h">
+      <Filter>brdfs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\materials\dielectric.h">
+      <Filter>materials</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

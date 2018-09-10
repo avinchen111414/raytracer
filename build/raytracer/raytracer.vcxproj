@@ -88,6 +88,7 @@
     <ClCompile Include="..\..\src\brdfs\BRDF.cpp" />
     <ClCompile Include="..\..\src\brdfs\BTDF.cpp" />
     <ClCompile Include="..\..\src\brdfs\fresnelreflector.cpp" />
+    <ClCompile Include="..\..\src\brdfs\fresneltransmitter.cpp" />
     <ClCompile Include="..\..\src\brdfs\glossyspecular.cpp" />
     <ClCompile Include="..\..\src\brdfs\lambertian.cpp" />
     <ClCompile Include="..\..\src\brdfs\perfectspecular.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="..\..\src\lights\environmentlight.cpp" />
     <ClCompile Include="..\..\src\lights\light.cpp" />
     <ClCompile Include="..\..\src\lights\point.cpp" />
+    <ClCompile Include="..\..\src\materials\dielectric.cpp" />
     <ClCompile Include="..\..\src\materials\emissive.cpp" />
     <ClCompile Include="..\..\src\materials\glossyreflective.cpp" />
     <ClCompile Include="..\..\src\materials\material.cpp" />
@@ -152,6 +154,7 @@
     <ClInclude Include="..\..\src\brdfs\BRDF.h" />
     <ClInclude Include="..\..\src\brdfs\BTDF.h" />
     <ClInclude Include="..\..\src\brdfs\fresnelreflector.h" />
+    <ClInclude Include="..\..\src\brdfs\fresneltransmitter.h" />
     <ClInclude Include="..\..\src\brdfs\glossyspecular.h" />
     <ClInclude Include="..\..\src\brdfs\lambertian.h" />
     <ClInclude Include="..\..\src\brdfs\perfectspecular.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="..\..\src\lights\environmentlight.h" />
     <ClInclude Include="..\..\src\lights\light.h" />
     <ClInclude Include="..\..\src\lights\point.h" />
+    <ClInclude Include="..\..\src\materials\dielectric.h" />
     <ClInclude Include="..\..\src\materials\emissive.h" />
     <ClInclude Include="..\..\src\materials\glossyreflective.h" />
     <ClInclude Include="..\..\src\materials\material.h" />

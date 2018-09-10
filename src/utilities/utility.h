@@ -11,6 +11,8 @@ const double 	invPI 		= 0.3183098861837906715;
 const double 	invTWO_PI 	= 0.1591549430918953358;
 const float		kEpsilon	= 0.001f;
 
+#define FLT_MAX         3.402823466e+38F
+
 inline double clamp(double value, double min, double max)
 {
 	if (value < min)

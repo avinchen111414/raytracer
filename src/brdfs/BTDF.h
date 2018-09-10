@@ -22,7 +22,7 @@ public:
 	virtual RGBColor rho(const ShadeRec& sr,
 		const Vector3D& wo);
 
-	bool tir(const ShadeRec& sr) const;
+	virtual bool tir(const ShadeRec& sr) const;
 
 	void set_kt(float kt) { k = kt; };
 	void set_ior(float _ior) { ior = _ior; };

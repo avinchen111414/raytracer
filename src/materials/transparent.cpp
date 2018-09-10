@@ -53,21 +53,19 @@ RGBColor Transparent::area_light_shade(ShadeRec& sr)
 		L += sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1);
 	}
 	else
-	{
-		//L += fr * sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1) * 
-		//	fabs(sr.normal * wi);
-		
+	{	
 		Vector3D wt;
 		RGBColor ft = transmitive_btdf->sample_f(sr, wo, wt);
 		Ray transmitted_ray(sr.hit_point, wt);
-
+		
+		L += fr * sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1) * 
+			fabs(sr.normal * wi);
 		L += ft * sr.w.tracer_ptr->trace_ray(transmitted_ray, sr.depth + 1) *
 			fabs(sr.normal * wt);
+
+		if (L.r > L.g && L.r > L.b && L.r >= 0.5 && L.g <= 0.2 && L.b <= 0.2)
+			bool _break = true;
 	}
-
-
-	if (sr.depth == 0 && L.r < 0.1 && L.g < 0.1 && L.b < 0.1)
-		bool _break = true;
 
 	return L;
 }

@@ -12,6 +12,9 @@ FresnelReflector::FresnelReflector(const FresnelReflector& fr)
 	: BRDF(fr), cr(fr.cr)
 {}
 
+FresnelReflector::~FresnelReflector()
+{}
+
 FresnelReflector& FresnelReflector::operator=(const FresnelReflector& rhs)
 {
 	if (this == &rhs)
@@ -31,12 +34,7 @@ RGBColor FresnelReflector::sample_f(const ShadeRec& sr, const Vector3D& wo, Vect
 {
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2 * ndotwo * sr.normal;
-	return this->fresnel(sr) * cr / (sr.normal * wi);
-}
-
-void FresnelReflector::set_eta(float eta_in, float eta_out)
-{
-	this->eta_in = eta_in; this->eta_out = eta_out;
+	return this->fresnel(sr) * cr / fabs(sr.normal * wi);
 }
 
 float FresnelReflector::fresnel(const ShadeRec& sr) const

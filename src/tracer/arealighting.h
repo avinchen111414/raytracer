@@ -15,6 +15,7 @@ public:
 	~AreaLighting();
 
 	virtual RGBColor trace_ray(const Ray& ray, const int depth) const;
+	virtual RGBColor trace_ray(const Ray& ray, float& tmin, const int depth) const;
 };
 
 #endif

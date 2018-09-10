@@ -17,6 +17,7 @@
 #include "materials/reflective.h"
 #include "materials/glossyreflective.h"
 #include "materials/transparent.h"
+#include "materials/dielectric.h"
 #include "geometricobjects/plane.h"
 #include "geometricobjects/rectangle.h"
 #include "geometricobjects/box.h"
@@ -629,6 +630,11 @@ void World::build_transparent_test_scene()
 
 
 	// transparent sphere
+	Dielectric* dielectirc = new Dielectric;
+	dielectirc->set_ks(0.2);
+	dielectirc->set_exp(2000.0);
+	dielectirc->set_eta(0.75f, 1.0f);
+	dielectirc->set_color_filter(RGBColor(1.0f, 0.9f, 0.9f), 1.0f);
 
 	Transparent* glass_ptr = new Transparent;
 	glass_ptr->set_ks(0.2);
@@ -638,7 +644,8 @@ void World::build_transparent_test_scene()
 	glass_ptr->set_kt(0.9);
 
 	Sphere* sphere_ptr1 = new Sphere(Point3D(0.0, 4.5, 0.0), 3.0);
-	sphere_ptr1->set_material(glass_ptr);
+	//sphere_ptr1->set_material(glass_ptr);
+	sphere_ptr1->set_material(dielectirc);
 	add_object(sphere_ptr1);
 
 

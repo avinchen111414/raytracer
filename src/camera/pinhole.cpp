@@ -43,6 +43,9 @@ void PinHole::render_scene(const World& w)
 			if (w.quit_render_tag)
 				break;
 
+			if (r == 350 && c == 200)
+				bool _break = true;
+
 			L = RGBColor(0.0f); 
 
 			for (int i = 0; i != vp.num_samples; i++)

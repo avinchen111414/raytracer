@@ -5,7 +5,7 @@
 #include "utilities/point3d.h"
 
 class World;
-
+class RenderThread;
 class Camera
 {
 public:
@@ -13,7 +13,8 @@ public:
 	Camera(const Camera& camera);
 	virtual ~Camera();
 
-	virtual void render_scene(const World& w) = 0;
+	virtual void render_scene(const World& w, int start_row, int end_row,
+		RenderThread* paint_thread) = 0;
 	void compute_uvw();
 
 public:

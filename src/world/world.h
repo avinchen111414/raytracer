@@ -28,8 +28,6 @@ public:
 	float						d;		// distance from eye point to viewplane
 	bool						quit_render_tag;
 
-	RenderThread* paintArea;
-
 public:
 	World();
 	~World();
@@ -39,12 +37,11 @@ public:
 	void set_ambient_light(Light* ambient_light_ptr);
 	void set_camera(Camera* camera_ptr);
 	void build();
-	void render_scene() const;
-	void render_perspective() const;
 	void open_window(const int hres, const int vres) const;
 
-	void display_pixel(const int row, const int col, 
-			const RGBColor& pixel_c) const;
+	void display_pixel(const int row, const int col,
+		const RGBColor& pixel_c, RenderThread* paint_thread) const;
+
 	void quit_render() {quit_render_tag = true;};
 	
 	RGBColor max_to_one(const RGBColor& c) const;

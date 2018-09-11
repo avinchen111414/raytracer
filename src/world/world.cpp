@@ -51,86 +51,25 @@ World::~World(void) {
 	}				
 }
 
-void 												
-World::render_scene(void) const {
-
-	RGBColor	pixel_color;	 	
-	Ray			ray;					
-	int 		hres 	= vp.hres;
-	int 		vres 	= vp.vres;
-	float		s		= vp.s;
-	float		zw		= 100.0;				// hardwired in
-	// sample param
-	Point2D pp;
-	Point2D sp;
-
-	ray.d = Vector3D(0, 0, -1);
-	
-	for (int r = 0; r < vres; r++)			// up
-	{
-		for (int c = 0; c <= hres; c++)		// across
-		{	
-			pixel_color = RGBColor(0.0f);
-			for (int i = 0; i != vp.num_samples; i++)
-			{
-				// filter sampling
-				sp = vp.sampler_ptr->sample_unit_square();
-				pp.x = (c - vp.hres * 0.5f + sp.x);
-				pp.y = (r - vp.vres * 0.5f + sp.y);
-				ray.o = Point3D(pp.x, pp.y, zw);
-				pixel_color += tracer_ptr->trace_ray(ray);
-			}
-			pixel_color /= vp.num_samples;
-			display_pixel(r, c, pixel_color);
-		}
-	}
-} 
-
-void World::render_perspective() const
+void World::display_pixel(const int row, const int column, const RGBColor& raw_color,
+							  RenderThread* paint_thread) const
 {
-	RGBColor pixel_color;
-	Ray ray;
-	Point2D sp;
-	Point2D pp;
-
-	ray.o = Point3D(0.0f, 0.0f, eye);
-	for (int r = 0; r != vp.vres; r++)
-		for (int c = 0; c != vp.hres; c++)
-		{
-			pixel_color = RGBColor(0.0f);
-			for (int i = 0; i != vp.num_samples; i++)
-			{
-				// filter sampling
-				sp = vp.sampler_ptr->sample_unit_square();
-				pp.x = vp.s * (c - 0.5f * (vp.hres - 1) + sp.x);
-				pp.y = vp.s * (r - 0.5f * (vp.vres - 1) + sp.y);
-				ray.d = Point3D(pp.x, pp.y, -d);
-				ray.d.normalize();
-				pixel_color += tracer_ptr->trace_ray(ray);
-			}
-			pixel_color /= vp.num_samples;
-			display_pixel(r, c, pixel_color);
-		}
-}
-
-void
-World::display_pixel(const int row, const int column, const RGBColor& raw_color) const {
 	RGBColor mapped_color = raw_color;
 	if (vp.show_out_of_gamut)
 		mapped_color = clamp_to_color(raw_color);
 	else
 		mapped_color = max_to_one(raw_color);
-	
+
 	if (vp.gamma != 1.0)
 		mapped_color = mapped_color.powc(vp.inv_gamma);
-	
-   //have to start from max y coordinate to convert to screen coordinates
-   int x = column;
-   int y = vp.vres - row - 1;
 
-   paintArea->setPixel(x, y, (int)(mapped_color.r * 255),
-                             (int)(mapped_color.g * 255),
-                             (int)(mapped_color.b * 255));
+	//have to start from max y coordinate to convert to screen coordinates
+	int x = column;
+	int y = vp.vres - row - 1;
+
+	paint_thread->setPixel(x, y, (int)(mapped_color.r * 255),
+		(int)(mapped_color.g * 255),
+		(int)(mapped_color.b * 255));
 }
 
 RGBColor

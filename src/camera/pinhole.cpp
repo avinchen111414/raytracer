@@ -21,7 +21,7 @@ PinHole::PinHole(const PinHole& c)
 
 PinHole::~PinHole() {}
 
-void PinHole::render_scene(const World& w)
+void PinHole::render_scene(const World& w, int start_row, int end_row, RenderThread* paint_thread)
 {
 	RGBColor	L;
 	ViewPlane	vp(w.vp);	 								
@@ -34,7 +34,7 @@ void PinHole::render_scene(const World& w)
 	vp.s /= zoom;
 	ray.o = eye;
 
-	for (int r = 0; r < vp.vres; r++)			// up
+	for (int r = start_row; r < end_row; r++)			// up
 	{
 		if (w.quit_render_tag)
 			break;
@@ -62,7 +62,7 @@ void PinHole::render_scene(const World& w)
 			}
 			L /= (float)vp.num_samples;
 			L *= exposure_time;
-			w.display_pixel(r, c, L);
+			w.display_pixel(r, c, L, paint_thread);
 		}
 	}
 }

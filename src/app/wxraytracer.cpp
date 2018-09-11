@@ -13,6 +13,18 @@ END_EVENT_TABLE()
 
 IMPLEMENT_APP(wxraytracerapp)
 
+// local functions declaration
+DWORD GetNumberOfProcessors()
+{
+#if defined(WIN32)
+	SYSTEM_INFO system_info;
+	::GetSystemInfo(&system_info);
+	return system_info.dwNumberOfProcessors;
+#else
+	return 1;
+#endif
+}
+
 bool wxraytracerapp::OnInit()
 {
    wxInitAllImageHandlers();
@@ -200,7 +212,7 @@ void wxraytracerFrame::OnRenderResume( wxCommandEvent& event )
 }
 
 RenderCanvas::RenderCanvas(wxWindow *parent)
-   : wxScrolledWindow(parent), m_image(NULL), w(NULL), thread(NULL), 
+   : wxScrolledWindow(parent), m_image(NULL), w(NULL), 
    timer(NULL), updateTimer(this, ID_RENDER_UPDATE)
 {
    SetOwnBackgroundColour(wxColour(143,144,150));
@@ -211,12 +223,14 @@ RenderCanvas::~RenderCanvas(void)
    if(m_image != NULL)
       delete m_image;
    
-   if(thread != NULL)
-   {
-	  thread->breakThread();
-      thread->Delete();
-   }
-   
+   for (size_t index = 0; index < painters.size(); index++)
+	   if (painters[index])
+	   {
+		   painters[index]->breakThread();
+		   painters[index]->Delete();
+	   }
+	painters.clear();
+  
    if(w != NULL)
       delete w;
    
@@ -253,8 +267,16 @@ void RenderCanvas::OnDraw(wxDC& dc)
 
 void RenderCanvas::OnRenderCompleted( wxCommandEvent& event )
 {
-   thread = NULL;
-   
+ 
+	RenderThread* painter = (RenderThread*)event.GetClientData();
+	for (size_t index = 0; index < painters.size(); index++)
+		if (painters[index] == painter)
+			painters[index] = NULL;
+
+   num_task_completed++;
+   if (num_task_completed != painters.size())
+	   return;
+
    if(w != NULL)
    {
       delete w;
@@ -272,6 +294,9 @@ void RenderCanvas::OnRenderCompleted( wxCommandEvent& event )
       delete timer;
       timer = NULL;
    }
+
+   wxCommandEvent completed_event(wxEVT_RENDER, ID_RENDER_COMPLETED);
+   GetParent()->GetEventHandler()->AddPendingEvent(completed_event);
 }
 
 void RenderCanvas::OnNewPixel( wxCommandEvent& event )
@@ -304,8 +329,8 @@ void RenderCanvas::OnNewPixel( wxCommandEvent& event )
 
 void RenderCanvas::renderPause(void)
 {
-   if(thread != NULL)
-      thread->Pause();
+	for (size_t index = 0; index < painters.size(); index++)
+		painters[index]->Pause();
    
    updateTimer.Stop();
    
@@ -315,8 +340,8 @@ void RenderCanvas::renderPause(void)
 
 void RenderCanvas::renderResume(void)
 {
-   if(thread != NULL)
-      thread->Resume();
+	for (size_t index = 0; index < painters.size(); index++)
+		painters[index]->Resume();
    
    updateTimer.Start();
    
@@ -398,11 +423,52 @@ void RenderCanvas::renderStart(void)
 	//start timer
 	timer = new wxStopWatch();
    
-	thread = new RenderThread(this, w);
-	thread->Create();
-	w->paintArea = thread;
-	thread->SetPriority(20);
-	thread->Run();
+	CreatePainters();
+}
+
+void RenderCanvas::GenerateTasks(std::vector<std::pair<int, int>>& ret_tasks) const
+{
+	ret_tasks.clear();
+
+	if (!w->vp.vres)
+		return;
+
+	DWORD number_processors = GetNumberOfProcessors();
+	int row_per_task = std::ceil(w->vp.vres / number_processors);
+
+	if (!row_per_task)
+	{
+		for (int i = 0; i < w->vp.vres; i++)
+			ret_tasks.push_back(std::make_pair(i, i+1));
+	}
+	else
+	{
+		for (DWORD i = 0; i < number_processors - 1; i++)
+			ret_tasks.push_back(std::make_pair(i * row_per_task, 
+				(i + 1) * row_per_task));
+		ret_tasks.push_back(std::make_pair((number_processors - 1) * row_per_task,
+			w->vp.vres));
+	}
+}
+
+void RenderCanvas::CreatePainters()
+{
+	std::vector<std::pair<int, int>> tasks;
+	GenerateTasks(tasks);
+
+	for (size_t index = 0; index < tasks.size(); index++)
+	{
+		const std::pair<int, int>& task = tasks[index];
+		RenderThread* painter = new RenderThread(this, w, task.first, task.second);
+		painter->Create();
+		painter->SetPriority(20);
+		painters.push_back(painter);
+	}
+
+	num_task_completed = 0;
+
+	for (size_t index = 0; index < painters.size(); index++)
+		painters[index]->Run();
 }
 
 RenderPixel::RenderPixel(int _x, int _y, int _red, int _green, int _blue)
@@ -414,7 +480,7 @@ DEFINE_EVENT_TYPE(wxEVT_RENDER)
 BEGIN_EVENT_TABLE( RenderCanvas, wxScrolledWindow )
    EVT_COMMAND(ID_RENDER_NEWPIXEL, wxEVT_RENDER,
                      RenderCanvas::OnNewPixel)
-   EVT_COMMAND(ID_RENDER_COMPLETED, wxEVT_RENDER,
+   EVT_COMMAND(ID_RENDER_THREAD_COMPLETED, wxEVT_RENDER,
                      RenderCanvas::OnRenderCompleted)
    EVT_TIMER(ID_RENDER_UPDATE, RenderCanvas::OnTimerUpdate)
 END_EVENT_TABLE()
@@ -447,11 +513,9 @@ void RenderThread::OnExit()
 {
    NotifyCanvas();
    
-   wxCommandEvent event(wxEVT_RENDER, ID_RENDER_COMPLETED);
-   
+   wxCommandEvent event(wxEVT_RENDER, ID_RENDER_THREAD_COMPLETED);
+	event.SetClientData(this);
    canvas->GetEventHandler()->AddPendingEvent(event);
-   
-   canvas->GetParent()->GetEventHandler()->AddPendingEvent(event);
 }
 
 void *RenderThread::Entry()
@@ -459,9 +523,8 @@ void *RenderThread::Entry()
    lastUpdateTime = 0;
    timer = new wxStopWatch();
    
-   //world->render_scene(); //for bare bones ray tracer only
-   world->camera_ptr->render_scene(*world);
-   //world->camera_ptr->render_scene(*world);
+   world->camera_ptr->render_scene(*world,
+	   start_row, end_row, this);
 
    return NULL;
 }

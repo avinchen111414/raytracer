@@ -67,12 +67,18 @@ public:
    void OnTimerUpdate( wxTimerEvent& event );
    void OnNewPixel( wxCommandEvent& event );
 
+   void GenerateTasks(std::vector<std::pair<int, int>>& ret_tasks) const;
+   void CreatePainters();
+
 protected:
    wxBitmap *m_image;
    World* w;
 
 private:
-   RenderThread* thread;
+
+	std::vector<RenderThread*> painters;
+	DWORD num_task_completed;
+
    wxStopWatch* timer;
    long pixelsRendered;
    long pixelsToRender;
@@ -95,11 +101,15 @@ DECLARE_EVENT_TYPE(wxEVT_RENDER, -1)
 #define ID_RENDER_COMPLETED 100
 #define ID_RENDER_NEWPIXEL  101
 #define ID_RENDER_UPDATE    102
+#define ID_RENDER_THREAD_COMPLETED 103
 
 class RenderThread : public wxThread
 {
 public:
    RenderThread(RenderCanvas* c, World* w) : wxThread(), world(w), canvas(c){}
+   RenderThread(RenderCanvas* c, World* w, int start_row, int end_row) : wxThread(), world(w), canvas(c),
+	   start_row(start_row), end_row(end_row)
+   {}
    virtual void *Entry();
    virtual void OnExit();
    virtual void setPixel(int x, int y, int red, int green, int blue);
@@ -114,6 +124,10 @@ private:
    std::vector<RenderPixel*> pixels;
    wxStopWatch* timer;
    long lastUpdateTime;
+
+   // [start_row, end_row)
+   int start_row;
+   int end_row;
 };
 
 #endif

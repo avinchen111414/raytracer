@@ -225,6 +225,9 @@
     <ClCompile Include="..\..\src\materials\dielectric.cpp">
       <Filter>materials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\sampler\seedgenerator.cpp">
+      <Filter>sampler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\app\wxraytracer.h">
@@ -415,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\materials\dielectric.h">
       <Filter>materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampler\seedgenerator.h">
+      <Filter>sampler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

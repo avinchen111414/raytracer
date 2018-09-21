@@ -126,6 +126,7 @@
     <ClCompile Include="..\..\src\sampler\hammersley.cpp" />
     <ClCompile Include="..\..\src\sampler\jittered.cpp" />
     <ClCompile Include="..\..\src\sampler\sampler.cpp" />
+    <ClCompile Include="..\..\src\sampler\seedgenerator.cpp" />
     <ClCompile Include="..\..\src\tracer\arealighting.cpp" />
     <ClCompile Include="..\..\src\tracer\globaltracer.cpp" />
     <ClCompile Include="..\..\src\tracer\multipleobjects.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="..\..\src\sampler\hammersley.h" />
     <ClInclude Include="..\..\src\sampler\jittered.h" />
     <ClInclude Include="..\..\src\sampler\sampler.h" />
+    <ClInclude Include="..\..\src\sampler\seedgenerator.h" />
     <ClInclude Include="..\..\src\tracer\arealighting.h" />
     <ClInclude Include="..\..\src\tracer\globaltracer.h" />
     <ClInclude Include="..\..\src\tracer\multipleobjects.h" />

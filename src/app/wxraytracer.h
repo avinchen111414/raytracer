@@ -50,6 +50,22 @@ enum
    Menu_Render_Resume
 };
 
+class RenderTile
+{
+public:
+	RenderTile(int left, int bottom, int right, int top):
+		left(left), bottom(bottom), right(right), top(top)	
+	{}
+	RenderTile():
+		left(0), bottom(0), right(0), top(0)
+	{}
+
+	int left;
+	int bottom;
+	int right;
+	int top;
+};
+
 class RenderCanvas: public wxScrolledWindow
 {
 public:
@@ -67,7 +83,9 @@ public:
    void OnTimerUpdate( wxTimerEvent& event );
    void OnNewPixel( wxCommandEvent& event );
 
-   void GenerateTasks(std::vector<std::pair<int, int>>& ret_tasks) const;
+   void GenerateTiles();
+   bool PopTile(RenderTile& tile);
+
    void CreatePainters();
 
 protected:
@@ -75,6 +93,9 @@ protected:
    World* w;
 
 private:
+
+	wxMutex tiles_mutex;
+	std::vector<RenderTile> tiles;
 
 	std::vector<RenderThread*> painters;
 	DWORD num_task_completed;
@@ -106,16 +127,15 @@ DECLARE_EVENT_TYPE(wxEVT_RENDER, -1)
 class RenderThread : public wxThread
 {
 public:
-   RenderThread(RenderCanvas* c, World* w) : wxThread(), world(w), canvas(c){}
-   RenderThread(RenderCanvas* c, World* w, int start_row, int end_row) : wxThread(), world(w), canvas(c),
-	   start_row(start_row), end_row(end_row)
-   {}
+   RenderThread(RenderCanvas* c, World* w) : wxThread(), world(w), canvas(c), break_thread(false){}
    virtual void *Entry();
    virtual void OnExit();
    virtual void setPixel(int x, int y, int red, int green, int blue);
    void breakThread();
 
 private:
+
+	void FetchTile();
    void NotifyCanvas();
    
    World* world;
@@ -125,9 +145,8 @@ private:
    wxStopWatch* timer;
    long lastUpdateTime;
 
-   // [start_row, end_row)
-   int start_row;
-   int end_row;
+   RenderTile working_tile;
+   bool break_thread;
 };
 
 #endif

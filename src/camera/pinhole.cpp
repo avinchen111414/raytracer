@@ -6,6 +6,7 @@
 #include "utilities/point2d.h"
 #include "tracer/tracer.h"
 #include "sampler/sampler.h"
+#include "app/wxraytracer.h"
 
 PinHole::PinHole()
 	:	Camera(),
@@ -21,7 +22,7 @@ PinHole::PinHole(const PinHole& c)
 
 PinHole::~PinHole() {}
 
-void PinHole::render_scene(const World& w, int start_row, int end_row, RenderThread* paint_thread)
+void PinHole::render_scene(const World& w, const RenderTile& tile, RenderThread* paint_thread)
 {
 	RGBColor	L;
 	ViewPlane	vp(w.vp);	 								
@@ -34,12 +35,12 @@ void PinHole::render_scene(const World& w, int start_row, int end_row, RenderThr
 	vp.s /= zoom;
 	ray.o = eye;
 
-	for (int r = start_row; r < end_row; r++)			// up
+	for (int r = tile.bottom; r < tile.top; r++)			// up
 	{
 		if (w.quit_render_tag)
 			break;
 
-		for (int c = 0; c < vp.hres; c++) {		// across
+		for (int c = tile.left; c < tile.right; c++) {		// across
 			if (w.quit_render_tag)
 				break;
 

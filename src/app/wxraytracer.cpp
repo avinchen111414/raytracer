@@ -6,6 +6,9 @@
 
 #include "wxraytracer.h"
 #include "camera/camera.h"
+#include "sampler/sampler.h"
+#include "world/viewplane.h"
+#include "world/world.h"
 #include "bg.xpm"
 
 BEGIN_EVENT_TABLE(wxraytracerapp, wxApp)
@@ -426,40 +429,46 @@ void RenderCanvas::renderStart(void)
 	CreatePainters();
 }
 
-void RenderCanvas::GenerateTasks(std::vector<std::pair<int, int>>& ret_tasks) const
+void RenderCanvas::GenerateTiles()
 {
-	ret_tasks.clear();
-
-	if (!w->vp.vres)
+	tiles.clear();
+	if (!w->vp.vres || !w->vp.hres)
 		return;
 
-	DWORD number_processors = GetNumberOfProcessors();
-	int row_per_task = std::ceil(w->vp.vres / number_processors);
+	const int tile_size = 32;
 
-	if (!row_per_task)
+	for (int v = 0; v < w->vp.vres; v += tile_size)	// vertical
 	{
-		for (int i = 0; i < w->vp.vres; i++)
-			ret_tasks.push_back(std::make_pair(i, i+1));
+		for (int h = 0; h < w->vp.hres; h += tile_size)	// horizontal
+		{
+			int left = h, right = std::min(h + tile_size, w->vp.hres);
+			int bottom = v, top = std::min(v + tile_size, w->vp.vres);
+			tiles.push_back(RenderTile(left, bottom, right, top));
+		}
 	}
-	else
-	{
-		for (DWORD i = 0; i < number_processors - 1; i++)
-			ret_tasks.push_back(std::make_pair(i * row_per_task, 
-				(i + 1) * row_per_task));
-		ret_tasks.push_back(std::make_pair((number_processors - 1) * row_per_task,
-			w->vp.vres));
-	}
+}
+
+bool RenderCanvas::PopTile(RenderTile& tile)
+{
+	// fence
+	wxMutexLocker locker(tiles_mutex);
+
+	if (tiles.empty())
+		return false;
+	tile = tiles.back();
+	tiles.pop_back();
+	return true;
 }
 
 void RenderCanvas::CreatePainters()
 {
-	std::vector<std::pair<int, int>> tasks;
-	GenerateTasks(tasks);
+	GenerateTiles();
 
-	for (size_t index = 0; index < tasks.size(); index++)
+	DWORD number_processors = GetNumberOfProcessors();
+	
+	for (size_t index = 0; index < number_processors; index++)
 	{
-		const std::pair<int, int>& task = tasks[index];
-		RenderThread* painter = new RenderThread(this, w, task.first, task.second);
+		RenderThread* painter = new RenderThread(this, w);
 		painter->Create();
 		painter->SetPriority(20);
 		painters.push_back(painter);
@@ -523,13 +532,17 @@ void *RenderThread::Entry()
    lastUpdateTime = 0;
    timer = new wxStopWatch();
    
-   world->camera_ptr->render_scene(*world,
-	   start_row, end_row, this);
+   while (canvas->PopTile(working_tile) && !break_thread)
+   {
+	   world->camera_ptr->render_scene(*world,
+		   working_tile, this);
+   }
 
    return NULL;
 }
 
 void RenderThread::breakThread()
 {
+	break_thread = true;
 	world->quit_render();
 }

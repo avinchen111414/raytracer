@@ -7,6 +7,7 @@
 class Point2D;
 class World;
 class RenderThread;
+class RenderTile;
 
 class PinHole: public Camera
 {
@@ -15,7 +16,7 @@ public:
 	PinHole(const PinHole& camera);
 	virtual ~PinHole();
 
-	virtual void render_scene(const World& w, int start_row, int end_row,
+	virtual void render_scene(const World& w, const RenderTile& tile,
 		RenderThread* paint_thread);
 
 	Vector3D ray_direction(const Point2D& p) const;

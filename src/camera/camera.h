@@ -6,6 +6,8 @@
 
 class World;
 class RenderThread;
+class RenderTile;
+
 class Camera
 {
 public:
@@ -13,8 +15,9 @@ public:
 	Camera(const Camera& camera);
 	virtual ~Camera();
 
-	virtual void render_scene(const World& w, int start_row, int end_row,
+	virtual void render_scene(const World& w, const RenderTile& tile,
 		RenderThread* paint_thread) = 0;
+
 	void compute_uvw();
 
 public:

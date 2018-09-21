@@ -73,7 +73,7 @@ void Sampler::setup_shuffled_indices(void) {
 		for (int j = 0; j < num_samples; j++)
 			indices.push_back(j);
 
-		for (int p = 0; p < num_sets; p++) { 
+		for (int p = 0; p < num_sets; p++) {
 			random_shuffle(indices.begin(), indices.end());	
 
 			for (int j = 0; j < num_samples; j++)

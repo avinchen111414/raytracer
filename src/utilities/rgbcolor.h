@@ -52,6 +52,8 @@ class RGBColor {
 		
 		float												// the average of the components
 		average(void) const;
+
+		void clamp(const RGBColor& clr);
 };
 
 

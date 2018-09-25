@@ -1,6 +1,7 @@
 // This file contains the definition of the class RGBColor
 
-#include <math.h>
+#include <cmath>
+#include <algorithm>
 
 #include "rgbcolor.h"
 
@@ -60,3 +61,9 @@ RGBColor::powc(float p) const {
 	return (RGBColor(pow(r, p), pow(g, p), pow(b, p)));
 }
 
+void RGBColor::clamp(const RGBColor& clr)
+{
+	r = std::min(r, clr.r);
+	g = std::min(g, clr.g);
+	b = std::min(b, clr.b);
+}

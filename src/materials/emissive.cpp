@@ -42,7 +42,11 @@ RGBColor Emissive::shade(ShadeRec& sr)
 RGBColor Emissive::area_light_shade(ShadeRec& sr)
 {
 	if (sr.normal * -sr.ray.d > 0.0)
-		return ls * ce;
+	{
+		RGBColor ret = ls * ce;
+		ret.clamp(1.0f);	
+		return ret;
+	}
 	else
 		return 0.0;
 }

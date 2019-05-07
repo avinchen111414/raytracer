@@ -67,7 +67,7 @@ void World::display_pixel(const int row, const int column, const RGBColor& raw_c
 	int x = column;
 	int y = vp.vres - row - 1;
 
-	paint_thread->setPixel(x, y, (int)(mapped_color.r * 255),
+	paint_thread->SetPixel(x, y, (int)(mapped_color.r * 255),
 		(int)(mapped_color.g * 255),
 		(int)(mapped_color.b * 255));
 }

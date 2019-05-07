@@ -229,7 +229,7 @@ RenderCanvas::~RenderCanvas(void)
    for (size_t index = 0; index < painters.size(); index++)
 	   if (painters[index])
 	   {
-		   painters[index]->breakThread();
+		   painters[index]->BreakThread();
 		   painters[index]->Delete();
 	   }
 	painters.clear();
@@ -494,12 +494,12 @@ BEGIN_EVENT_TABLE( RenderCanvas, wxScrolledWindow )
    EVT_TIMER(ID_RENDER_UPDATE, RenderCanvas::OnTimerUpdate)
 END_EVENT_TABLE()
 
-void RenderThread::setPixel(int x, int y, int red, int green, int blue)
+void RenderThread::SetPixel(int x, int y, int red, int green, int blue)
 {
    
-   pixels.push_back(new RenderPixel(x, y, red, green, blue));
+   m_pixels.push_back(new RenderPixel(x, y, red, green, blue));
    
-   if(timer->Time() - lastUpdateTime > 40)
+   if(m_timer->Time() - m_lastUpdateTime > 40)
       NotifyCanvas();
     
    TestDestroy();
@@ -507,15 +507,15 @@ void RenderThread::setPixel(int x, int y, int red, int green, int blue)
 
 void RenderThread::NotifyCanvas()
 {
-   lastUpdateTime = timer->Time();
+   m_lastUpdateTime = m_timer->Time();
    
    //copy rendered pixels into a new vector and reset
-   std::vector<RenderPixel*> *pixelsUpdate = new std::vector<RenderPixel*>(pixels);
-   pixels.clear();
+   std::vector<RenderPixel*> *pixelsUpdate = new std::vector<RenderPixel*>(m_pixels);
+   m_pixels.clear();
    
    wxCommandEvent event(wxEVT_RENDER, ID_RENDER_NEWPIXEL);
    event.SetClientData(pixelsUpdate);
-   canvas->GetEventHandler()->AddPendingEvent(event);
+   m_canvas->GetEventHandler()->AddPendingEvent(event);
 }
 
 void RenderThread::OnExit()
@@ -524,25 +524,25 @@ void RenderThread::OnExit()
    
    wxCommandEvent event(wxEVT_RENDER, ID_RENDER_THREAD_COMPLETED);
 	event.SetClientData(this);
-   canvas->GetEventHandler()->AddPendingEvent(event);
+   m_canvas->GetEventHandler()->AddPendingEvent(event);
 }
 
 void *RenderThread::Entry()
 {
-   lastUpdateTime = 0;
-   timer = new wxStopWatch();
+   m_lastUpdateTime = 0;
+   m_timer = new wxStopWatch();
    
-   while (canvas->PopTile(working_tile) && !break_thread)
+   while (m_canvas->PopTile(m_working_tile) && !m_break_thread)
    {
-	   world->camera_ptr->render_scene(*world,
-		   working_tile, this);
+	   m_world->camera_ptr->render_scene(*m_world,
+		   m_working_tile, this);
    }
 
    return NULL;
 }
 
-void RenderThread::breakThread()
+void RenderThread::BreakThread()
 {
-	break_thread = true;
-	world->quit_render();
+	m_break_thread = true;
+	m_world->quit_render();
 }

@@ -38,7 +38,7 @@ RGBColor Reflective::global_shade(ShadeRec& sr)
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
 	float pdf;
-	RGBColor fr = reflective_brdf->sample_f(sr, wo, wi, pdf);
+	RGBColor fr = reflective_brdf->SampleF(sr, wo, wi, pdf);
 	Ray reflected_ray(sr.hit_point, wi);
 
 	if (sr.depth == 0)
@@ -55,7 +55,7 @@ RGBColor Reflective::area_light_shade(ShadeRec& sr)
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
-	RGBColor fr = reflective_brdf->sample_f(sr, wo, wi);
+	RGBColor fr = reflective_brdf->SampleF(sr, wo, wi);
 
 	Ray reflective_ray(sr.hit_point, wi);
 	

@@ -82,13 +82,13 @@ RGBColor Phong::global_shade(ShadeRec& sr)
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
 	float pdf;
-	RGBColor f = diffuse_brdf->sample_f(sr, wo, wi, pdf);
+	RGBColor f = diffuse_brdf->SampleF(sr, wo, wi, pdf);
 	float ndotwi = sr.normal * wi;
 	Ray reflected_ray(sr.hit_point, wi);
 	L += f * sr.w.tracer_ptr->trace_ray(reflected_ray, sr.depth + 1)
 		* ndotwi / pdf;
 
-	f = specular_brdf->sample_f(sr, wo, wi, pdf);
+	f = specular_brdf->SampleF(sr, wo, wi, pdf);
 	ndotwi = sr.normal * wi;
 	reflected_ray = Ray(sr.hit_point, wi);
 	L += f * sr.w.tracer_ptr->trace_ray(reflected_ray, sr.depth + 1)
@@ -99,14 +99,14 @@ RGBColor Phong::global_shade(ShadeRec& sr)
 
 void Phong::set_sampler(Sampler* sampler_ptr)
 {
-	diffuse_brdf->set_sampler(sampler_ptr);
-	specular_brdf->set_sampler(sampler_ptr);
+	diffuse_brdf->SetSampler(sampler_ptr);
+	specular_brdf->SetSampler(sampler_ptr);
 }
 
 RGBColor Phong::area_light_shade(ShadeRec& sr)
 {
 	Vector3D wo = -sr.ray.d;
-	RGBColor L = ambient_brdf->rho(sr, wo) * sr.w.ambient_ptr->L(sr);
+	RGBColor L = ambient_brdf->Rho(sr, wo) * sr.w.ambient_ptr->L(sr);
 	int num_lights = sr.w.lights.size();
 
 	for (int j = 0; j != num_lights; j++)
@@ -125,8 +125,8 @@ RGBColor Phong::area_light_shade(ShadeRec& sr)
 
 			if (!in_shadow)
 			{
-				L += (diffuse_brdf->f(sr, wo, wi) +
-					specular_brdf->f(sr, wo, wi)) * sr.w.lights[j]->L(sr) *
+				L += (diffuse_brdf->F(sr, wo, wi) +
+					specular_brdf->F(sr, wo, wi)) * sr.w.lights[j]->L(sr) *
 					ndotwi * sr.w.lights[j]->G(sr) / sr.w.lights[j]->pdf(sr);
 			}
 		}
@@ -138,7 +138,7 @@ RGBColor Phong::area_light_shade(ShadeRec& sr)
 RGBColor Phong::shade(ShadeRec& sr)
 {
 	Vector3D wo = -sr.ray.d;
-	RGBColor L = ambient_brdf->rho(sr, wo) * sr.w.ambient_ptr->L(sr);
+	RGBColor L = ambient_brdf->Rho(sr, wo) * sr.w.ambient_ptr->L(sr);
 	int num_lights = sr.w.lights.size();
 
 	for (int j = 0; j != num_lights; j++)
@@ -157,8 +157,8 @@ RGBColor Phong::shade(ShadeRec& sr)
 	
 			if (!in_shadow)
 			{
-				L += (diffuse_brdf->f(sr, wo, wi) + 
-					specular_brdf->f(sr, wo, wi)) * sr.w.lights[j]->L(sr) * n_dot_wi;
+				L += (diffuse_brdf->F(sr, wo, wi) + 
+					specular_brdf->F(sr, wo, wi)) * sr.w.lights[j]->L(sr) * n_dot_wi;
 			}
 		}
 	}

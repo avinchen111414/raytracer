@@ -44,7 +44,7 @@ RGBColor Transparent::area_light_shade(ShadeRec& sr)
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
-	RGBColor fr = reflective_brdf->sample_f(sr, wo, wi);
+	RGBColor fr = reflective_brdf->SampleF(sr, wo, wi);
 
 	Ray reflective_ray(sr.hit_point, wi);
 	

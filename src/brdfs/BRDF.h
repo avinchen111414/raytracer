@@ -15,21 +15,21 @@ public:
 	~BRDF();
 	BRDF& operator= (const BRDF& rhs);
 
-	virtual RGBColor f(const ShadeRec& sr, const Vector3D& wo, 
+	virtual RGBColor F(const ShadeRec& sr, const Vector3D& wo, 
 		const Vector3D& wi);
 
-	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, 
+	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo, 
 		Vector3D& wi);
 
-	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
+	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
 		float& pdf);
 
-	virtual RGBColor rho(const ShadeRec& sr, const Vector3D& wo);
+	virtual RGBColor Rho(const ShadeRec& sr, const Vector3D& wo);
 
-	virtual void set_sampler(Sampler* sampler_ptr);
+	virtual void SetSampler(Sampler* sampler_ptr);
 
 protected:
-	Sampler* sampler_ptr;
+	Sampler* m_sampler;
 };
 
 #endif

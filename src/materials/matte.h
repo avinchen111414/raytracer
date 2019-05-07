@@ -11,7 +11,7 @@ class Matte: public Material
 public:
 	Matte();
 	Matte(const Matte& m);
-	virtual Material* clone() const;
+	virtual Material* Clone() const;
 	virtual ~Matte();
 	Matte& operator= (const Matte& rhs);
 

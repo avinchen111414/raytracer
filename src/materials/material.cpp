@@ -22,7 +22,7 @@ RGBColor Material::global_shade(ShadeRec& sr)
 	return 0.0f;
 }
 
-RGBColor Material::area_light_shade(ShadeRec& sr)
+RGBColor Material::AreaLightShade(ShadeRec& sr)
 {
 	return 0.0f;
 }

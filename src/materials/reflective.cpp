@@ -16,7 +16,7 @@ Reflective::Reflective(const Reflective& r)
 
 }
 
-Material* Reflective::clone() const
+Material* Reflective::Clone() const
 {
 	return new Reflective(*this);
 }
@@ -33,7 +33,7 @@ Reflective& Reflective::operator= (const Reflective& rhs)
 
 RGBColor Reflective::global_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::area_light_shade(sr));
+	RGBColor L(Phong::AreaLightShade(sr));
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
@@ -51,7 +51,7 @@ RGBColor Reflective::global_shade(ShadeRec& sr)
 
 RGBColor Reflective::area_light_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::area_light_shade(sr));
+	RGBColor L(Phong::AreaLightShade(sr));
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;

@@ -10,7 +10,7 @@ class Transparent: public Phong
 public:
 	Transparent();
 	Transparent(const Transparent& other);
-	virtual Material* clone() const;
+	virtual Material* Clone() const;
 	Transparent& operator= (const Transparent& rhs);
 
 	virtual RGBColor area_light_shade(ShadeRec& sr);

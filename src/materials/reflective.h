@@ -9,7 +9,7 @@ class Reflective: public Phong
 public:
 	Reflective();
 	Reflective(const Reflective& r);
-	virtual Material* clone() const;
+	virtual Material* Clone() const;
 	Reflective& operator= (const Reflective& rhs);
 
 	virtual RGBColor area_light_shade(ShadeRec& sr);

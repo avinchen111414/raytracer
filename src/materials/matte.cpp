@@ -26,7 +26,7 @@ Matte::Matte(const Matte& m):
 		diffuse_brdf = nullptr;
 }
 
-Material* Matte::clone() const
+Material* Matte::Clone() const
 {
 	return new Matte(*this);
 }

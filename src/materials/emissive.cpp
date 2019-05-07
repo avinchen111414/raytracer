@@ -13,7 +13,7 @@ Emissive::Emissive(const Emissive& e)
 	
 }
 
-Material* Emissive::clone() const
+Material* Emissive::Clone() const
 {
 	return new Emissive(*this);
 }

@@ -10,7 +10,7 @@ class GlossyReflective: public Phong
 public:
 	GlossyReflective();
 	GlossyReflective(const GlossyReflective& r);
-	virtual Material* clone() const;
+	virtual Material* Clone() const;
 	GlossyReflective& operator= (const GlossyReflective& rhs);
 	virtual void set_sampler(Sampler* sampler);
 

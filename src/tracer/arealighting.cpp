@@ -32,7 +32,7 @@ RGBColor AreaLighting::trace_ray(const Ray& ray, const int depth) const
 	{
 		sr.ray = ray;
 		sr.depth = depth;
-		return sr.material_ptr->area_light_shade(sr);
+		return sr.material_ptr->AreaLightShade(sr);
 	}
 	else
 	{
@@ -52,7 +52,7 @@ RGBColor AreaLighting::trace_ray(const Ray& ray, float& tmin, const int depth) c
 		sr.ray = ray;
 		sr.depth = depth;
 		tmin = sr.t;
-		return sr.material_ptr->area_light_shade(sr);
+		return sr.material_ptr->AreaLightShade(sr);
 	}
 	else
 	{

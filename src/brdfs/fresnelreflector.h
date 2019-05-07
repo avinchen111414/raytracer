@@ -16,7 +16,7 @@ public:
 
 	virtual ~FresnelReflector();
 
-	virtual FresnelReflector* clone() const;
+	virtual BRDF* Clone() const;
 
 	virtual RGBColor FresnelReflector::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const;
 

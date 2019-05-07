@@ -12,7 +12,7 @@ FresnelTransmitter::FresnelTransmitter(const FresnelTransmitter& ft)
 	: BTDF(ft), eta_in(ft.eta_in), eta_out(ft.eta_out)
 {}
 
-RGBColor FresnelTransmitter::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wt)
+RGBColor FresnelTransmitter::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wt)
 {
 	// 注意射线的方向与能量传输的方向是相反的（P.571）
 	// 所以返回值中的eta * eta是作为分母
@@ -38,17 +38,17 @@ FresnelTransmitter* FresnelTransmitter::clone() const
 	return new FresnelTransmitter(*this);
 }
 
-RGBColor FresnelTransmitter::f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
+RGBColor FresnelTransmitter::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
 {
 	return 0.0f;
 }
 
-RGBColor FresnelTransmitter::rho(const ShadeRec& sr, const Vector3D& wo)
+RGBColor FresnelTransmitter::Rho(const ShadeRec& sr, const Vector3D& wo)
 {
 	return 0.0f;
 }
 
-bool FresnelTransmitter::tir(const ShadeRec& sr) const
+bool FresnelTransmitter::Tir(const ShadeRec& sr) const
 {
 	Vector3D wo(-sr.ray.d); 
 	float cos_thetai = sr.normal * wo;  

@@ -77,7 +77,7 @@ RGBColor Phong::global_shade(ShadeRec& sr)
 	RGBColor L;
 
 	if (sr.depth == 0)
-		L = area_light_shade(sr);
+		L = AreaLightShade(sr);
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
@@ -103,7 +103,7 @@ void Phong::set_sampler(Sampler* sampler_ptr)
 	specular_brdf->SetSampler(sampler_ptr);
 }
 
-RGBColor Phong::area_light_shade(ShadeRec& sr)
+RGBColor Phong::AreaLightShade(ShadeRec& sr)
 {
 	Vector3D wo = -sr.ray.d;
 	RGBColor L = ambient_brdf->Rho(sr, wo) * sr.w.ambient_ptr->L(sr);
@@ -166,7 +166,7 @@ RGBColor Phong::shade(ShadeRec& sr)
 	return L;
 }
 
-Material* Phong::clone() const 
+Material* Phong::Clone() const 
 {
 	return (new Phong(*this));
 }

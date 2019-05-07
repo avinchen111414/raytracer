@@ -33,7 +33,7 @@ RGBColor Whitte::trace_ray(const Ray& ray, const int depth) const
 	{
 		sr.ray = ray;
 		sr.depth = depth;
-		return sr.material_ptr->area_light_shade(sr);
+		return sr.material_ptr->AreaLightShade(sr);
 	}
 	else
 	{

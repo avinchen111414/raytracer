@@ -25,7 +25,7 @@ FresnelReflector& FresnelReflector::operator=(const FresnelReflector& rhs)
 	return *this;
 }
 
-FresnelReflector* FresnelReflector::clone() const
+BRDF* FresnelReflector::Clone() const
 {
 	return new FresnelReflector(*this);
 }

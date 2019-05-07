@@ -633,8 +633,8 @@ void World::build_transparent_test_scene()
 	Dielectric* dielectirc = new Dielectric;
 	dielectirc->set_ks(0.2);
 	dielectirc->set_exp(2000.0);
-	dielectirc->set_eta(0.75f, 1.0f);
-	dielectirc->set_color_filter(RGBColor(1.0f, 0.9f, 0.9f), 1.0f);
+	dielectirc->SetEta(0.75f, 1.0f);
+	dielectirc->SetColorFilter(RGBColor(1.0f, 0.9f, 0.9f), 1.0f);
 
 	Transparent* glass_ptr = new Transparent;
 	glass_ptr->set_ks(0.2);

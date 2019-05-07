@@ -50,6 +50,11 @@ void BRDF::SetSampler(Sampler* sampler_ptr)
 	}
 }
 
+BRDF* BRDF::Clone() const
+{
+	return new BRDF(*this);
+}
+
 RGBColor BRDF::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
 {
 	return RGBColor(0);

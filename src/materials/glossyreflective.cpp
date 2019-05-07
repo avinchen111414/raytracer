@@ -16,7 +16,7 @@ GlossyReflective::GlossyReflective(const GlossyReflective& r)
 
 }
 
-Material* GlossyReflective::clone() const
+Material* GlossyReflective::Clone() const
 {
 	return new GlossyReflective(*this);
 }
@@ -33,7 +33,7 @@ GlossyReflective& GlossyReflective::operator= (const GlossyReflective& rhs)
 
 RGBColor GlossyReflective::global_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::area_light_shade(sr));
+	RGBColor L(Phong::AreaLightShade(sr));
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
@@ -51,7 +51,7 @@ RGBColor GlossyReflective::global_shade(ShadeRec& sr)
 
 RGBColor GlossyReflective::area_light_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::area_light_shade(sr));
+	RGBColor L(Phong::AreaLightShade(sr));
 	Vector3D wo(-sr.ray.d);
 	Vector3D wi;
 	float pdf;

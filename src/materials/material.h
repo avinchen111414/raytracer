@@ -10,11 +10,11 @@ class Material
 public:
 	Material();
 	Material(const Material& m);
-	virtual Material* Clone() const = 0;
+	virtual Material* clone() const = 0;
 	virtual ~Material();
 	
 	virtual RGBColor shade(ShadeRec& sr);
-	virtual RGBColor AreaLightShade(ShadeRec& sr);
+	virtual RGBColor area_light_shade(ShadeRec& sr);
 	virtual RGBColor global_shade(ShadeRec& sr);
 
 	inline void enable_recv_shadow(bool enable) {recv_shadow = enable;};

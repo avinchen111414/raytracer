@@ -14,7 +14,7 @@ private:
 public:
 	Emissive();
 	Emissive(const Emissive& e);
-	virtual Material* Clone() const;
+	virtual Material* clone() const;
 	virtual ~Emissive();
 	Emissive& operator= (const Emissive& rhs);
 

@@ -15,7 +15,7 @@ EnvironmentLight::EnvironmentLight(const EnvironmentLight& env_light)
 	if (env_light.sampler_ptr)
 		sampler_ptr = env_light.sampler_ptr->clone();
 	if (env_light.material_ptr)
-		material_ptr = env_light.material_ptr->Clone();
+		material_ptr = env_light.material_ptr->clone();
 }
 
 EnvironmentLight& EnvironmentLight::operator= (const EnvironmentLight& rhs)
@@ -41,7 +41,7 @@ EnvironmentLight& EnvironmentLight::operator= (const EnvironmentLight& rhs)
 	}
 	if (rhs.material_ptr)
 	{
-		material_ptr = rhs.material_ptr->Clone();
+		material_ptr = rhs.material_ptr->clone();
 	}
 	return *this;
 }

@@ -16,7 +16,7 @@ GlossyReflective::GlossyReflective(const GlossyReflective& r)
 
 }
 
-Material* GlossyReflective::Clone() const
+Material* GlossyReflective::clone() const
 {
 	return new GlossyReflective(*this);
 }
@@ -33,12 +33,12 @@ GlossyReflective& GlossyReflective::operator= (const GlossyReflective& rhs)
 
 RGBColor GlossyReflective::global_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::AreaLightShade(sr));
+	RGBColor L(Phong::area_light_shade(sr));
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
 	float pdf;
-	RGBColor fr = glossy_reflective_brdf->SampleF(sr, wo, wi, pdf);
+	RGBColor fr = glossy_reflective_brdf->sample_f(sr, wo, wi, pdf);
 	Ray reflected_ray(sr.hit_point, wi);
 
 	if (sr.depth == 0)
@@ -51,11 +51,11 @@ RGBColor GlossyReflective::global_shade(ShadeRec& sr)
 
 RGBColor GlossyReflective::area_light_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::AreaLightShade(sr));
+	RGBColor L(Phong::area_light_shade(sr));
 	Vector3D wo(-sr.ray.d);
 	Vector3D wi;
 	float pdf;
-	RGBColor fr = glossy_reflective_brdf->SampleF(sr, wo, wi, pdf);
+	RGBColor fr = glossy_reflective_brdf->sample_f(sr, wo, wi, pdf);
 
 	Ray reflective_ray(sr.hit_point, wi);
 
@@ -86,5 +86,5 @@ void GlossyReflective::set_exp(const float exp)
 
 void GlossyReflective::set_sampler(Sampler* sampler)
 {
-	glossy_reflective_brdf->SetSampler(sampler);
+	glossy_reflective_brdf->set_sampler(sampler);
 }

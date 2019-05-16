@@ -36,7 +36,7 @@ PerfectSpecular* PerfectSpecular::clone() const
 	return new PerfectSpecular(*this);
 }
 
-RGBColor PerfectSpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const
+RGBColor PerfectSpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const
 {
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2 * ndotwo * sr.normal;
@@ -44,7 +44,7 @@ RGBColor PerfectSpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector
 	return kr * cr / fabs(sr.normal * wi);	
 }
 
-RGBColor PerfectSpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const
+RGBColor PerfectSpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const
 {
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2.0 * sr.normal * ndotwo; 

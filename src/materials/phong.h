@@ -12,11 +12,11 @@ class Phong: public Material
 public:
 	Phong();
 	Phong(const Phong& p);
-	virtual Material* Clone() const;
+	virtual Material* clone() const;
 	Phong& operator= (const Phong& rhs);
 
 	virtual RGBColor shade(ShadeRec& sr);
-	virtual RGBColor AreaLightShade(ShadeRec& sr);
+	virtual RGBColor area_light_shade(ShadeRec& sr);
 	virtual RGBColor global_shade(ShadeRec& sr);
 	virtual void set_sampler(Sampler* sampler_ptr);
 

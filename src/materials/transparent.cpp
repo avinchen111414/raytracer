@@ -20,7 +20,7 @@ Transparent::Transparent(const Transparent& other):
 
 }
 
-Material* Transparent::Clone() const
+Material* Transparent::clone() const
 {
 	return new Transparent(*this);
 }
@@ -44,18 +44,18 @@ RGBColor Transparent::area_light_shade(ShadeRec& sr)
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
-	RGBColor fr = reflective_brdf->SampleF(sr, wo, wi);
+	RGBColor fr = reflective_brdf->sample_f(sr, wo, wi);
 
 	Ray reflective_ray(sr.hit_point, wi);
 	
-	if (transmitive_btdf->Tir(sr))
+	if (transmitive_btdf->tir(sr))
 	{
 		L += sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1);
 	}
 	else
 	{	
 		Vector3D wt;
-		RGBColor ft = transmitive_btdf->SampleF(sr, wo, wt);
+		RGBColor ft = transmitive_btdf->sample_f(sr, wo, wt);
 		Ray transmitted_ray(sr.hit_point, wt);
 		
 		L += fr * sr.w.tracer_ptr->trace_ray(reflective_ray, sr.depth + 1) * 
@@ -82,10 +82,10 @@ void Transparent::set_cr(const RGBColor& cr)
 
 void Transparent::set_kt(float kt)
 {
-	transmitive_btdf->SetKt(kt);
+	transmitive_btdf->set_kt(kt);
 }
 
 void Transparent::set_ior(float ior)
 {
-	transmitive_btdf->SetIor(ior);
+	transmitive_btdf->set_ior(ior);
 }

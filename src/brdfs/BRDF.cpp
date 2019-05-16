@@ -4,29 +4,29 @@
 #include "sampler/sampler.h"
 
 BRDF::BRDF()
-	: m_sampler(nullptr)
+	: sampler_ptr(nullptr)
 {}
 
-BRDF::BRDF(const BRDF& other)
+BRDF::BRDF(const BRDF& object)
 {
-	if (other.m_sampler)
-		m_sampler = other.m_sampler->clone();
+	if (object.sampler_ptr)
+		sampler_ptr = object.sampler_ptr->clone();
 	else
-		m_sampler = nullptr;
+		sampler_ptr = nullptr;
 }
 
 BRDF& BRDF::operator=(const BRDF& rhs) {
 	if (this == &rhs)
 		return (*this);
 
-	if (m_sampler){
-		delete m_sampler;
-		m_sampler = nullptr;
+	if (sampler_ptr){
+		delete sampler_ptr;
+		sampler_ptr = nullptr;
 	}
 
-	if (rhs.m_sampler)
+	if (rhs.sampler_ptr)
 	{
-		m_sampler = rhs.m_sampler->clone();
+		sampler_ptr = rhs.sampler_ptr->clone();
 	}
 
 	return (*this);
@@ -34,43 +34,38 @@ BRDF& BRDF::operator=(const BRDF& rhs) {
 
 BRDF::~BRDF() 
 {
-	if (m_sampler)
+	if (sampler_ptr)
 	{
-		delete m_sampler;
-		m_sampler = nullptr;
+		delete sampler_ptr;
+		sampler_ptr = nullptr;
 	}
 }
 
-void BRDF::SetSampler(Sampler* sampler_ptr)
+void BRDF::set_sampler(Sampler* sampler_ptr)
 {
 	if (sampler_ptr)
 	{
-		this->m_sampler = sampler_ptr;
-		this->m_sampler->map_samples_to_hemisphere(1);
+		this->sampler_ptr = sampler_ptr;
+		this->sampler_ptr->map_samples_to_hemisphere(1);
 	}
 }
 
-BRDF* BRDF::Clone() const
-{
-	return new BRDF(*this);
-}
-
-RGBColor BRDF::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
+RGBColor BRDF::f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
 {
 	return RGBColor(0);
 }
 
-RGBColor BRDF::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi)
+RGBColor BRDF::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi)
 {
 	return RGBColor(0);
 }
 
-RGBColor BRDF::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf)
+RGBColor BRDF::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf)
 {
 	return RGBColor(0);
 }
 
-RGBColor BRDF::Rho(const ShadeRec& sr, const Vector3D& wo)
+RGBColor BRDF::rho(const ShadeRec& sr, const Vector3D& wo)
 {
 	return RGBColor(0);
 }

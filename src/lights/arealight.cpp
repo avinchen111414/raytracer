@@ -25,7 +25,7 @@ AreaLight::AreaLight(const AreaLight& al):
 		delete this->material_ptr;
 	this->material_ptr = nullptr;
 	if (al.material_ptr)
-		this->material_ptr = al.material_ptr->Clone();
+		this->material_ptr = al.material_ptr->clone();
 }
 
 AreaLight& AreaLight::operator=(const AreaLight& rhs)
@@ -50,7 +50,7 @@ AreaLight& AreaLight::operator=(const AreaLight& rhs)
 	}
 	if (rhs.material_ptr)
 	{
-		material_ptr = rhs.material_ptr->Clone();
+		material_ptr = rhs.material_ptr->clone();
 	}
 	return *this;
 }

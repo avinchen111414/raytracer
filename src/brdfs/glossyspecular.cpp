@@ -47,7 +47,7 @@ GlossySpecular* GlossySpecular::clone() const
 	return (new GlossySpecular(*this));
 }
 
-RGBColor GlossySpecular::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
+RGBColor GlossySpecular::f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
 {
 	RGBColor L(0.0);
 	float n_dot_wi = static_cast<float>(sr.normal * wi);
@@ -60,16 +60,16 @@ RGBColor GlossySpecular::F(const ShadeRec& sr, const Vector3D& wo, const Vector3
 	return L;
 }
 
-void GlossySpecular::SetSampler(Sampler* sampler_ptr)
+void GlossySpecular::set_sampler(Sampler* sampler_ptr)
 {
 	if (sampler_ptr)
 	{
-		this->m_sampler = sampler_ptr;
-		this->m_sampler->map_samples_to_hemisphere(exp);
+		this->sampler_ptr = sampler_ptr;
+		this->sampler_ptr->map_samples_to_hemisphere(exp);
 	}	
 }
 
-RGBColor GlossySpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
+RGBColor GlossySpecular::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
 								  float& pdf)
 {
 	float ndotwo = sr.normal * wo;
@@ -81,7 +81,7 @@ RGBColor GlossySpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3
 	u.normalize();
 	Vector3D v = u ^ w;
 
-	Point3D sp = m_sampler->sample_hemisphere();
+	Point3D sp = sampler_ptr->sample_hemisphere();
 	wi = sp.x * u + sp.y * v + sp.z * w;
 
 	if (sr.normal * wi < 0.0) 						// reflected ray is below tangent plane

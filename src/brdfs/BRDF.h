@@ -11,27 +11,25 @@ class BRDF
 {
 public:
 	BRDF();
-	BRDF(const BRDF& other);
+	BRDF(const BRDF& brdf_object);
 	~BRDF();
 	BRDF& operator= (const BRDF& rhs);
 
-	virtual RGBColor F(const ShadeRec& sr, const Vector3D& wo, 
+	virtual RGBColor f(const ShadeRec& sr, const Vector3D& wo, 
 		const Vector3D& wi);
 
-	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo, 
+	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, 
 		Vector3D& wi);
 
-	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
+	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi,
 		float& pdf);
 
-	virtual RGBColor Rho(const ShadeRec& sr, const Vector3D& wo);
+	virtual RGBColor rho(const ShadeRec& sr, const Vector3D& wo);
 
-	virtual void SetSampler(Sampler* sampler_ptr);
-
-	virtual BRDF* Clone() const;
+	virtual void set_sampler(Sampler* sampler_ptr);
 
 protected:
-	Sampler* m_sampler;
+	Sampler* sampler_ptr;
 };
 
 #endif

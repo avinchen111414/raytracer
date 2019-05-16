@@ -12,21 +12,19 @@ class Dielectric: public Phong
 public:
 	Dielectric();
 	Dielectric(const Dielectric& dlt);
-	virtual Material* Clone() const;
+	virtual Material* clone() const;
 	Dielectric& operator= (const Dielectric& rhs);
 
-	virtual RGBColor AreaLightShade(ShadeRec& sr);
+	virtual RGBColor area_light_shade(ShadeRec& sr);
 
-	void SetEta(float eta_in, float eta_out);
-	void SetColorFilter(RGBColor cf_in, RGBColor cf_out);
+	void set_eta(float eta_in, float eta_out);
+	void set_color_filter(RGBColor cf_in, RGBColor cf_out);
 
 protected:
-	// 因为表示介质的BRDF和BTDF都需要特化的Reflector和Transmitter
-	// 所以这里就直接使用子类类型，不使用普适性的基类类型了。
-	FresnelReflector* m_fresnel_brdf;
-	FresnelTransmitter* m_fresnel_btdf;
-	RGBColor m_cf_in;
-	RGBColor m_cf_out;
+	FresnelReflector* fresnel_brdf;
+	FresnelTransmitter* fresnel_btdf;
+	RGBColor cf_in;
+	RGBColor cf_out;
 
 private:
 

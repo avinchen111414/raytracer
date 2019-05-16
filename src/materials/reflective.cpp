@@ -16,7 +16,7 @@ Reflective::Reflective(const Reflective& r)
 
 }
 
-Material* Reflective::Clone() const
+Material* Reflective::clone() const
 {
 	return new Reflective(*this);
 }
@@ -33,12 +33,12 @@ Reflective& Reflective::operator= (const Reflective& rhs)
 
 RGBColor Reflective::global_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::AreaLightShade(sr));
+	RGBColor L(Phong::area_light_shade(sr));
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
 	float pdf;
-	RGBColor fr = reflective_brdf->SampleF(sr, wo, wi, pdf);
+	RGBColor fr = reflective_brdf->sample_f(sr, wo, wi, pdf);
 	Ray reflected_ray(sr.hit_point, wi);
 
 	if (sr.depth == 0)
@@ -51,11 +51,11 @@ RGBColor Reflective::global_shade(ShadeRec& sr)
 
 RGBColor Reflective::area_light_shade(ShadeRec& sr)
 {
-	RGBColor L(Phong::AreaLightShade(sr));
+	RGBColor L(Phong::area_light_shade(sr));
 
 	Vector3D wo = -sr.ray.d;
 	Vector3D wi;
-	RGBColor fr = reflective_brdf->SampleF(sr, wo, wi);
+	RGBColor fr = reflective_brdf->sample_f(sr, wo, wi);
 
 	Ray reflective_ray(sr.hit_point, wi);
 	

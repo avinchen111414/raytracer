@@ -20,12 +20,12 @@ public:
 
 	virtual GlossySpecular* clone() const;
 
-	virtual RGBColor f(const ShadeRec& sr, const Vector3D& wo, 
+	virtual RGBColor F(const ShadeRec& sr, const Vector3D& wo, 
 		const Vector3D& wi);
 
-	virtual void set_sampler(Sampler* sampler_ptr);
+	virtual void SetSampler(Sampler* sampler_ptr);
 
-	virtual RGBColor sample_f(const ShadeRec& sr, const Vector3D& wo, 
+	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo, 
 		Vector3D& wi, float& pdf);
 
 	inline void set_ks(const float ks) {this->ks = ks;};

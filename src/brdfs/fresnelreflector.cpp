@@ -30,7 +30,7 @@ FresnelReflector* FresnelReflector::clone() const
 	return new FresnelReflector(*this);
 }
 
-RGBColor FresnelReflector::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const
+RGBColor FresnelReflector::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const
 {
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2 * ndotwo * sr.normal;

@@ -18,7 +18,7 @@ public:
 
 	virtual FresnelReflector* clone() const;
 
-	virtual RGBColor FresnelReflector::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const;
+	virtual RGBColor FresnelReflector::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const;
 
 	float fresnel(const ShadeRec& sr) const;
 

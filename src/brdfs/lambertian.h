@@ -21,16 +21,16 @@ public:
 		clone(void) const;
 
 	virtual RGBColor
-		f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi) const;
+		F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi) const;
 
 	virtual RGBColor												
-		sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const;
+		SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const;
 
 	virtual RGBColor
-		sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const;
+		SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const;
 
 	virtual RGBColor
-		rho(const ShadeRec& sr, const Vector3D& wo) const;
+		Rho(const ShadeRec& sr, const Vector3D& wo) const;
 
 	inline void set_kd(float kd) {this->kd = kd;};
 	inline void set_cd(const RGBColor& cd) {this->cd = cd;};

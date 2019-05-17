@@ -46,7 +46,7 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 
 	Vector3D wi;
 	Vector3D wo(-sr.ray.d);
-	RGBColor fr = fresnel_brdf->sample_f(sr, wo, wi);
+	RGBColor fr = fresnel_brdf->SampleF(sr, wo, wi);
 	Ray reflected_ray(sr.hit_point, wi);
 	
 	RGBColor Lr, Lt;

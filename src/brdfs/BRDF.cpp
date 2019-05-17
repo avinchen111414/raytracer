@@ -4,29 +4,29 @@
 #include "sampler/sampler.h"
 
 BRDF::BRDF()
-	: sampler_ptr(nullptr)
+	: m_sampler_ptr(nullptr)
 {}
 
 BRDF::BRDF(const BRDF& object)
 {
-	if (object.sampler_ptr)
-		sampler_ptr = object.sampler_ptr->clone();
+	if (object.m_sampler_ptr)
+		m_sampler_ptr = object.m_sampler_ptr->clone();
 	else
-		sampler_ptr = nullptr;
+		m_sampler_ptr = nullptr;
 }
 
 BRDF& BRDF::operator=(const BRDF& rhs) {
 	if (this == &rhs)
 		return (*this);
 
-	if (sampler_ptr){
-		delete sampler_ptr;
-		sampler_ptr = nullptr;
+	if (m_sampler_ptr){
+		delete m_sampler_ptr;
+		m_sampler_ptr = nullptr;
 	}
 
-	if (rhs.sampler_ptr)
+	if (rhs.m_sampler_ptr)
 	{
-		sampler_ptr = rhs.sampler_ptr->clone();
+		m_sampler_ptr = rhs.m_sampler_ptr->clone();
 	}
 
 	return (*this);
@@ -34,38 +34,38 @@ BRDF& BRDF::operator=(const BRDF& rhs) {
 
 BRDF::~BRDF() 
 {
-	if (sampler_ptr)
+	if (m_sampler_ptr)
 	{
-		delete sampler_ptr;
-		sampler_ptr = nullptr;
+		delete m_sampler_ptr;
+		m_sampler_ptr = nullptr;
 	}
 }
 
-void BRDF::set_sampler(Sampler* sampler_ptr)
+void BRDF::SetSampler(Sampler* sampler_ptr)
 {
 	if (sampler_ptr)
 	{
-		this->sampler_ptr = sampler_ptr;
-		this->sampler_ptr->map_samples_to_hemisphere(1);
+		this->m_sampler_ptr = sampler_ptr;
+		this->m_sampler_ptr->map_samples_to_hemisphere(1);
 	}
 }
 
-RGBColor BRDF::f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
+RGBColor BRDF::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
 {
 	return RGBColor(0);
 }
 
-RGBColor BRDF::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi)
+RGBColor BRDF::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi)
 {
 	return RGBColor(0);
 }
 
-RGBColor BRDF::sample_f(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf)
+RGBColor BRDF::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf)
 {
 	return RGBColor(0);
 }
 
-RGBColor BRDF::rho(const ShadeRec& sr, const Vector3D& wo)
+RGBColor BRDF::Rho(const ShadeRec& sr, const Vector3D& wo)
 {
 	return RGBColor(0);
 }

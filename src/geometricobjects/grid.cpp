@@ -20,12 +20,12 @@ Grid::~Grid()
 	m_cells.clear();
 }
 
-const BBox* Grid::get_bounding_box() const
+const BBox* Grid::GetBoundingBox() const
 {
 	return &m_bbox;
 }
 
-bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
+bool Grid::Hit(const Ray& ray, double& tmin, ShadeRec& s) const
 { 
 	// Same as BBox::hit
 	double ox = ray.o.x;
@@ -188,9 +188,9 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 		// tx_next 最小，说明射线将要进入YOZ平面，由tx_next给出的cell
 		if (tx_next < ty_next && tx_next < tz_next)
 		{
-			if (object_ptr && object_ptr->hit(ray, tmin, s) && tmin < tx_next)
+			if (object_ptr && object_ptr->Hit(ray, tmin, s) && tmin < tx_next)
 			{
-				const_cast<Material*>(m_material) = object_ptr->get_material();
+				const_cast<Material*>(m_material) = object_ptr->GetMaterial();
 				return true;
 			}
 
@@ -203,9 +203,9 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 		{
 			if (ty_next < tz_next)
 			{
-				if (object_ptr && object_ptr->hit(ray, tmin, s) && tmin < ty_next)
+				if (object_ptr && object_ptr->Hit(ray, tmin, s) && tmin < ty_next)
 				{
-					const_cast<Material*>(m_material) = object_ptr->get_material();
+					const_cast<Material*>(m_material) = object_ptr->GetMaterial();
 					return true;
 				}
 
@@ -216,9 +216,9 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 			}
 			else
 			{
-				if (object_ptr && object_ptr->hit(ray, tmin, s) && tmin < tz_next)
+				if (object_ptr && object_ptr->Hit(ray, tmin, s) && tmin < tz_next)
 				{
-					const_cast<Material*>(m_material) = object_ptr->get_material();
+					const_cast<Material*>(m_material) = object_ptr->GetMaterial();
 					return true;
 				}
 
@@ -231,7 +231,7 @@ bool Grid::hit(const Ray& ray, double& tmin, ShadeRec& s) const
 	}
 }
 
-bool Grid::shadow_hit(const Ray& ray, float& tmin) const
+bool Grid::ShadowHit(const Ray& ray, float& tmin) const
 {
 	// Same as BBox::hit
 	double ox = ray.o.x;
@@ -394,7 +394,7 @@ bool Grid::shadow_hit(const Ray& ray, float& tmin) const
 		// tx_next 最小，说明射线将要进入YOZ平面，由tx_next给出的cell
 		if (tx_next < ty_next && tx_next < tz_next)
 		{
-			if (object_ptr && object_ptr->shadow_hit(ray, tmin) && tmin < tx_next)
+			if (object_ptr && object_ptr->ShadowHit(ray, tmin) && tmin < tx_next)
 				return true;
 
 			tx_next += dtx;
@@ -406,7 +406,7 @@ bool Grid::shadow_hit(const Ray& ray, float& tmin) const
 		{
 			if (ty_next < tz_next)
 			{
-				if (object_ptr && object_ptr->shadow_hit(ray, tmin) && tmin < ty_next)
+				if (object_ptr && object_ptr->ShadowHit(ray, tmin) && tmin < ty_next)
 					return true;
 
 				ty_next += dty;
@@ -416,7 +416,7 @@ bool Grid::shadow_hit(const Ray& ray, float& tmin) const
 			}
 			else
 			{
-				if (object_ptr && object_ptr->shadow_hit(ray, tmin) && tmin < tz_next)
+				if (object_ptr && object_ptr->ShadowHit(ray, tmin) && tmin < tz_next)
 					return true;
 
 				tz_next += dtz;
@@ -428,10 +428,10 @@ bool Grid::shadow_hit(const Ray& ray, float& tmin) const
 	}
 }
 
-void Grid::setup_cells()
+void Grid::SetupCells()
 {
-	Point3D p0 = min_coordinates();
-	Point3D p1 = max_coordinates();
+	Point3D p0 = MinCoordinates();
+	Point3D p1 = MaxCoordinates();
 
 	m_bbox.x0 = p0.x;
 	m_bbox.y0 = p0.y;
@@ -466,7 +466,7 @@ void Grid::setup_cells()
 
 	for (size_t idx = 0; idx < m_objects.size(); idx++)
 	{
-		const BBox* obj_bbox = m_objects[idx]->get_bounding_box();
+		const BBox* obj_bbox = m_objects[idx]->GetBoundingBox();
 		if (!obj_bbox)
 			continue;
 		int ixmin = clamp((obj_bbox->x0 - p0.x) / (p1.x - p0.x) * m_nx, 
@@ -498,13 +498,13 @@ void Grid::setup_cells()
 						if (!compound)
 						{
 							Compound* compound = new Compound;
-							compound->add_object(m_cells[index]);
-							compound->add_object(m_objects[idx]);
+							compound->AddObject(m_cells[index]);
+							compound->AddObject(m_objects[idx]);
 							m_cells[index] = compound;
 						}
 						else
 						{
-							compound->add_object(m_objects[idx]);
+							compound->AddObject(m_objects[idx]);
 						}
 					}
 					counts[index] += 1;
@@ -537,13 +537,13 @@ void Grid::setup_cells()
 	std::cout << "numThrees = " << num_threes << "  numGreater = " << num_greater << std::endl;		 
 }
 
-Point3D Grid::min_coordinates() const
+Point3D Grid::MinCoordinates() const
 {
 	Point3D p(INT_MAX);
 
 	for (size_t idx = 0; idx < m_objects.size(); idx++)
 	{
-		const BBox* bbox = m_objects[idx]->get_bounding_box();
+		const BBox* bbox = m_objects[idx]->GetBoundingBox();
 		if (!bbox)
 			continue;
 		if (bbox->x0 < p.x)
@@ -558,13 +558,13 @@ Point3D Grid::min_coordinates() const
 	return p;
 }
 
-Point3D Grid::max_coordinates() const
+Point3D Grid::MaxCoordinates() const
 {
 	Point3D p(-INT_MAX);
 
 	for (size_t idx = 0; idx < m_objects.size(); idx++)
 	{
-		const BBox* bbox = m_objects[idx]->get_bounding_box();
+		const BBox* bbox = m_objects[idx]->GetBoundingBox();
 		if (!bbox)
 			continue;
 		if (bbox->x1 > p.x)

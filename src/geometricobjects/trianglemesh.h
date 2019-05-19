@@ -28,15 +28,15 @@ public:
 
 public:
 	TriangleMesh(Mesh* mesh, bool reverse_normal=false);
-	void read_flat_triangle(const char* ply_filepath);
-	void read_smooth_triangle(const char* ply_filepath);
+	void ReadFlatTriangles(const char* ply_filepath);
+	void ReadSmoothTriangles(const char* ply_filepath);
 
 protected:
-	void read_ply_file(const char* ply_filepath, TriangleType type);
-	void compute_mesh_normals();
-	void read_ply_vertices(PlyFile* ply, char* elem_name,
+	void ReadPlyFile(const char* ply_filepath, TriangleType type);
+	void ComputeMeshNormals();
+	void ReadPlyVertices(PlyFile* ply, char* elem_name,
 		PlyProperty* vert_props, int num_elems);
-	void read_ply_faces(PlyFile* ply, char* elem_name,
+	void ReadPlyFaces(PlyFile* ply, char* elem_name,
 		PlyProperty* indices_props, int num_elems, TriangleType type);
 
 private:

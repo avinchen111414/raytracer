@@ -9,21 +9,21 @@ const float Box::kEpsilon = 0.001f;
 Box::Box(float _x0, float _y0, float _z0,
 		 float _x1, float _y1, float _z1)
 		 : GeometricObject(), 
-		 x0(_x0), y0(_y0), z0(_z0), x1(_x1), y1(_y1), z1(_z1),
+		 m_x0(_x0), m_y0(_y0), m_z0(_z0), m_x1(_x1), m_y1(_y1), m_z1(_z1),
 		 m_bbox(_x0, _y0, _z0, _x1 , _y1, _z1)
 {}
 
 Box::Box(const Point3D& p0, const Point3D& p1)
 	: GeometricObject(),
-	x0(p0.x), y0(p0.y), z0(p0.z),
-	x1(p1.x), y1(p1.y), z1(p1.z),
+	m_x0(p0.x), m_y0(p0.y), m_z0(p0.z),
+	m_x1(p1.x), m_y1(p1.y), m_z1(p1.z),
 	m_bbox(p0, p1)
 {}
 
 Box::Box(const Box& other)
 	: GeometricObject(other),
-	x0(other.x0), y0(other.y0), z0(other.z0),
-	x1(other.x1), y1(other.y1), z1(other.z1),
+	m_x0(other.m_x0), m_y0(other.m_y0), m_z0(other.m_z0),
+	m_x1(other.m_x1), m_y1(other.m_y1), m_z1(other.m_z1),
 	m_bbox(other.m_bbox)
 {}
 
@@ -33,8 +33,8 @@ Box& Box::operator= (const Box& rhs)
 		return *this;
 
 	GeometricObject::operator=(rhs);
-	x0 = rhs.x0; y0 = rhs.y0; z0 = rhs.z0;
-	x1 = rhs.x1; y1 = rhs.y1; z1 = rhs.z1;
+	m_x0 = rhs.m_x0; m_y0 = rhs.m_y0; m_z0 = rhs.m_z0;
+	m_x1 = rhs.m_x1; m_y1 = rhs.m_y1; m_z1 = rhs.m_z1;
 	m_bbox = rhs.m_bbox;
 
 	return *this;
@@ -43,25 +43,25 @@ Box& Box::operator= (const Box& rhs)
 Box::~Box()
 {}
 
-GeometricObject* Box::clone() const
+GeometricObject* Box::Clone() const
 {
 	return new Box(*this);
 }
 
-bool Box::hit(const Ray& ray, double& t, ShadeRec& s) const 
+bool Box::Hit(const Ray& ray, double& t, ShadeRec& s) const 
 {
 	double ox = ray.o.x; double dx = ray.d.x;
 	double tx_min, tx_max;
 	double a = 1.0 / dx;
 	if (a >= 0)
 	{
-		tx_min = (x0 - ox) * a;
-		tx_max = (x1 - ox) * a;
+		tx_min = (m_x0 - ox) * a;
+		tx_max = (m_x1 - ox) * a;
 	}
 	else
 	{
-		tx_min = (x1 - ox) * a;
-		tx_max = (x0 - ox) * a;
+		tx_min = (m_x1 - ox) * a;
+		tx_max = (m_x0 - ox) * a;
 	}
 
 	double oy = ray.o.y; double dy = ray.d.y;
@@ -69,13 +69,13 @@ bool Box::hit(const Ray& ray, double& t, ShadeRec& s) const
 	double b = 1.0 / dy;
 	if (b >= 0)
 	{
-		ty_min = (y0 - oy) * b;
-		ty_max = (y1 - oy) * b;
+		ty_min = (m_y0 - oy) * b;
+		ty_max = (m_y1 - oy) * b;
 	}
 	else
 	{
-		ty_min = (y1 - oy) * b;
-		ty_max = (y0 - oy) * b;
+		ty_min = (m_y1 - oy) * b;
+		ty_max = (m_y0 - oy) * b;
 	}
 
 	double oz = ray.o.z; double dz = ray.d.z;
@@ -83,13 +83,13 @@ bool Box::hit(const Ray& ray, double& t, ShadeRec& s) const
 	double c = 1.0 / dz;
 	if (c >= 0)
 	{
-		tz_min = (z0 - oz) * c;
-		tz_max = (z1 - oz) * c;
+		tz_min = (m_z0 - oz) * c;
+		tz_max = (m_z1 - oz) * c;
 	}
 	else
 	{
-		tz_min = (z1 - oz) * c;
-		tz_max = (z0 - oz) * c;
+		tz_min = (m_z1 - oz) * c;
+		tz_max = (m_z0 - oz) * c;
 	}
 
 	// find the largest entering t-value
@@ -136,12 +136,12 @@ bool Box::hit(const Ray& ray, double& t, ShadeRec& s) const
 		if (t0 > kEpsilon)
 		{
 			t = t0;
-			s.normal = get_normal(face_in);
+			s.normal = GetNormal(face_in);
 		}
 		else // ray hits inside surface
 		{
 			t = t1;
-			s.normal = get_normal(face_out);
+			s.normal = GetNormal(face_out);
 		}
 
 		s.local_hit_point = ray.o + t * ray.d;
@@ -151,20 +151,20 @@ bool Box::hit(const Ray& ray, double& t, ShadeRec& s) const
 		return false;
 }
 
-bool Box::shadow_hit(const Ray& ray, float& tmin) const
+bool Box::ShadowHit(const Ray& ray, float& tmin) const
 {
 	double ox = ray.o.x; double dx = ray.d.x;
 	double tx_min, tx_max;
 	double a = 1.0 / dx;
 	if (a >= 0)
 	{
-		tx_min = (x0 - ox) * a;
-		tx_max = (x1 - ox) * a;
+		tx_min = (m_x0 - ox) * a;
+		tx_max = (m_x1 - ox) * a;
 	}
 	else
 	{
-		tx_min = (x1 - ox) * a;
-		tx_max = (x0 - ox) * a;
+		tx_min = (m_x1 - ox) * a;
+		tx_max = (m_x0 - ox) * a;
 	}
 
 	double oy = ray.o.y; double dy = ray.d.y;
@@ -172,13 +172,13 @@ bool Box::shadow_hit(const Ray& ray, float& tmin) const
 	double b = 1.0 / dy;
 	if (b >= 0)
 	{
-		ty_min = (y0 - oy) * b;
-		ty_max = (y1 - oy) * b;
+		ty_min = (m_y0 - oy) * b;
+		ty_max = (m_y1 - oy) * b;
 	}
 	else
 	{
-		ty_min = (y1 - oy) * b;
-		ty_max = (y0 - oy) * b;
+		ty_min = (m_y1 - oy) * b;
+		ty_max = (m_y0 - oy) * b;
 	}
 
 	double oz = ray.o.z; double dz = ray.d.z;
@@ -186,13 +186,13 @@ bool Box::shadow_hit(const Ray& ray, float& tmin) const
 	double c = 1.0 / dz;
 	if (c >= 0)
 	{
-		tz_min = (z0 - oz) * c;
-		tz_max = (z1 - oz) * c;
+		tz_min = (m_z0 - oz) * c;
+		tz_max = (m_z1 - oz) * c;
 	}
 	else
 	{
-		tz_min = (z1 - oz) * c;
-		tz_max = (z0 - oz) * c;
+		tz_min = (m_z1 - oz) * c;
+		tz_max = (m_z0 - oz) * c;
 	}
 
 	// find the largest entering t-value
@@ -242,7 +242,7 @@ bool Box::shadow_hit(const Ray& ray, float& tmin) const
 		return false;
 }
 
-Normal Box::get_normal(int face_hit) const
+Normal Box::GetNormal(int face_hit) const
 {
 	switch (face_hit)
 	{
@@ -264,7 +264,7 @@ Normal Box::get_normal(int face_hit) const
 	return Normal(0.0f, 0.0f, 0.0f);
 }
 
-const BBox* Box::get_bounding_box() const
+const BBox* Box::GetBoundingBox() const
 {
 	return &m_bbox;
 }

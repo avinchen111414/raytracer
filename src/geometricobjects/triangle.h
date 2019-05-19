@@ -15,13 +15,13 @@ public:
 	Triangle& operator= (const Triangle& rhs);
 	~Triangle();
 
-	virtual GeometricObject* clone() const;
-	virtual bool hit(const Ray& ray, double& tmin, ShadeRec& sr) const;
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual const BBox* get_bounding_box() const;
+	virtual GeometricObject* Clone() const;
+	virtual bool Hit(const Ray& ray, double& tmin, ShadeRec& sr) const;
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual const BBox* GetBoundingBox() const;
 
 protected:
-	void update_bbox();
+	void UpdateBbox();
 
 private:
 	Point3D v0, v1, v2;

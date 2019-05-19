@@ -11,13 +11,13 @@ public:
 	Sphere(void);
 	Sphere(const Point3D& center, const float radius);
 
-	virtual bool hit(const Ray& ray, double& t, ShadeRec& s) const;
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual GeometricObject* clone() const;
-	virtual const BBox* get_bounding_box() const;
+	virtual bool Hit(const Ray& ray, double& t, ShadeRec& s) const;
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual GeometricObject* Clone() const;
+	virtual const BBox* GetBoundingBox() const;
 
 protected:
-	void update_bbox();
+	void UpdateBbox();
 
 public:
 	Point3D m_center;

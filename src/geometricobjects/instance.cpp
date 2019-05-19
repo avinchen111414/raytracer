@@ -26,7 +26,7 @@ Instance::Instance(GeometricObject* object)
 	m_inv_matrix.set_identity();
 	m_forward_matrix.set_identity();
 	if (object)
-		m_material = object->get_material();
+		m_material = object->GetMaterial();
 }
 
 Instance::Instance(const Instance& other)
@@ -36,7 +36,7 @@ Instance::Instance(const Instance& other)
 	m_bbox(other.m_bbox)
 {
 	if (other.m_object)
-		m_object = other.m_object->clone();
+		m_object = other.m_object->Clone();
 	else
 		m_object = nullptr;
 
@@ -61,30 +61,30 @@ Instance& Instance::operator=(const Instance& rhs)
 	if (m_object)
 		delete m_object;
 	if (rhs.m_object)
-		m_object = rhs.m_object->clone();
+		m_object = rhs.m_object->Clone();
 	else
 		m_object = nullptr;
 
 	m_inv_matrix = rhs.m_inv_matrix;
 	m_forward_matrix = rhs.m_forward_matrix;
 	m_bbox = rhs.m_bbox;
-	transform_the_texture = rhs.transform_the_texture;
+	m_transform_the_texture = rhs.m_transform_the_texture;
 	m_material = rhs.m_material;
 	return *this;
 }
 
-GeometricObject* Instance::clone() const
+GeometricObject* Instance::Clone() const
 {
 	return new Instance(*this);
 }
 
-bool Instance::hit(const Ray& ray, double& t, ShadeRec& s) const
+bool Instance::Hit(const Ray& ray, double& t, ShadeRec& s) const
 {
 	Ray inv_ray(ray);
 	inv_ray.o = m_inv_matrix * inv_ray.o;
 	inv_ray.d = m_inv_matrix * inv_ray.d;
 
-	if (m_object->hit(inv_ray, t, s))
+	if (m_object->Hit(inv_ray, t, s))
 	{
 		s.normal = m_inv_matrix * s.normal;
 		s.normal.normalize();
@@ -95,24 +95,24 @@ bool Instance::hit(const Ray& ray, double& t, ShadeRec& s) const
 	return false;
 }
 
-bool Instance::shadow_hit(const Ray& ray, float& tmin) const
+bool Instance::ShadowHit(const Ray& ray, float& tmin) const
 {
 	Ray inv_ray(ray);
 	inv_ray.o = m_inv_matrix * inv_ray.o;
 	inv_ray.d = m_inv_matrix * inv_ray.d;
 
-	if (m_object->shadow_hit(inv_ray, tmin))
+	if (m_object->ShadowHit(inv_ray, tmin))
 		return true;
 
 	return false;
 }
 
-void Instance::set_object(GeometricObject* object)
+void Instance::SetObject(GeometricObject* object)
 {
 	if (object)
 	{
-		m_object = object->clone();
-		m_material = m_object->get_material();
+		m_object = object->Clone();
+		m_material = m_object->GetMaterial();
 	}
 	else
 	{
@@ -121,28 +121,28 @@ void Instance::set_object(GeometricObject* object)
 	}
 }
 
-Point3D Instance::sample()
+Point3D Instance::Sample()
 {
 	if (m_object)
-		return m_object->sample();
-	return GeometricObject::sample();
+		return m_object->Sample();
+	return GeometricObject::Sample();
 }
 
-float Instance::pdf(const ShadeRec& sr)
+float Instance::Pdf(const ShadeRec& sr)
 {
 	if (m_object)
-		return m_object->pdf(sr);
-	return GeometricObject::pdf(sr);
+		return m_object->Pdf(sr);
+	return GeometricObject::Pdf(sr);
 }
 
-Normal Instance::get_normal(const Point3D& p)
+Normal Instance::GetNormal(const Point3D& p)
 {
 	if (m_object)
-		return m_object->get_normal(p);
-	return GeometricObject::get_normal(p);
+		return m_object->GetNormal(p);
+	return GeometricObject::GetNormal(p);
 }
 
-void Instance::translate(const Vector3D& trans)
+void Instance::Translate(const Vector3D& trans)
 {
 	Matrix inv_translation_matrix;
 	inv_translation_matrix.m[0][3] = -trans.x;
@@ -159,12 +159,12 @@ void Instance::translate(const Vector3D& trans)
 	m_forward_matrix = forward_translation_matrix * m_forward_matrix;
 }
 
-void Instance::translate(double dx, double dy, double dz)
+void Instance::Translate(double dx, double dy, double dz)
 {
-	translate(Vector3D(dx, dy, dz));
+	Translate(Vector3D(dx, dy, dz));
 }
 
-void Instance::rotate_x(double r)
+void Instance::RotateX(double r)
 {
 	double sin_theta = sin(r * PI_ON_180);
 	double cos_theta = cos(r * PI_ON_180);
@@ -189,7 +189,7 @@ void Instance::rotate_x(double r)
 
 }
 
-void Instance::rotate_y(double r)
+void Instance::RotateY(double r)
 {
 	double sin_theta = sin(r * PI / 180.0);
 	double cos_theta = cos(r * PI / 180.0);
@@ -213,7 +213,7 @@ void Instance::rotate_y(double r)
 	m_forward_matrix = y_rotation_matrix * m_forward_matrix;
 }
 
-void Instance::rotate_z(double r)
+void Instance::RotateZ(double r)
 {
 	double sin_theta = sin(r * PI / 180.0);
 	double cos_theta = cos(r * PI / 180.0);
@@ -237,7 +237,7 @@ void Instance::rotate_z(double r)
 	m_forward_matrix = z_rotation_matrix * m_forward_matrix;
 }
 
-void Instance::shear(const Matrix& s)
+void Instance::Shear(const Matrix& s)
 {
 	Matrix inverse_shearing_matrix;    // inverse shear matrix
 
@@ -277,7 +277,7 @@ void Instance::shear(const Matrix& s)
 	m_forward_matrix = s * m_forward_matrix;
 }
 
-void Instance::scale(const Vector3D& s)
+void Instance::Scale(const Vector3D& s)
 {
 	Matrix	inv_scaling_matrix;			// temporary inverse scaling matrix
 
@@ -296,20 +296,20 @@ void Instance::scale(const Vector3D& s)
 	m_forward_matrix = scaling_matrix * m_forward_matrix;
 }
 
-void Instance::scale(double sx, double sy, double sz)
+void Instance::Scale(double sx, double sy, double sz)
 {
-	scale(Vector3D(sx, sy, sz));
+	Scale(Vector3D(sx, sy, sz));
 }
 
-void Instance::end_transform()
+void Instance::EndTransform()
 {
-	update_bbox();
+	UpdateBbox();
 }
 
-void Instance::update_bbox()
+void Instance::UpdateBbox()
 {
 	// 1. 首先拿到原物体的bbox
-	const BBox* bbox = m_object->get_bounding_box();
+	const BBox* bbox = m_object->GetBoundingBox();
 	if (!bbox)
 		return;
 	const BBox& object_bbox = *bbox;
@@ -356,7 +356,7 @@ void Instance::update_bbox()
 	m_bbox.x1 = x1; m_bbox.y1 = y1; m_bbox.z1 = z1;
 }
 
-const BBox* Instance::get_bounding_box() const
+const BBox* Instance::GetBoundingBox() const
 {
 	return &m_bbox;
 }

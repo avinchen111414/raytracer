@@ -18,14 +18,14 @@ public:
 	virtual	~MeshTriangle(void);   									
 	MeshTriangle& operator= (const MeshTriangle& rhs);
 
-	virtual bool hit(const Ray& ray, double& tmin, ShadeRec& sr) const = 0;
-	virtual	bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual const BBox* get_bounding_box() const;
+	virtual bool Hit(const Ray& ray, double& tmin, ShadeRec& sr) const = 0;
+	virtual	bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual const BBox* GetBoundingBox() const;
 
-	void compute_normal(const bool reverse_normal);
-	void set_mesh(Mesh* mesh, const int i1, const int i2, const int i3);
+	void ComputeNormal(const bool reverse_normal);
+	void SetMesh(Mesh* mesh, const int i1, const int i2, const int i3);
 
-	virtual Normal get_normal() const;
+	virtual Normal GetNormal() const;
 	
 protected:
 	void update_bbox();

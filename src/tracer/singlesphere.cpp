@@ -17,7 +17,7 @@ SingleSphere::trace_ray(const Ray& ray) const {
 	ShadeRec	sr(*world_ptr); 	// not used
 	double    	t;  				// not used
 	
-	if (world_ptr->sphere.hit(ray, t, sr))		
+	if (world_ptr->sphere.Hit(ray, t, sr))		
 		return RGBColor(1.0, 0.0, 0.0);  
 	else
 		return RGBColor(0.0);   

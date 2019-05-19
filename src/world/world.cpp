@@ -121,11 +121,11 @@ ShadeRec World::hit_bare_bones_objects(const Ray& ray)
 	for (size_t i = 0; i != num_objs; i++)
 	{
 		ShadeRec sr_stack(sr);	
-		if (objects[i]->hit(ray, t, sr) && (t < tmin))
+		if (objects[i]->Hit(ray, t, sr) && (t < tmin))
 		{
 			sr.hit_an_object = true;
 			tmin = t;
-			sr.color = objects[i]->get_color();
+			sr.color = objects[i]->GetColor();
 		}
 		else
 		{
@@ -146,13 +146,13 @@ ShadeRec World::hit_object(const Ray& ray)
 
 	for (size_t i = 0; i != num_objects; i++)
 	{
-		if (objects[i]->hit(ray, t, sr) && (t < tmin))
+		if (objects[i]->Hit(ray, t, sr) && (t < tmin))
 		{
 			sr.hit_an_object = true;
 			tmin = t;
-			if (objects[i]->get_material() == NULL)
+			if (objects[i]->GetMaterial() == NULL)
 				bool _debug = true;
-			sr.material_ptr = objects[i]->get_material();
+			sr.material_ptr = objects[i]->GetMaterial();
 			sr.hit_point = ray.o + t * ray.d;
 			normal = sr.normal;
 			local_hit_point = sr.local_hit_point;

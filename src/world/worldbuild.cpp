@@ -59,7 +59,7 @@ void World::build_ao_scene()
 	matte_ptr0->set_cd(RGBColor(1, 1, 0));
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
-	sphere0->set_material(matte_ptr0);
+	sphere0->SetMaterial(matte_ptr0);
 	add_object(sphere0);
 
 	Matte* matte_ptr1 = new Matte;
@@ -68,7 +68,7 @@ void World::build_ao_scene()
 	matte_ptr1->set_cd(RGBColor(1, 1, 1));
 
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
-	plane->set_material(matte_ptr1);
+	plane->SetMaterial(matte_ptr1);
 	add_object(plane);
 }
 
@@ -97,9 +97,9 @@ void World::build_area_lights_scene()
 	Jittered* rectangle_sampler_ptr = new Jittered(num_samples);
 	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-2.0f, 1.0f, -2.0f),
 		Vector3D(0.0f, 3.0f, 0.0f), Vector3D(-1.7f, 0.0f, 1.7f));
-	rectangle_ptr->set_material(emmisvie_ptr);
-	rectangle_ptr->set_sampler(rectangle_sampler_ptr);
-	rectangle_ptr->enable_shadow(false);
+	rectangle_ptr->SetMaterial(emmisvie_ptr);
+	rectangle_ptr->SetSampler(rectangle_sampler_ptr);
+	rectangle_ptr->EnableShadow(false);
 	add_object(rectangle_ptr);
 
 	AreaLight* area_light_ptr = new AreaLight;
@@ -121,7 +121,7 @@ void World::build_area_lights_scene()
 	matte_ptr0->set_cd(RGBColor(1, 1, 0));
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
-	sphere0->set_material(matte_ptr0);
+	sphere0->SetMaterial(matte_ptr0);
 	add_object(sphere0);
 	
 	
@@ -131,11 +131,11 @@ void World::build_area_lights_scene()
 	matte_ptr1->set_cd(RGBColor(1, 1, 1));
 
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
-	plane->set_material(matte_ptr1);
+	plane->SetMaterial(matte_ptr1);
 	add_object(plane);
 
 	Box* box = new Box(Point3D(1, 0, 1), Point3D(2, 1, 2));
-	box->set_material(matte_ptr1);
+	box->SetMaterial(matte_ptr1);
 	add_object(box);
 }
 
@@ -183,10 +183,10 @@ void World::build_instance_test_scene()
 	phong->set_exp(50);
 
 	Instance* ellipsoid = new Instance(new Sphere);
-	ellipsoid->set_material(phong);
-	ellipsoid->scale(2, 3, 1);
-	ellipsoid->rotate_x(-45);
-	ellipsoid->translate(0, 1, 0);
+	ellipsoid->SetMaterial(phong);
+	ellipsoid->Scale(2, 3, 1);
+	ellipsoid->RotateX(-45);
+	ellipsoid->Translate(0, 1, 0);
 	add_object(ellipsoid);
 }
 
@@ -228,12 +228,12 @@ void World::build_grid_test_scene()
 		{
 			Point3D center(i, j, 0);
 			Sphere* sphere = new Sphere(center, 0.5f);
-			sphere->set_material(phong);
-			grid->add_object(sphere);
+			sphere->SetMaterial(phong);
+			grid->AddObject(sphere);
 		}
 	}
 	
-	grid->setup_cells();
+	grid->SetupCells();
 	add_object(grid);
 }
 
@@ -286,10 +286,10 @@ void World::build_triangle_mesh_test_scene()
 	const char* ply_file_name = "../../res/plys/Horse2K.ply";
 	TriangleMesh* mesh = new TriangleMesh(new Mesh, true);
 	//mesh->read_flat_triangle(ply_file_name);
-	mesh->read_smooth_triangle(ply_file_name);
-	mesh->set_material(phong);
-	mesh->setup_cells();
-	mesh->enable_shadow(true);
+	mesh->ReadSmoothTriangles(ply_file_name);
+	mesh->SetMaterial(phong);
+	mesh->SetupCells();
+	mesh->EnableShadow(true);
 	add_object(mesh);
 
 	/*
@@ -323,8 +323,8 @@ void World::build_triangle_mesh_test_scene()
 	matte_ptr2->enable_recv_shadow(true);
 
 	Plane* plane_ptr1 = new Plane(Point3D(0, -0.83, 0), Normal(0, 1, 0));  
-	plane_ptr1->set_material(matte_ptr2);
-	plane_ptr1->enable_shadow(true);
+	plane_ptr1->SetMaterial(matte_ptr2);
+	plane_ptr1->EnableShadow(true);
 	add_object(plane_ptr1);
 	
 }
@@ -407,10 +407,10 @@ void World::build_reflective_test_scene()
 	const char* ply_file_name = "../../res/plys/Horse2K.ply";
 	TriangleMesh* mesh = new TriangleMesh(new Mesh, true);
 	//mesh->read_flat_triangle(ply_file_name);
-	mesh->read_smooth_triangle(ply_file_name);
-	mesh->set_material(phong);
-	mesh->setup_cells();
-	mesh->enable_shadow(true);
+	mesh->ReadSmoothTriangles(ply_file_name);
+	mesh->SetMaterial(phong);
+	mesh->SetupCells();
+	mesh->EnableShadow(true);
 	add_object(mesh);
 	
 	//raytracer::Rectangle* rect = new raytracer::Rectangle(Point3D(0, -0.83, -2), Vector3D(3, 0, 0), Vector3D(0, 3, 0));
@@ -420,7 +420,7 @@ void World::build_reflective_test_scene()
 	Sphere* sphere0 = new Sphere(Point3D(2, 0.5f, 3), 1);
 	//sphere0->set_material(reflective);
 	//sphere0->set_material(glossy_reflective);
-	sphere0->set_material(transparent);
+	sphere0->SetMaterial(transparent);
 	add_object(sphere0);
 
 	Matte* matte_ptr2 = new Matte;			
@@ -430,8 +430,8 @@ void World::build_reflective_test_scene()
 	matte_ptr2->enable_recv_shadow(true);
 
 	Plane* plane_ptr1 = new Plane(Point3D(0, -0.83, 0), Normal(0, 1, 0));  
-	plane_ptr1->set_material(matte_ptr2);
-	plane_ptr1->enable_shadow(true);
+	plane_ptr1->SetMaterial(matte_ptr2);
+	plane_ptr1->EnableShadow(true);
 	add_object(plane_ptr1);
 }
 
@@ -487,8 +487,8 @@ void World::build_global_test_scene()
 	normal = Normal(0.0, -1.0, 0.0);
 	Hammersley* rectangle_sampler_ptr = new Hammersley(num_samples);
 	raytracer::Rectangle* light_ptr = new raytracer::Rectangle(p0, b, a);
-	light_ptr->set_material(emissive_ptr);
-	light_ptr->set_sampler(rectangle_sampler_ptr);
+	light_ptr->SetMaterial(emissive_ptr);
+	light_ptr->SetSampler(rectangle_sampler_ptr);
 	add_object(light_ptr);
 
 	AreaLight* area_light_ptr = new AreaLight;
@@ -511,8 +511,8 @@ void World::build_global_test_scene()
 	normal = Normal(-1.0, 0.0, 0.0);
 	rectangle_sampler_ptr = new Hammersley(num_samples);
 	raytracer::Rectangle* left_wall_ptr = new raytracer::Rectangle(p0, a, b);
-	left_wall_ptr->set_material(matte_ptr1);
-	left_wall_ptr->set_sampler(rectangle_sampler_ptr);
+	left_wall_ptr->SetMaterial(matte_ptr1);
+	left_wall_ptr->SetSampler(rectangle_sampler_ptr);
 	add_object(left_wall_ptr);
 
 
@@ -530,8 +530,8 @@ void World::build_global_test_scene()
 	normal = Normal(1.0, 0.0, 0.0);
 	rectangle_sampler_ptr = new Hammersley(num_samples);
 	raytracer::Rectangle* right_wall_ptr = new raytracer::Rectangle(p0, b, a);
-	right_wall_ptr->set_material(matte_ptr2);
-	right_wall_ptr->set_sampler(rectangle_sampler_ptr);
+	right_wall_ptr->SetMaterial(matte_ptr2);
+	right_wall_ptr->SetSampler(rectangle_sampler_ptr);
 	add_object(right_wall_ptr);
 
 
@@ -548,8 +548,8 @@ void World::build_global_test_scene()
 	b = Vector3D(0.0, height, 0.0);
 	normal = Normal(0.0, 0.0, -1.0);
 	raytracer::Rectangle* back_wall_ptr = new raytracer::Rectangle(p0, b, a);
-	back_wall_ptr->set_material(matte_ptr3);
-	back_wall_ptr->set_sampler(new Hammersley(num_samples));
+	back_wall_ptr->SetMaterial(matte_ptr3);
+	back_wall_ptr->SetSampler(new Hammersley(num_samples));
 	add_object(back_wall_ptr);
 
 
@@ -560,8 +560,8 @@ void World::build_global_test_scene()
 	b = Vector3D(width, 0.0, 0.0);
 	normal = Normal(0.0, 1.0, 0.0);
 	raytracer::Rectangle* floor_ptr = new raytracer::Rectangle(p0, a, b);
-	floor_ptr->set_material(matte_ptr3);
-	floor_ptr->set_sampler(new Hammersley(num_samples));
+	floor_ptr->SetMaterial(matte_ptr3);
+	floor_ptr->SetSampler(new Hammersley(num_samples));
 	add_object(floor_ptr);
 
 
@@ -572,8 +572,8 @@ void World::build_global_test_scene()
 	b = Vector3D(width, 0.0, 0.0);
 	normal = Normal(0.0, -1.0, 0.0);
 	raytracer::Rectangle* ceiling_ptr = new raytracer::Rectangle(p0, b, a);
-	ceiling_ptr->set_material(matte_ptr3);
-	ceiling_ptr->set_sampler(new Hammersley(num_samples));
+	ceiling_ptr->SetMaterial(matte_ptr3);
+	ceiling_ptr->SetSampler(new Hammersley(num_samples));
 	add_object(ceiling_ptr);
 }
 
@@ -645,7 +645,7 @@ void World::build_transparent_test_scene()
 
 	Sphere* sphere_ptr1 = new Sphere(Point3D(0.0, 4.5, 0.0), 3.0);
 	//sphere_ptr1->set_material(glass_ptr);
-	sphere_ptr1->set_material(dielectirc);
+	sphere_ptr1->SetMaterial(dielectirc);
 	add_object(sphere_ptr1);
 
 
@@ -660,7 +660,7 @@ void World::build_transparent_test_scene()
 	reflective_ptr->set_kr(0.25);
 
 	Sphere* sphere_ptr2 = new Sphere(Point3D(4, 4, -6), 3);
-	sphere_ptr2->set_material(reflective_ptr);
+	sphere_ptr2->SetMaterial(reflective_ptr);
 	add_object(sphere_ptr2);
 
 	// rectangle
@@ -671,6 +671,6 @@ void World::build_transparent_test_scene()
 	matte_ptr2->enable_recv_shadow(true);
 
 	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-20, -0.001, -100), Vector3D(0, 0, 120), Vector3D(40, 0, 0)); 
-	rectangle_ptr->set_material(matte_ptr2);
+	rectangle_ptr->SetMaterial(matte_ptr2);
 	add_object(rectangle_ptr);		
 }

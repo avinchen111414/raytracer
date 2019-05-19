@@ -13,19 +13,19 @@ public:
 	Compound& operator= (const Compound& rhs);
 
 	virtual ~Compound();
-	virtual GeometricObject* clone() const;
-	virtual bool hit(const Ray& ray, double& tmin, ShadeRec& s) const;
-	virtual void set_material(Material* m);
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual const BBox* get_bounding_box() const;
+	virtual GeometricObject* Clone() const;
+	virtual bool Hit(const Ray& ray, double& tmin, ShadeRec& s) const;
+	virtual void SetMaterial(Material* m);
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual const BBox* GetBoundingBox() const;
 	
-	virtual void add_object(GeometricObject* object);
-	size_t get_object_num() const;
+	virtual void AddObject(GeometricObject* object);
+	size_t GetObjectNum() const;
 
 protected:
-	void update_bbox();
-	void delete_objects();
-	void copy_objects(const std::vector<GeometricObject*>& rhs_objects);
+	void UpdateBbox();
+	void DeleteObjects();
+	void CopyObjects(const std::vector<GeometricObject*>& rhs_objects);
 
 protected:
 	std::vector<GeometricObject*> m_objects;

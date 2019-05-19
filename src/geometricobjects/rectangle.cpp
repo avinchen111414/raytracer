@@ -9,15 +9,15 @@ const double Rectangle::kEpsilon = 0.001;
 
 Rectangle::Rectangle():
 	GeometricObject(),
-	p0(Point3D(-1, 0, -1)),
-	a(Vector3D(0.0f, 0.0f, 2.0f)),
-	b(Vector3D(2.0f, 0.0f, 0.0f)),
-	a_len_squared(4.0f),
-	b_len_squared(4.0f),
-	normal(Vector3D(0, 1, 0)),
-	area(4),
-	inv_area(0.25f),
-	sampler_ptr(nullptr)
+	m_p0(Point3D(-1, 0, -1)),
+	m_a(Vector3D(0.0f, 0.0f, 2.0f)),
+	m_b(Vector3D(2.0f, 0.0f, 0.0f)),
+	m_a_len_squared(4.0f),
+	m_b_len_squared(4.0f),
+	m_normal(Vector3D(0, 1, 0)),
+	m_area(4),
+	m_inv_area(0.25f),
+	m_sampler_ptr(nullptr)
 {
 
 }
@@ -25,102 +25,102 @@ Rectangle::Rectangle():
 Rectangle::Rectangle(const Point3D& _p0, const Vector3D& _a,
 	const Vector3D& _b):
 GeometricObject(),
-	p0(_p0), a(_a), b(_b),
-	a_len_squared(_a.len_squared()), b_len_squared(_b.len_squared()),
-	area(_a.length() * _b.length()),
-	inv_area(1.0f / (_a.length() * _b.length())),
-	sampler_ptr(nullptr)
+	m_p0(_p0), m_a(_a), m_b(_b),
+	m_a_len_squared(_a.len_squared()), m_b_len_squared(_b.len_squared()),
+	m_area(_a.length() * _b.length()),
+	m_inv_area(1.0f / (_a.length() * _b.length())),
+	m_sampler_ptr(nullptr)
 {
-	normal = a ^ b;
-	normal.normalize();
+	m_normal = m_a ^ m_b;
+	m_normal.normalize();
 }
 
 Rectangle::Rectangle(const Rectangle& other)
 	:GeometricObject(other),
-	p0(other.p0), a(other.a), b(other.b),
-	a_len_squared(other.a_len_squared), b_len_squared(other.b_len_squared),
-	area(other.area), inv_area(other.inv_area),
-	normal(other.normal)
+	m_p0(other.m_p0), m_a(other.m_a), m_b(other.m_b),
+	m_a_len_squared(other.m_a_len_squared), m_b_len_squared(other.m_b_len_squared),
+	m_area(other.m_area), m_inv_area(other.m_inv_area),
+	m_normal(other.m_normal)
 {
-	if (other.sampler_ptr)
-		sampler_ptr = other.sampler_ptr->clone();
+	if (other.m_sampler_ptr)
+		m_sampler_ptr = other.m_sampler_ptr->clone();
 	else
-		sampler_ptr = nullptr;
+		m_sampler_ptr = nullptr;
 }
 
-GeometricObject* Rectangle::clone() const
+GeometricObject* Rectangle::Clone() const
 {
 	return new Rectangle(*this);
 }
 
-bool Rectangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
+bool Rectangle::Hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 {
-	double t = (p0 - ray.o) * normal / (ray.d * normal);
+	double t = (m_p0 - ray.o) * m_normal / (ray.d * m_normal);
 	if (t <= kEpsilon)
 		return false;
 
 	// p: hit point of ray and the surface where the rectangle lives
 	Point3D p = ray.o + t * ray.d;
-	Vector3D d = p - p0;
+	Vector3D d = p - m_p0;
 
-	double ddota = d * a;
-	if (ddota <= kEpsilon || ddota >= a_len_squared)
+	double ddota = d * m_a;
+	if (ddota <= kEpsilon || ddota >= m_a_len_squared)
 		return false;
 
-	double ddotb = d * b;
-	if (ddotb <= kEpsilon || ddotb >= b_len_squared)
+	double ddotb = d * m_b;
+	if (ddotb <= kEpsilon || ddotb >= m_b_len_squared)
 		return false;
 
 	tmin = t;
-	sr.normal = normal;
+	sr.normal = m_normal;
 	sr.local_hit_point = p;
 
 	return true;
 }
 
-bool Rectangle::shadow_hit(const Ray& ray, float& tmin) const
+bool Rectangle::ShadowHit(const Ray& ray, float& tmin) const
 {
 	if (!m_shadow)
 		return false;
 
-	double t = (p0 - ray.o) * normal / (ray.d * normal);
+	double t = (m_p0 - ray.o) * m_normal / (ray.d * m_normal);
 	if (t <= kEpsilon)
 		return false;
 
 	Point3D p = ray.o + t * ray.d;
-	Vector3D d = p - p0;
+	Vector3D d = p - m_p0;
 
-	double ddota = d * a;
-	if (ddota <= kEpsilon || ddota >= a_len_squared)
+	double ddota = d * m_a;
+	if (ddota <= kEpsilon || ddota >= m_a_len_squared)
 		return false;
 
-	double ddotb = d * b;
-	if (ddotb <= kEpsilon || ddotb >= b_len_squared)
+	double ddotb = d * m_b;
+	if (ddotb <= kEpsilon || ddotb >= m_b_len_squared)
 		return false;
 
 	tmin = static_cast<float>(t);
 	return true;
 }
 
-Point3D Rectangle::sample()
+Point3D Rectangle::Sample()
 {
-	Point2D sample_point = sampler_ptr->sample_unit_square();
-	return (p0 + sample_point.x * a + sample_point.y * b);
+	Point2D sample_point = m_sampler_ptr->sample_unit_square();
+	return (m_p0 + sample_point.x * m_a + sample_point.y * m_b);
 }
 
-float Rectangle::pdf(const ShadeRec& sr)
+float Rectangle::Pdf(const ShadeRec& sr)
 {
-	return inv_area;
+	return m_inv_area;
 }
 
-Normal Rectangle::get_normal(const Point3D& p) const
+Normal Rectangle::GetNormal(const Point3D& p) const
 {
-	return normal;
+	return m_normal;
 }
 
-void Rectangle::set_sampler(Sampler* sampler)
+void Rectangle::SetSampler(Sampler* sampler)
 {
-	sampler_ptr = sampler;
+	m_sampler_ptr = sampler;
 }
 
 }

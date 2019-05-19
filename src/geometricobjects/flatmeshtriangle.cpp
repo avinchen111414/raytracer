@@ -15,12 +15,12 @@ FlatMeshTriangle::FlatMeshTriangle(Mesh* _mesh_ptr, const int i1, const int i2, 
 {
 }
 
-GeometricObject* FlatMeshTriangle::clone() const
+GeometricObject* FlatMeshTriangle::Clone() const
 {
 	return new FlatMeshTriangle(*this);
 }
 
-bool FlatMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
+bool FlatMeshTriangle::Hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 {
 	const Point3D& v0 = m_mesh->vertices[m_index0];
 	const Point3D& v1 = m_mesh->vertices[m_index1];
@@ -68,7 +68,7 @@ bool FlatMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 	return (true);
 }
 
-bool FlatMeshTriangle::shadow_hit(const Ray& ray, float& tmin) const
+bool FlatMeshTriangle::ShadowHit(const Ray& ray, float& tmin) const
 {
-	return MeshTriangle::shadow_hit(ray, tmin);
+	return MeshTriangle::ShadowHit(ray, tmin);
 }

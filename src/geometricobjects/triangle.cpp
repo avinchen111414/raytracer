@@ -9,14 +9,14 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2)
 {
 	normal = (v1 - v0) ^ (v2 - v0);
 	normal.normalize();
-	update_bbox();
+	UpdateBbox();
 }
 
 Triangle::Triangle(const Triangle& other)
 	: GeometricObject(other), 
 	v0(other.v0), v1(other.v1), v2(other.v2), normal(other.normal)
 {
-	update_bbox();
+	UpdateBbox();
 }
 
 Triangle& Triangle::operator= (const Triangle& rhs)
@@ -37,12 +37,12 @@ Triangle::~Triangle()
 
 };
 
-GeometricObject* Triangle::clone() const
+GeometricObject* Triangle::Clone() const
 {
 	return new Triangle(*this);
 }
 
-bool Triangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
+bool Triangle::Hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 {
 	double a = v0.x - v1.x, b = v0.x - v2.x, c = ray.d.x, d = v0.x - ray.o.x; 
 	double e = v0.y - v1.y, f = v0.y - v2.y, g = ray.d.y, h = v0.y - ray.o.y;
@@ -86,7 +86,7 @@ bool Triangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 	return (true);	
 }
 
-bool Triangle::shadow_hit(const Ray& ray, float& tmin) const
+bool Triangle::ShadowHit(const Ray& ray, float& tmin) const
 {
 	double a = v0.x - v1.x, b = v0.x - v2.x, c = ray.d.x, d = v0.x - ray.o.x; 
 	double e = v0.y - v1.y, f = v0.y - v2.y, g = ray.d.y, h = v0.y - ray.o.y;
@@ -128,12 +128,12 @@ bool Triangle::shadow_hit(const Ray& ray, float& tmin) const
 	return (true);	
 }
 
-const BBox* Triangle::get_bounding_box() const
+const BBox* Triangle::GetBoundingBox() const
 {
 	return &m_bbox;
 }
 
-void Triangle::update_bbox()
+void Triangle::UpdateBbox()
 {
 	double delta = 0.000001;
 	m_bbox.x0 = std::min(std::min(v0.x, v1.x), v2.x);

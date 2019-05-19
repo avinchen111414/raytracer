@@ -38,7 +38,7 @@ private:
 inline void AreaLight::set_object(GeometricObject* obj_ptr)
 {
 	object_ptr = obj_ptr;
-	material_ptr = obj_ptr->get_material();	
+	material_ptr = obj_ptr->GetMaterial();	
 }
 
 #endif

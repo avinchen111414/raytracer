@@ -63,7 +63,7 @@ bool Point::in_shadow(const Ray& ray, const ShadeRec& sr)
 
 	for (int j = 0; j != num_objects; j++)
 	{
-		if (sr.w.objects[j]->shadow_hit(ray, t) && t < d)
+		if (sr.w.objects[j]->ShadowHit(ray, t) && t < d)
 		{
 			return true;
 		}

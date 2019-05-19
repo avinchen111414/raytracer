@@ -66,7 +66,7 @@ bool Direction::in_shadow(const Ray& ray, const ShadeRec& sr)
 
 	for (int j = 0; j != num_objects; j++)
 	{
-		if (sr.w.objects[j]->shadow_hit(ray, t))
+		if (sr.w.objects[j]->ShadowHit(ray, t))
 		{
 			return true;
 		}

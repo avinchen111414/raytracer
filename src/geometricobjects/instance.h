@@ -18,40 +18,40 @@ public:
 	virtual ~Instance();
 
 	Instance& operator= (const Instance& rhs);
-	virtual GeometricObject* clone() const;
-	virtual bool hit(const Ray& ray, double& t, ShadeRec& s) const;
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual const BBox* get_bounding_box() const;
+	virtual GeometricObject* Clone() const;
+	virtual bool Hit(const Ray& ray, double& t, ShadeRec& s) const;
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual const BBox* GetBoundingBox() const;
 
-	void set_object(GeometricObject* object);
+	void SetObject(GeometricObject* object);
 	
 	// for area light
-	virtual Point3D sample();
-	virtual float pdf(const ShadeRec& sr);
-	virtual Normal get_normal(const Point3D& p);
+	virtual Point3D Sample();
+	virtual float Pdf(const ShadeRec& sr);
+	virtual Normal GetNormal(const Point3D& p);
 
 	// affine transformation functions
-	void translate(const Vector3D& trans);
-	void translate(double dx, double dy, double dz);
+	void Translate(const Vector3D& trans);
+	void Translate(double dx, double dy, double dz);
 
-	void scale(const Vector3D& s);
-	void scale(double sx, double sy, double sz);
+	void Scale(const Vector3D& s);
+	void Scale(double sx, double sy, double sz);
 
-	void rotate_x(double r);
-	void rotate_y(double r);
-	void rotate_z(double r);
+	void RotateX(double r);
+	void RotateY(double r);
+	void RotateZ(double r);
 
-	void shear(const Matrix& s);
-	void end_transform();
+	void Shear(const Matrix& s);
+	void EndTransform();
 
 protected:
-	void update_bbox();
+	void UpdateBbox();
 
 private:
 	GeometricObject* m_object;
 	Matrix m_inv_matrix;
 	Matrix m_forward_matrix;
-	bool transform_the_texture;
+	bool m_transform_the_texture;
 	BBox m_bbox;
 };
 

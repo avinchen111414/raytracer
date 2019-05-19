@@ -85,7 +85,7 @@ bool AmbientOccluder::in_shadow(const Ray& ray, const ShadeRec& sr)
 
 	for (size_t i = 0; i != num_objects; i++)
 	{
-		if (sr.w.objects[i]->shadow_hit(ray, t))
+		if (sr.w.objects[i]->ShadowHit(ray, t))
 			return true;
 	}
 

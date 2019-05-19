@@ -25,46 +25,46 @@ GeometricObject& GeometricObject::operator= (const GeometricObject& rhs) {
 GeometricObject::~GeometricObject (void) {	
 }
 
-void GeometricObject::set_color(const RGBColor& color)
+void GeometricObject::SetColor(const RGBColor& color)
 {
 	m_color = color;
 }
 
-void GeometricObject::set_material(Material* m)
+void GeometricObject::SetMaterial(Material* m)
 {
 	m_material = m;
 }
 
-bool GeometricObject::shadow_hit(const Ray& ray, float& tmin) const
+bool GeometricObject::ShadowHit(const Ray& ray, float& tmin) const
 {
 	return false;
 }
 
-Point3D GeometricObject::sample()
+Point3D GeometricObject::Sample()
 {
 	throw "Calling GeometricObject::sample does not make sense";
 	return Point3D(0.0f);
 }
 
-float GeometricObject::pdf(const ShadeRec& sr)
+float GeometricObject::Pdf(const ShadeRec& sr)
 {
 	throw "Calling GeometricObject::pdf does not make sense";
 	return 0.0f;
 }
 
-Normal GeometricObject::get_normal(const Point3D& p) const
+Normal GeometricObject::GetNormal(const Point3D& p) const
 {
 	throw "Calling GeometricObject::get_normal does not make sense";
 	return Normal(0.0f);
 }
 
-Normal GeometricObject::get_normal() const
+Normal GeometricObject::GetNormal() const
 {
 	throw "Calling GeometricObject::get_normal does not make sense";
 	return Normal(0.0f);
 }
 
-const BBox* GeometricObject::get_bounding_box() const
+const BBox* GeometricObject::GetBoundingBox() const
 {
 	return nullptr;
 }

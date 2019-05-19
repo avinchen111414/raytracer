@@ -14,16 +14,16 @@ public:
 	Box& operator= (const Box& rhs);
 	~Box();
 
-	virtual GeometricObject* clone() const;
-	virtual bool hit(const Ray& ray, double& t, ShadeRec& s) const;
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual const BBox* get_bounding_box() const;
+	virtual GeometricObject* Clone() const;
+	virtual bool Hit(const Ray& ray, double& t, ShadeRec& s) const;
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual const BBox* GetBoundingBox() const;
 
 protected:
-	Normal get_normal(int face_hit) const;
+	Normal GetNormal(int face_hit) const;
 
 private:
-	float x0, y0, z0, x1, y1, z1;
+	float m_x0, m_y0, m_z0, m_x1, m_y1, m_z1;
 	BBox m_bbox;
 	static const float kEpsilon;
 };

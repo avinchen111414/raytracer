@@ -14,7 +14,7 @@ Plane::Plane(const Point3D& point, const Normal& normal)
 {
 }
 
-bool Plane::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
+bool Plane::Hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 {
 	// t = (plane_point - line_point) * normal / (line_dir * normal)
 	double t = (m_point - ray.o) * m_normal / (ray.d * m_normal);
@@ -31,7 +31,7 @@ bool Plane::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 	}
 }
 
-bool Plane::shadow_hit(const Ray& ray, float& tmin) const
+bool Plane::ShadowHit(const Ray& ray, float& tmin) const
 {
 	if (!m_shadow)
 		return false;
@@ -48,7 +48,7 @@ bool Plane::shadow_hit(const Ray& ray, float& tmin) const
 	}
 }
 
-GeometricObject* Plane::clone() const
+GeometricObject* Plane::Clone() const
 {
 	return (new Plane(*this));
 }

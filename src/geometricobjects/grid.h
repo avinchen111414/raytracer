@@ -12,16 +12,16 @@ public:
 	Grid();
 	
 	virtual ~Grid();
-	virtual GeometricObject* clone() const {return nullptr;}
-	virtual const BBox* get_bounding_box() const;
-	virtual bool hit(const Ray& ray, double& tmin, ShadeRec& s) const;
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
+	virtual GeometricObject* Clone() const {return nullptr;}
+	virtual const BBox* GetBoundingBox() const;
+	virtual bool Hit(const Ray& ray, double& tmin, ShadeRec& s) const;
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
 
-	void setup_cells();
+	void SetupCells();
 
 protected:
-	Point3D min_coordinates() const;
-	Point3D max_coordinates() const;
+	Point3D MinCoordinates() const;
+	Point3D MaxCoordinates() const;
 
 private:
 	Grid(const Grid& other);

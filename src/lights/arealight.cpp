@@ -19,7 +19,7 @@ AreaLight::AreaLight(const AreaLight& al):
 		delete this->object_ptr;
 	this->object_ptr = nullptr;
 	if (al.object_ptr)
-		this->object_ptr = al.object_ptr->clone();
+		this->object_ptr = al.object_ptr->Clone();
 	
 	if (this->material_ptr)
 		delete this->material_ptr;
@@ -41,7 +41,7 @@ AreaLight& AreaLight::operator=(const AreaLight& rhs)
 	}
 	if (rhs.object_ptr)
 	{
-		object_ptr = rhs.object_ptr->clone();
+		object_ptr = rhs.object_ptr->Clone();
 	}
 	if (material_ptr)
 	{
@@ -70,8 +70,8 @@ Light* AreaLight::clone() const
 
 Vector3D AreaLight::get_direction(ShadeRec& sr)
 {
-	sample_point = object_ptr->sample();
-	light_normal = object_ptr->get_normal(sample_point);
+	sample_point = object_ptr->Sample();
+	light_normal = object_ptr->GetNormal(sample_point);
 	wi = sample_point - sr.hit_point;
 	wi.normalize();
 	return wi;
@@ -96,7 +96,7 @@ bool AreaLight::in_shadow(const Ray& ray, const ShadeRec& sr)
 
 	for (int j = 0; j != num_objects; j++)
 	{
-		if (sr.w.objects[j]->shadow_hit(ray, t) && t < ts)
+		if (sr.w.objects[j]->ShadowHit(ray, t) && t < ts)
 			return true;
 	}
 
@@ -113,5 +113,5 @@ float AreaLight::G(const ShadeRec& sr) const
 
 float AreaLight::pdf(const ShadeRec& sr) const
 {
-	return object_ptr->pdf(sr);
+	return object_ptr->Pdf(sr);
 }

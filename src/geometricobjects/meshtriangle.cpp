@@ -18,7 +18,7 @@ MeshTriangle::MeshTriangle(Mesh* _mesh_ptr, const int i1, const int i2, const in
 	m_mesh(_mesh_ptr),
 	m_index0(i1), m_index1(i2), m_index2(i3)
 {
-	compute_normal(false);
+	ComputeNormal(false);
 	update_bbox();
 }
 
@@ -54,7 +54,7 @@ MeshTriangle& MeshTriangle::operator=(const MeshTriangle& rhs)
 }
 
 // Excatlly same as Triangle::shadow_hit
-bool MeshTriangle::shadow_hit(const Ray& ray, float& tmin) const
+bool MeshTriangle::ShadowHit(const Ray& ray, float& tmin) const
 {
 	const Point3D& v0 = m_mesh->vertices[m_index0];
 	const Point3D& v1 = m_mesh->vertices[m_index1];
@@ -100,12 +100,12 @@ bool MeshTriangle::shadow_hit(const Ray& ray, float& tmin) const
 	return (true);	
 }
 
-const BBox* MeshTriangle::get_bounding_box() const
+const BBox* MeshTriangle::GetBoundingBox() const
 {
 	return &m_bbox;
 }
 
-void MeshTriangle::compute_normal(const bool reverse_normal)
+void MeshTriangle::ComputeNormal(const bool reverse_normal)
 {
 	Vector3D v1 = m_mesh->vertices[m_index1] - m_mesh->vertices[m_index0];
 	Vector3D v2 = m_mesh->vertices[m_index2] - m_mesh->vertices[m_index0];
@@ -117,14 +117,14 @@ void MeshTriangle::compute_normal(const bool reverse_normal)
 		m_normal = -m_normal;
 }
 
-void MeshTriangle::set_mesh(Mesh* mesh, const int i1, const int i2, const int i3)
+void MeshTriangle::SetMesh(Mesh* mesh, const int i1, const int i2, const int i3)
 {
 	m_mesh = mesh; m_index0 = i1; m_index1 = i2; m_index2 = i3;
-	compute_normal(false);
+	ComputeNormal(false);
 	update_bbox();
 }
 
-Normal MeshTriangle::get_normal() const
+Normal MeshTriangle::GetNormal() const
 {
 	return m_normal;
 }

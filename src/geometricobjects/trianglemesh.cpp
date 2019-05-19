@@ -9,18 +9,18 @@ TriangleMesh::TriangleMesh(Mesh* mesh, bool reverse_normal)
 	: Grid(), m_mesh(mesh), m_reverse_normal(reverse_normal)
 {}
 
-void TriangleMesh::read_flat_triangle(const char* ply_filepath)
+void TriangleMesh::ReadFlatTriangles(const char* ply_filepath)
 {
-	read_ply_file(ply_filepath, FLAT);
+	ReadPlyFile(ply_filepath, FLAT);
 }
 
-void TriangleMesh::read_smooth_triangle(const char* ply_filepath)
+void TriangleMesh::ReadSmoothTriangles(const char* ply_filepath)
 {
-	read_ply_file(ply_filepath, SMOOTH);
-	compute_mesh_normals();
+	ReadPlyFile(ply_filepath, SMOOTH);
+	ComputeMeshNormals();
 }
 
-void TriangleMesh::read_ply_file(const char* ply_filepath, TriangleType type)
+void TriangleMesh::ReadPlyFile(const char* ply_filepath, TriangleType type)
 {
 	// Vertex layout declaration
 	PlyProperty vert_props[] = 
@@ -55,18 +55,18 @@ void TriangleMesh::read_ply_file(const char* ply_filepath, TriangleType type)
 			elem_name, &num_elems, &nprops);
 		if (equal_strings("vertex", elem_name))
 		{
-			read_ply_vertices(ply, elem_name, vert_props, num_elems);
+			ReadPlyVertices(ply, elem_name, vert_props, num_elems);
 		}
 		else if (equal_strings("face", elem_name))
 		{
-			read_ply_faces(ply, elem_name, face_props, num_elems, type);
+			ReadPlyFaces(ply, elem_name, face_props, num_elems, type);
 		}
 	}
 
 	ply_close(ply);
 }
 
-void TriangleMesh::read_ply_vertices(PlyFile* ply, char* elem_name, 
+void TriangleMesh::ReadPlyVertices(PlyFile* ply, char* elem_name, 
 									 PlyProperty* vert_props, int num_elems)
 {
 	ply_get_property(ply, elem_name, &vert_props[0]);
@@ -86,7 +86,7 @@ void TriangleMesh::read_ply_vertices(PlyFile* ply, char* elem_name,
 	}
 }
 
-void TriangleMesh::read_ply_faces(PlyFile* ply, char* elem_name, 
+void TriangleMesh::ReadPlyFaces(PlyFile* ply, char* elem_name, 
 									PlyProperty* faces_props, int num_elems,
 									TriangleType type)
 {
@@ -110,14 +110,14 @@ void TriangleMesh::read_ply_faces(PlyFile* ply, char* elem_name,
 		{
 			FlatMeshTriangle* triangle = new FlatMeshTriangle(m_mesh,
 				face->verts[0], face->verts[1], face->verts[2]);
-			triangle->compute_normal(m_reverse_normal);
+			triangle->ComputeNormal(m_reverse_normal);
 			m_objects.push_back(triangle);
 		}
 		else
 		{
 			SmoothMeshTriangle* triangle = new SmoothMeshTriangle(m_mesh,
 				face->verts[0], face->verts[1], face->verts[2]);
-			triangle->compute_normal(m_reverse_normal);
+			triangle->ComputeNormal(m_reverse_normal);
 			m_objects.push_back(triangle);
 
 			m_mesh->vertex_faces[face->verts[0]].push_back(i);
@@ -130,7 +130,7 @@ void TriangleMesh::read_ply_faces(PlyFile* ply, char* elem_name,
 		m_mesh->vertex_faces.clear();
 }
 
-void TriangleMesh::compute_mesh_normals()
+void TriangleMesh::ComputeMeshNormals()
 {
 	m_mesh->normals.reserve(m_mesh->num_verties);
 
@@ -140,7 +140,7 @@ void TriangleMesh::compute_mesh_normals()
 		// iterate the faces that shares the vertex
 		Normal normal;
 		for (int j = 0; j < m_mesh->vertex_faces[index].size(); j++)
-			normal += m_objects[m_mesh->vertex_faces[index][j]]->get_normal();
+			normal += m_objects[m_mesh->vertex_faces[index][j]]->GetNormal();
 
 		if (normal.x == 0.0 && normal.y == 0.0 && normal.z == 0.0)
 			normal.y = 1.0f;

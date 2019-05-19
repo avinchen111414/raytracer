@@ -17,7 +17,7 @@ SmoothMeshTriangle::SmoothMeshTriangle(Mesh* _mesh_ptr, const int i1, const int 
 
 }
 
-bool SmoothMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
+bool SmoothMeshTriangle::Hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 {
 	const Point3D& v0 = m_mesh->vertices[m_index0];
 	const Point3D& v1 = m_mesh->vertices[m_index1];
@@ -59,13 +59,13 @@ bool SmoothMeshTriangle::hit(const Ray& ray, double& tmin, ShadeRec& sr) const
 		return (false);
 
 	tmin 				= t;
-	sr.normal 			= interpolate_normal(beta, gamma);  	
+	sr.normal 			= InterpolateNormal(beta, gamma);  	
 	sr.local_hit_point 	= ray.o + t * ray.d;
 
 	return (true);
 }
 
-Normal SmoothMeshTriangle::interpolate_normal(const float beta, const float gamma) const
+Normal SmoothMeshTriangle::InterpolateNormal(const float beta, const float gamma) const
 {
 	Normal normal((1 - beta - gamma) * m_mesh->normals[m_index0] 
 	+ beta * m_mesh->normals[m_index1] 

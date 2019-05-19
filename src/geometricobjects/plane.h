@@ -10,9 +10,9 @@ class Plane: public GeometricObject
 public:
 	Plane(void);
 	Plane(const Point3D& point, const Normal& normal);
-	virtual bool hit(const Ray& ray, double& t, ShadeRec& s) const;
-	virtual bool shadow_hit(const Ray& ray, float& tmin) const;
-	virtual GeometricObject* clone() const;
+	virtual bool Hit(const Ray& ray, double& t, ShadeRec& s) const;
+	virtual bool ShadowHit(const Ray& ray, float& tmin) const;
+	virtual GeometricObject* Clone() const;
 
 private:
 	Point3D m_point;

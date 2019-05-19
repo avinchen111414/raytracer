@@ -7,18 +7,18 @@ using namespace std;
 
 GlossySpecular::GlossySpecular():
 	BRDF(),
-	ks(1.0),
-	cs(1.0),
-	exp(1.0)
+	m_ks(1.0),
+	m_cs(1.0),
+	m_exp(1.0)
 {
 	
 }
 
 GlossySpecular::GlossySpecular(const GlossySpecular& glossy):
 	BRDF(glossy),
-	ks(glossy.ks),
-	cs(glossy.cs),
-	exp(glossy.exp)
+	m_ks(glossy.m_ks),
+	m_cs(glossy.m_cs),
+	m_exp(glossy.m_exp)
 {
 	
 }
@@ -30,9 +30,9 @@ GlossySpecular& GlossySpecular::operator=(const GlossySpecular& rhs)
 
 	BRDF::operator=(rhs);
 
-	ks = rhs.ks;
-	cs = rhs.cs;
-	exp = rhs.exp;
+	m_ks = rhs.m_ks;
+	m_cs = rhs.m_cs;
+	m_exp = rhs.m_exp;
 
 	return *this;
 }
@@ -42,7 +42,7 @@ GlossySpecular::~GlossySpecular()
 
 }
 
-GlossySpecular* GlossySpecular::clone() const
+GlossySpecular* GlossySpecular::Clone() const
 {
 	return (new GlossySpecular(*this));
 }
@@ -55,7 +55,7 @@ RGBColor GlossySpecular::F(const ShadeRec& sr, const Vector3D& wo, const Vector3
 	float r_dot_wo = static_cast<float>(r * wo);
 
 	if (r_dot_wo > 0.0)
-		L = ks * cs * pow(r_dot_wo, exp);
+		L = m_ks * m_cs * pow(r_dot_wo, m_exp);
 
 	return L;
 }
@@ -65,7 +65,7 @@ void GlossySpecular::SetSampler(Sampler* sampler_ptr)
 	if (sampler_ptr)
 	{
 		this->m_sampler_ptr = sampler_ptr;
-		this->m_sampler_ptr->map_samples_to_hemisphere(exp);
+		this->m_sampler_ptr->map_samples_to_hemisphere(m_exp);
 	}	
 }
 
@@ -87,8 +87,8 @@ RGBColor GlossySpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3
 	if (sr.normal * wi < 0.0) 						// reflected ray is below tangent plane
 		wi = -sp.x * u - sp.y * v + sp.z * w;
 
-	float phong_lobe = pow(r * wi, exp);
+	float phong_lobe = pow(r * wi, m_exp);
 	pdf = phong_lobe * (sr.normal * wi);
 
-	return (ks * cs * phong_lobe);
+	return (m_ks * m_cs * phong_lobe);
 }

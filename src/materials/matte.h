@@ -31,21 +31,21 @@ private:
 inline void Matte::set_ka(const float ka)
 {
 	if (ambient_brdf)
-		ambient_brdf->set_kd(ka);
+		ambient_brdf->SetKd(ka);
 }
 
 inline void Matte::set_kd(const float kd)
 {
 	if (diffuse_brdf)
-		diffuse_brdf->set_kd(kd);
+		diffuse_brdf->SetKd(kd);
 }
 
 inline void Matte::set_cd(const RGBColor& cd)
 {
 	if (diffuse_brdf)
-		diffuse_brdf->set_cd(cd);
+		diffuse_brdf->SetCd(cd);
 	if (ambient_brdf)
-		ambient_brdf->set_cd(cd);
+		ambient_brdf->SetCd(cd);
 }
 
 #endif

@@ -36,39 +36,39 @@ protected:
 inline void Phong::set_ka(const float ka)
 {
 	if (ambient_brdf)
-		ambient_brdf->set_kd(ka);
+		ambient_brdf->SetKd(ka);
 }
 
 inline void Phong::set_kd(const float kd)
 {
 	if (diffuse_brdf)
-		diffuse_brdf->set_kd(kd);
+		diffuse_brdf->SetKd(kd);
 }
 
 inline void Phong::set_cd(const RGBColor& cd)
 {
 	if (diffuse_brdf)
-		diffuse_brdf->set_cd(cd);
+		diffuse_brdf->SetCd(cd);
 	if (ambient_brdf)
-		ambient_brdf->set_cd(cd);
+		ambient_brdf->SetCd(cd);
 }
 
 inline void Phong::set_ks(const float ks)
 {
 	if (specular_brdf)
-		specular_brdf->set_ks(ks);
+		specular_brdf->SetKs(ks);
 }
 
 inline void Phong::set_cs(const RGBColor& cs)
 {
 	if (specular_brdf)
-		specular_brdf->set_cs(cs);
+		specular_brdf->SetCs(cs);
 }
 
 inline void Phong::set_exp(const float exp)
 {
 	if (specular_brdf)
-		specular_brdf->set_exp(exp);
+		specular_brdf->SetExp(exp);
 }
 
 #endif

@@ -32,8 +32,8 @@ Transparent& Transparent::operator=(const Transparent& rhs)
 
 	Phong::operator=(rhs);
 
-	reflective_brdf = rhs.reflective_brdf->clone();
-	transmitive_btdf = rhs.transmitive_btdf->clone();
+	reflective_brdf = rhs.reflective_brdf->Clone();
+	transmitive_btdf = rhs.transmitive_btdf->Clone();
 	return *this;
 }
 
@@ -72,12 +72,12 @@ RGBColor Transparent::area_light_shade(ShadeRec& sr)
 
 void Transparent::set_kr(float kr)
 {
-	reflective_brdf->set_kr(kr);
+	reflective_brdf->SetKr(kr);
 }
 
 void Transparent::set_cr(const RGBColor& cr)
 {
-	reflective_brdf->set_cr(cr);
+	reflective_brdf->SetCr(cr);
 }
 
 void Transparent::set_kt(float kt)

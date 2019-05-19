@@ -18,7 +18,7 @@ public:
 		~Lambertian(void);
 
 	virtual Lambertian*
-		clone(void) const;
+		Clone(void) const;
 
 	virtual RGBColor
 		F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi) const;
@@ -32,12 +32,12 @@ public:
 	virtual RGBColor
 		Rho(const ShadeRec& sr, const Vector3D& wo) const;
 
-	inline void set_kd(float kd) {this->kd = kd;};
-	inline void set_cd(const RGBColor& cd) {this->cd = cd;};
+	inline void SetKd(float kd) {this->m_kd = kd;};
+	inline void SetCd(const RGBColor& cd) {this->m_cd = cd;};
 
 private:
-	float kd;
-	RGBColor cd;
+	float m_kd;
+	RGBColor m_cd;
 };
 
 #endif

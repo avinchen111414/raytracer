@@ -27,7 +27,7 @@ Reflective& Reflective::operator= (const Reflective& rhs)
 		return *this;
 
 	Phong::operator=(rhs);
-	reflective_brdf = rhs.reflective_brdf->clone();
+	reflective_brdf = rhs.reflective_brdf->Clone();
 	return *this;
 }
 
@@ -65,12 +65,12 @@ RGBColor Reflective::area_light_shade(ShadeRec& sr)
 
 void Reflective::set_kr(const float kr)
 {
-	reflective_brdf->set_kr(kr);
-	specular_brdf->set_ks(kr);
+	reflective_brdf->SetKr(kr);
+	specular_brdf->SetKs(kr);
 }
 
 void Reflective::set_cr(const RGBColor& cr)
 {
-	reflective_brdf->set_cr(cr);
-	specular_brdf->set_cs(cr);
+	reflective_brdf->SetCr(cr);
+	specular_brdf->SetCs(cr);
 }

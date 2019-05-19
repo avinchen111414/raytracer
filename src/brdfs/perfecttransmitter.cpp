@@ -37,7 +37,7 @@ RGBColor PerfectTransmitter::SampleF(const ShadeRec& sr, const Vector3D& wo, Vec
 	return (m_k / (eta * eta) * RGBColor(1.0f) / fabs(sr.normal * wt));
 }
 
-PerfectTransmitter* PerfectTransmitter::clone() const
+PerfectTransmitter* PerfectTransmitter::Clone() const
 {
 	return new PerfectTransmitter(*this);
 }

@@ -16,17 +16,17 @@ Phong::Phong(const Phong& p):
 	Material(p)
 {
 	if (p.ambient_brdf)
-		ambient_brdf = p.ambient_brdf->clone();
+		ambient_brdf = p.ambient_brdf->Clone();
 	else
 		ambient_brdf = nullptr;
 
 	if (p.diffuse_brdf)
-		diffuse_brdf = p.diffuse_brdf->clone();
+		diffuse_brdf = p.diffuse_brdf->Clone();
 	else
 		diffuse_brdf = nullptr;
 
 	if (p.specular_brdf)
-		specular_brdf = p.specular_brdf->clone();
+		specular_brdf = p.specular_brdf->Clone();
 	else
 		specular_brdf = nullptr;
 }
@@ -45,7 +45,7 @@ Phong& Phong::operator=(const Phong& rhs)
 	}
 
 	if (rhs.ambient_brdf)
-		ambient_brdf = rhs.ambient_brdf->clone();
+		ambient_brdf = rhs.ambient_brdf->Clone();
 
 	if (diffuse_brdf)
 	{
@@ -55,7 +55,7 @@ Phong& Phong::operator=(const Phong& rhs)
 
 	if (rhs.diffuse_brdf)
 	{
-		diffuse_brdf = rhs.diffuse_brdf->clone();
+		diffuse_brdf = rhs.diffuse_brdf->Clone();
 	}
 
 	if (specular_brdf)
@@ -66,7 +66,7 @@ Phong& Phong::operator=(const Phong& rhs)
 
 	if (rhs.specular_brdf)
 	{
-		specular_brdf = rhs.specular_brdf->clone();
+		specular_brdf = rhs.specular_brdf->Clone();
 	}
 
 	return *this;

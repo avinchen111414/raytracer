@@ -6,14 +6,14 @@
 
 Lambertian::Lambertian():
 	BRDF(),
-	kd(0),
-	cd(0)
+	m_kd(0),
+	m_cd(0)
 {}
 
 Lambertian::Lambertian(const Lambertian& lamb):
 	BRDF(lamb),
-	kd(lamb.kd),
-	cd(lamb.cd)
+	m_kd(lamb.m_kd),
+	m_cd(lamb.m_cd)
 {}
 
 Lambertian& Lambertian::operator=(const Lambertian& rhs)
@@ -22,8 +22,8 @@ Lambertian& Lambertian::operator=(const Lambertian& rhs)
 		return *this;
 	BRDF::operator= (rhs);
 
-	kd = rhs.kd;
-	cd = rhs.cd;
+	m_kd = rhs.m_kd;
+	m_cd = rhs.m_cd;
 
 	return *this;
 }
@@ -33,19 +33,19 @@ Lambertian::~Lambertian()
 
 }
 
-Lambertian* Lambertian::clone() const
+Lambertian* Lambertian::Clone() const
 {
 	return new Lambertian(*this);
 }
 
 RGBColor Lambertian::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi) const
 {
-	return kd * cd * (float)invPI;
+	return m_kd * m_cd * (float)invPI;
 }
 
 RGBColor Lambertian::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const
 {
-	return kd * cd * (float)invPI;
+	return m_kd * m_cd * (float)invPI;
 }
 
 RGBColor Lambertian::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const
@@ -61,10 +61,10 @@ RGBColor Lambertian::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& w
 
 	pdf = sr.normal * wi * invPI;
 
-	return (kd * cd * invPI);
+	return (m_kd * m_cd * invPI);
 }
 
 RGBColor Lambertian::Rho(const ShadeRec& sr, const Vector3D& wo) const
 {
-	return kd * cd;
+	return m_kd * m_cd;
 }

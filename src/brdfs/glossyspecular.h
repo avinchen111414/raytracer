@@ -18,7 +18,7 @@ public:
 
 	virtual ~GlossySpecular();
 
-	virtual GlossySpecular* clone() const;
+	virtual GlossySpecular* Clone() const;
 
 	virtual RGBColor F(const ShadeRec& sr, const Vector3D& wo, 
 		const Vector3D& wi);
@@ -28,14 +28,14 @@ public:
 	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo, 
 		Vector3D& wi, float& pdf);
 
-	inline void set_ks(const float ks) {this->ks = ks;};
-	inline void set_cs(const RGBColor& cs) {this->cs = cs;};
-	inline void set_exp(const float exp) {this->exp = exp;};
+	inline void SetKs(const float ks) {this->m_ks = ks;};
+	inline void SetCs(const RGBColor& cs) {this->m_cs = cs;};
+	inline void SetExp(const float exp) {this->m_exp = exp;};
 
 private:
-	float ks;
-	RGBColor cs;
-	float exp;
+	float m_ks;
+	RGBColor m_cs;
+	float m_exp;
 };
 
 #endif

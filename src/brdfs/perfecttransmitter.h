@@ -14,7 +14,7 @@ public:
 	virtual RGBColor SampleF(const ShadeRec& sr, const Vector3D& wo,
 		Vector3D& wt);
 
-	virtual PerfectTransmitter* clone() const;
+	virtual PerfectTransmitter* Clone() const;
 };
 
 #endif

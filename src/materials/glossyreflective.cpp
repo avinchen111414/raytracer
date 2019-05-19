@@ -27,7 +27,7 @@ GlossyReflective& GlossyReflective::operator= (const GlossyReflective& rhs)
 		return *this;
 
 	Material::operator=(rhs);
-	glossy_reflective_brdf = rhs.glossy_reflective_brdf->clone();
+	glossy_reflective_brdf = rhs.glossy_reflective_brdf->Clone();
 	return *this;
 }
 
@@ -69,19 +69,19 @@ RGBColor GlossyReflective::area_light_shade(ShadeRec& sr)
 void GlossyReflective::set_kr(const float kr)
 {
 	Phong::set_ks(kr);
-	glossy_reflective_brdf->set_ks(kr);
+	glossy_reflective_brdf->SetKs(kr);
 }
 
 void GlossyReflective::set_cr(const float cr)
 {
 	Phong::set_cd(cr);
-	glossy_reflective_brdf->set_cs(cr);
+	glossy_reflective_brdf->SetCs(cr);
 }
 
 void GlossyReflective::set_exp(const float exp)
 {
 	Phong::set_exp(exp);
-	glossy_reflective_brdf->set_exp(exp);
+	glossy_reflective_brdf->SetExp(exp);
 }
 
 void GlossyReflective::set_sampler(Sampler* sampler)

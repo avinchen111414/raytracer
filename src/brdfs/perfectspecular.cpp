@@ -3,7 +3,7 @@
 #include "utilities/shaderec.h"
 
 PerfectSpecular::PerfectSpecular()
-	: BRDF(), kr(1), cr(1)
+	: BRDF(), m_kr(1), m_cr(1)
 {
 
 }
@@ -20,8 +20,8 @@ PerfectSpecular& PerfectSpecular::operator= (const PerfectSpecular& rhs)
 		return *this;
 
 	BRDF::operator=(rhs);
-	kr = rhs.kr;
-	cr = rhs.cr;
+	m_kr = rhs.m_kr;
+	m_cr = rhs.m_cr;
 
 	return *this;
 }
@@ -31,7 +31,7 @@ PerfectSpecular::~PerfectSpecular()
 
 }
 
-PerfectSpecular* PerfectSpecular::clone() const
+PerfectSpecular* PerfectSpecular::Clone() const
 {
 	return new PerfectSpecular(*this);
 }
@@ -41,7 +41,7 @@ RGBColor PerfectSpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2 * ndotwo * sr.normal;
 	// sr.normal * wi 是为了抵消渲染方程中的cos项
-	return kr * cr / fabs(sr.normal * wi);	
+	return m_kr * m_cr / fabs(sr.normal * wi);	
 }
 
 RGBColor PerfectSpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi, float& pdf) const
@@ -49,5 +49,5 @@ RGBColor PerfectSpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2.0 * sr.normal * ndotwo; 
 	pdf = sr.normal * wi;
-	return (kr * cr);
+	return (m_kr * m_cr);
 }

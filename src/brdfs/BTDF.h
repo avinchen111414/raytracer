@@ -13,25 +13,25 @@ public:
 	BTDF();
 	BTDF(const BTDF& btdf_object);
 
-	virtual RGBColor f(const ShadeRec& sr,
+	virtual RGBColor F(const ShadeRec& sr,
 		const Vector3D& wo, const Vector3D& wi);
 
-	virtual RGBColor sample_f(const ShadeRec& sr,
+	virtual RGBColor SampleF(const ShadeRec& sr,
 		const Vector3D& wo, Vector3D& wt);
 
-	virtual RGBColor rho(const ShadeRec& sr,
+	virtual RGBColor Rho(const ShadeRec& sr,
 		const Vector3D& wo);
 
-	virtual bool tir(const ShadeRec& sr) const;
+	virtual bool Tir(const ShadeRec& sr) const;
 
-	void set_kt(float kt) { k = kt; };
-	void set_ior(float _ior) { ior = _ior; };
+	void SetKt(float kt) { m_k = kt; };
+	void SetIor(float _ior) { m_ior = _ior; };
 
 protected:
-	Sampler* sampler_ptr;
-	float k;
+	Sampler* m_sampler_ptr;
+	float m_k;
 	// Nin / Nout，Nout表示空气的ior（约等于1）
-	float ior;
+	float m_ior;
 };
 
 #endif

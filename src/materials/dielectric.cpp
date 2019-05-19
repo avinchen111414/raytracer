@@ -52,7 +52,7 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 	RGBColor Lr, Lt;
 	float tmin = FLT_MAX;
 	float ndotwi = static_cast<float>(sr.normal * wi);
-	if (fresnel_btdf->tir(sr))
+	if (fresnel_btdf->Tir(sr))
 	{
 		// total internal reflection, kr always keeps to 1.0f
 		if (ndotwi < 0.0)
@@ -71,7 +71,7 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 	else
 	{
 		Vector3D wt;
-		RGBColor ft = fresnel_btdf->sample_f(sr, wo, wt);
+		RGBColor ft = fresnel_btdf->SampleF(sr, wo, wt);
 		Ray transmitted_ray(sr.hit_point, wt);
 		float ndotwt = static_cast<float>(sr.normal * wt);
 

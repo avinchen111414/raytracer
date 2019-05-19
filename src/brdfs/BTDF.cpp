@@ -4,38 +4,38 @@
 #include "BTDF.h"
 
 BTDF::BTDF():
-	k(1.0f), ior(1.0f)
+	m_k(1.0f), m_ior(1.0f)
 {
 
 }
 
 BTDF::BTDF(const BTDF& btdf_object):
-	k(btdf_object.k), ior(btdf_object.ior)
+	m_k(btdf_object.m_k), m_ior(btdf_object.m_ior)
 {
 
 }
 
-RGBColor BTDF::f(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
+RGBColor BTDF::F(const ShadeRec& sr, const Vector3D& wo, const Vector3D& wi)
 {
 	return RGBColor(0.0f);
 }
 
-RGBColor BTDF::sample_f(const ShadeRec& sr, const Vector3D& wo,
+RGBColor BTDF::SampleF(const ShadeRec& sr, const Vector3D& wo,
 						Vector3D& wt)
 {
 	return RGBColor(0.0f);
 }
 
-RGBColor BTDF::rho(const ShadeRec& sr, const Vector3D& wo)
+RGBColor BTDF::Rho(const ShadeRec& sr, const Vector3D& wo)
 {
 	return RGBColor(0.0f);
 }
 
-bool BTDF::tir(const ShadeRec& sr) const
+bool BTDF::Tir(const ShadeRec& sr) const
 {
 	Vector3D wo(-sr.ray.d); 
 	float cos_thetai = sr.normal * wo;  
-	float eta = ior;
+	float eta = m_ior;
 
 	// eta指由射线由空气进入折射物质，而且物体边缘的法线一般由内部指向外部，所以
 	// cos_theta < 0.0f，说明现在是由折射物质进入空气，eta要取一个倒数

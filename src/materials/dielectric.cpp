@@ -16,8 +16,8 @@ Dielectric::Dielectric():
 Dielectric::Dielectric(const Dielectric& dlt):
 	Phong(dlt)
 {
-	fresnel_brdf = dlt.fresnel_brdf->clone();
-	fresnel_btdf = dlt.fresnel_btdf->clone();
+	fresnel_brdf = dlt.fresnel_brdf->Clone();
+	fresnel_btdf = dlt.fresnel_btdf->Clone();
 }
 
 Material* Dielectric::clone() const
@@ -33,8 +33,8 @@ Dielectric& Dielectric::operator=(const Dielectric& rhs)
 	Phong::operator=(rhs);
 
 	cf_in = rhs.cf_in; cf_out = rhs.cf_out;
-	fresnel_brdf = rhs.fresnel_brdf->clone();
-	fresnel_btdf = rhs.fresnel_btdf->clone();
+	fresnel_brdf = rhs.fresnel_brdf->Clone();
+	fresnel_btdf = rhs.fresnel_btdf->Clone();
 
 	return *this;
 }
@@ -107,8 +107,8 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 
 void Dielectric::set_eta(float eta_in, float eta_out)
 {
-	fresnel_brdf->set_eta(eta_in, eta_out);
-	fresnel_btdf->set_eta(eta_in, eta_out);
+	fresnel_brdf->SetEta(eta_in, eta_out);
+	fresnel_btdf->SetEta(eta_in, eta_out);
 }
 
 void Dielectric::set_color_filter(RGBColor cf_in, RGBColor cf_out)

@@ -5,11 +5,11 @@
 #include "fresneltransmitter.h"
 
 FresnelTransmitter::FresnelTransmitter()
-	: BTDF(), eta_in(1.0f), eta_out(1.0f)
+	: BTDF(), m_eta_in(1.0f), m_eta_out(1.0f)
 {}
 
 FresnelTransmitter::FresnelTransmitter(const FresnelTransmitter& ft)
-	: BTDF(ft), eta_in(ft.eta_in), eta_out(ft.eta_out)
+	: BTDF(ft), m_eta_in(ft.m_eta_in), m_eta_out(ft.m_eta_out)
 {}
 
 RGBColor FresnelTransmitter::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wt)
@@ -18,7 +18,7 @@ RGBColor FresnelTransmitter::SampleF(const ShadeRec& sr, const Vector3D& wo, Vec
 	// 所以返回值中的eta * eta是作为分母
 	Normal n(sr.normal);
 	float cos_thetai = n * wo;
-	float eta = eta_in / eta_out;	
+	float eta = m_eta_in / m_eta_out;	
 
 	if (cos_thetai < 0.0) {			// transmitted ray is outside     
 		cos_thetai = -cos_thetai;
@@ -30,10 +30,10 @@ RGBColor FresnelTransmitter::SampleF(const ShadeRec& sr, const Vector3D& wo, Vec
 	float cos_theta2 = sqrt(temp);
 	wt = -wo / eta - (cos_theta2 - cos_thetai / eta) * n;   
 
-	return (fresnel(sr) / (eta * eta) * RGBColor(1.0f) / fabs(sr.normal * wt));
+	return (Fresnel(sr) / (eta * eta) * RGBColor(1.0f) / fabs(sr.normal * wt));
 }
 
-FresnelTransmitter* FresnelTransmitter::clone() const
+FresnelTransmitter* FresnelTransmitter::Clone() const
 {
 	return new FresnelTransmitter(*this);
 }
@@ -52,7 +52,7 @@ bool FresnelTransmitter::Tir(const ShadeRec& sr) const
 {
 	Vector3D wo(-sr.ray.d); 
 	float cos_thetai = sr.normal * wo;  
-	float eta = eta_in / eta_out;
+	float eta = m_eta_in / m_eta_out;
 
 	// eta指由射线由空气进入折射物质，而且物体边缘的法线一般由内部指向外部，所以
 	// cos_theta < 0.0f，说明现在是由折射物质进入空气，eta要取一个倒数
@@ -62,7 +62,7 @@ bool FresnelTransmitter::Tir(const ShadeRec& sr) const
 	return (1.0 - (1.0 - cos_thetai * cos_thetai) / (eta * eta) < 0.0);
 }
 
-float FresnelTransmitter::fresnel(const ShadeRec& sr) const
+float FresnelTransmitter::Fresnel(const ShadeRec& sr) const
 {
 	Normal normal(sr.normal);
 	float ndotd = normal * -sr.ray.d;
@@ -72,10 +72,10 @@ float FresnelTransmitter::fresnel(const ShadeRec& sr) const
 	if (ndotd < 0.0f)
 	{
 		normal = -normal;
-		eta = eta_out / eta_in;
+		eta = m_eta_out / m_eta_in;
 	}
 	else
-		eta = eta_in / eta_out;
+		eta = m_eta_in / m_eta_out;
 
 	float cos_theta_i = normal * -sr.ray.d;
 	float cos_theta_t = sqrt(1.0f - (1.0f - cos_theta_i * cos_theta_i) / (eta * eta));

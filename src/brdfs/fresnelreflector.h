@@ -16,19 +16,19 @@ public:
 
 	virtual ~FresnelReflector();
 
-	virtual FresnelReflector* clone() const;
+	virtual FresnelReflector* Clone() const;
 
 	virtual RGBColor FresnelReflector::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& wi) const;
 
-	float fresnel(const ShadeRec& sr) const;
+	float Fresnel(const ShadeRec& sr) const;
 
-	inline void set_eta(float eta_in, float eta_out) {this->eta_in = eta_in; this->eta_out = eta_out;};
+	inline void SetEta(float eta_in, float eta_out) {this->m_eta_in = eta_in; this->m_eta_out = eta_out;};
 protected:
 
 private:
-	RGBColor cr;
-	float eta_in;
-	float eta_out;
+	RGBColor m_cr;
+	float m_eta_in;
+	float m_eta_out;
 
 };
 

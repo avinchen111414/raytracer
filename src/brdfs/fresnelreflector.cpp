@@ -5,11 +5,11 @@
 #include "fresnelreflector.h"
 
 FresnelReflector::FresnelReflector()
-	: BRDF(), cr(1.0f)
+	: BRDF(), m_cr(1.0f)
 {}
 
 FresnelReflector::FresnelReflector(const FresnelReflector& fr)
-	: BRDF(fr), cr(fr.cr)
+	: BRDF(fr), m_cr(fr.m_cr)
 {}
 
 FresnelReflector::~FresnelReflector()
@@ -21,11 +21,11 @@ FresnelReflector& FresnelReflector::operator=(const FresnelReflector& rhs)
 		return *this;
 
 	BRDF::operator=(rhs);
-	cr = rhs.cr;
+	m_cr = rhs.m_cr;
 	return *this;
 }
 
-FresnelReflector* FresnelReflector::clone() const
+FresnelReflector* FresnelReflector::Clone() const
 {
 	return new FresnelReflector(*this);
 }
@@ -34,10 +34,10 @@ RGBColor FresnelReflector::SampleF(const ShadeRec& sr, const Vector3D& wo, Vecto
 {
 	float ndotwo = sr.normal * wo;
 	wi = -wo + 2 * ndotwo * sr.normal;
-	return this->fresnel(sr) * cr / fabs(sr.normal * wi);
+	return this->Fresnel(sr) * m_cr / fabs(sr.normal * wi);
 }
 
-float FresnelReflector::fresnel(const ShadeRec& sr) const
+float FresnelReflector::Fresnel(const ShadeRec& sr) const
 {
 	Normal normal(sr.normal);
 	float ndotd = normal * -sr.ray.d;
@@ -47,10 +47,10 @@ float FresnelReflector::fresnel(const ShadeRec& sr) const
 	if (ndotd < 0.0f)
 	{
 		normal = -normal;
-		eta = eta_out / eta_in;
+		eta = m_eta_out / m_eta_in;
 	}
 	else
-		eta = eta_in / eta_out;
+		eta = m_eta_in / m_eta_out;
 
 	float cos_theta_i = normal * -sr.ray.d;
 	float cos_theta_t = sqrt(1.0f - (1.0f - cos_theta_i * cos_theta_i) / (eta * eta));

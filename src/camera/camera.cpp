@@ -2,46 +2,46 @@
 #include "world/world.h"
 
 Camera::Camera()
-	:	eye(0, 0, 500),
-	lookat(0),
-	up(0, 1, 0),
-	u(1, 0, 0),
-	v(0, 1, 0),
-	w(0, 0, 1),
-	exposure_time(1.0)
+	:	m_eye(0, 0, 500),
+	m_lookat(0),
+	m_up(0, 1, 0),
+	m_u(1, 0, 0),
+	m_v(0, 1, 0),
+	m_w(0, 0, 1),
+	m_exposure_time(1.0)
 {}
 
 Camera::Camera(const Camera& c)
-	:	eye(c.eye),
-	lookat(c.lookat),
-	up(c.up),
-	u(c.u),
-	v(c.v),
-	w(c.w),
-	exposure_time(c.exposure_time)
+	:	m_eye(c.m_eye),
+	m_lookat(c.m_lookat),
+	m_up(c.m_up),
+	m_u(c.m_u),
+	m_v(c.m_v),
+	m_w(c.m_w),
+	m_exposure_time(c.m_exposure_time)
 {
 
 }
 
 Camera::~Camera() {}
 
-void Camera::compute_uvw()
+void Camera::ComputeUvw()
 {
-	w = eye - lookat;
-	w.normalize();
-	u = up ^ w;
-	u.normalize();
-	v = w ^ u;
+	m_w = m_eye - m_lookat;
+	m_w.normalize();
+	m_u = m_up ^ m_w;
+	m_u.normalize();
+	m_v = m_w ^ m_u;
 
-	if (eye.x == lookat.x && eye.z == lookat.z && eye.y > lookat.y) { // camera looking vertically down
-		u = Vector3D(0, 0, 1);
-		v = Vector3D(1, 0, 0);
-		w = Vector3D(0, 1, 0);	
+	if (m_eye.x == m_lookat.x && m_eye.z == m_lookat.z && m_eye.y > m_lookat.y) { // camera looking vertically down
+		m_u = Vector3D(0, 0, 1);
+		m_v = Vector3D(1, 0, 0);
+		m_w = Vector3D(0, 1, 0);	
 	}
 
-	if (eye.x == lookat.x && eye.z == lookat.z && eye.y < lookat.y) { // camera looking vertically up
-		u = Vector3D(1, 0, 0);
-		v = Vector3D(0, 0, 1);
-		w = Vector3D(0, -1, 0);
+	if (m_eye.x == m_lookat.x && m_eye.z == m_lookat.z && m_eye.y < m_lookat.y) { // camera looking vertically up
+		m_u = Vector3D(1, 0, 0);
+		m_v = Vector3D(0, 0, 1);
+		m_w = Vector3D(0, -1, 0);
 	}
 }

@@ -47,10 +47,10 @@ void World::build_ao_scene()
 	set_ambient_light(occluder);
 
 	PinHole* camera = new PinHole;
-	camera->eye = Point3D(25, 20, 45);
-	camera->lookat = Point3D(0, 1, 0);
-	camera->d = 5000;
-	camera->compute_uvw();
+	camera->m_eye = Point3D(25, 20, 45);
+	camera->m_lookat = Point3D(0, 1, 0);
+	camera->m_d = 5000;
+	camera->ComputeUvw();
 	set_camera(camera);
 
 	Matte* matte_ptr0 = new Matte;
@@ -108,10 +108,10 @@ void World::build_area_lights_scene()
 	add_light(area_light_ptr);
 
 	PinHole* camera = new PinHole;
-	camera->eye = Point3D(50, 40, 90);
-	camera->lookat = Point3D(0, 1, 0);
-	camera->d = 5000;
-	camera->compute_uvw();
+	camera->m_eye = Point3D(50, 40, 90);
+	camera->m_lookat = Point3D(0, 1, 0);
+	camera->m_d = 5000;
+	camera->ComputeUvw();
 	set_camera(camera);
 
 	
@@ -164,10 +164,10 @@ void World::build_instance_test_scene()
 	tracer_ptr = new AreaLighting(this);
 
 	PinHole* camera = new PinHole;
-	camera->eye = Point3D(100, 0, 100);
-	camera->lookat = Point3D(0, 0, 0);
-	camera->d = 8000;
-	camera->compute_uvw();
+	camera->m_eye = Point3D(100, 0, 100);
+	camera->m_lookat = Point3D(0, 0, 0);
+	camera->m_d = 8000;
+	camera->ComputeUvw();
 	set_camera(camera);
 
 	Point* point_light = new Point();
@@ -201,10 +201,10 @@ void World::build_grid_test_scene()
 	tracer_ptr = new AreaLighting(this);
 
 	PinHole* camera = new PinHole;
-	camera->eye = Point3D(0, 0, 1000);
-	camera->lookat = Point3D(0, 0, 0);
-	camera->d = 8000;
-	camera->compute_uvw();
+	camera->m_eye = Point3D(0, 0, 1000);
+	camera->m_lookat = Point3D(0, 0, 0);
+	camera->m_d = 8000;
+	camera->ComputeUvw();
 	set_camera(camera);
 
 	Direction* dir = new Direction;
@@ -248,10 +248,10 @@ void World::build_triangle_mesh_test_scene()
 	tracer_ptr = new AreaLighting(this);
 
 	PinHole* pinhole_ptr = new PinHole;
-	pinhole_ptr->eye = Point3D(100, 50, 90);
-	pinhole_ptr->lookat = Point3D(0, -0.5, 0);
-	pinhole_ptr->d = 16000;  	
-	pinhole_ptr->compute_uvw();     
+	pinhole_ptr->m_eye = Point3D(100, 50, 90);
+	pinhole_ptr->m_lookat = Point3D(0, -0.5, 0);
+	pinhole_ptr->m_d = 16000;  	
+	pinhole_ptr->ComputeUvw();     
 	set_camera(pinhole_ptr);
 
 	Jittered* sampler_ptr = new Jittered(num_samples);
@@ -341,10 +341,10 @@ void World::build_reflective_test_scene()
 	tracer_ptr = new AreaLighting(this);
 
 	PinHole* pinhole_ptr = new PinHole;
-	pinhole_ptr->eye = Point3D(200, 50, 200);
-	pinhole_ptr->lookat = Point3D(0, -0.5, 0);
-	pinhole_ptr->d = 16000;  	
-	pinhole_ptr->compute_uvw();     
+	pinhole_ptr->m_eye = Point3D(200, 50, 200);
+	pinhole_ptr->m_lookat = Point3D(0, -0.5, 0);
+	pinhole_ptr->m_d = 16000;  	
+	pinhole_ptr->ComputeUvw();     
 	set_camera(pinhole_ptr);
 
 	Jittered* sampler_ptr = new Jittered(num_samples);
@@ -457,10 +457,10 @@ void World::build_global_test_scene()
 	set_ambient_light(occluder);
 
 	PinHole* pinhole_ptr = new PinHole;
-	pinhole_ptr->eye = Point3D(27.6, 27.4, -80.0);
-	pinhole_ptr->lookat = Point3D(27.6, 27.4, 0.0);
-	pinhole_ptr->d = (400);      
-	pinhole_ptr->compute_uvw();     
+	pinhole_ptr->m_eye = Point3D(27.6, 27.4, -80.0);
+	pinhole_ptr->m_lookat = Point3D(27.6, 27.4, 0.0);
+	pinhole_ptr->m_d = (400);      
+	pinhole_ptr->ComputeUvw();     
 	set_camera(pinhole_ptr);
 
 
@@ -595,10 +595,10 @@ void World::build_transparent_test_scene()
 	set_ambient_light(ambient_ptr);
 
 	PinHole* pinhole_ptr = new PinHole;
-	pinhole_ptr->eye = Point3D(-8, 5.5, 40);   
-	pinhole_ptr->lookat = Point3D(1, 4, 0);    
-	pinhole_ptr->d = (2400.0);  
-	pinhole_ptr->compute_uvw();     
+	pinhole_ptr->m_eye = Point3D(-8, 5.5, 40);   
+	pinhole_ptr->m_lookat = Point3D(1, 4, 0);    
+	pinhole_ptr->m_d = (2400.0);  
+	pinhole_ptr->ComputeUvw();     
 	set_camera(pinhole_ptr);
 
 

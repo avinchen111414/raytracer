@@ -10,19 +10,19 @@
 
 PinHole::PinHole()
 	:	Camera(),
-	d(500),
-	zoom(1.0f)
+	m_d(500),
+	m_zoom(1.0f)
 {}
 
 PinHole::PinHole(const PinHole& c)
 	:	Camera(c),
-	d(c.d),
-	zoom(c.zoom)
+	m_d(c.m_d),
+	m_zoom(c.m_zoom)
 {}
 
 PinHole::~PinHole() {}
 
-void PinHole::render_scene(const World& w, const RenderTile& tile, RenderThread* paint_thread)
+void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* paint_thread)
 {
 	RGBColor	L;
 	ViewPlane	vp(w.vp);	 								
@@ -32,8 +32,8 @@ void PinHole::render_scene(const World& w, const RenderTile& tile, RenderThread*
 	int n = (int)sqrt((float)vp.num_samples);
 	Point2D		sp;
 
-	vp.s /= zoom;
-	ray.o = eye;
+	vp.s /= m_zoom;
+	ray.o = m_eye;
 
 	for (int r = tile.bottom; r < tile.top; r++)			// up
 	{
@@ -58,19 +58,19 @@ void PinHole::render_scene(const World& w, const RenderTile& tile, RenderThread*
 				pp.x = (float)(vp.s * (c - 0.5 * (vp.hres - 1) + sp.x));
 				pp.y = (float)(vp.s * (r - 0.5 * (vp.vres - 1) + sp.y));
 
-				ray.d = ray_direction(pp);
+				ray.d = RayDirection(pp);
 				L += w.tracer_ptr->trace_ray(ray, 0);
 			}
 			L /= (float)vp.num_samples;
-			L *= exposure_time;
+			L *= m_exposure_time;
 			w.display_pixel(r, c, L, paint_thread);
 		}
 	}
 }
 
-Vector3D PinHole::ray_direction(const Point2D& p) const
+Vector3D PinHole::RayDirection(const Point2D& p) const
 {
-	Vector3D ray_dir = p.x * u + p.y * v - d * w;
+	Vector3D ray_dir = p.x * m_u + p.y * m_v - m_d * m_w;
 	ray_dir.normalize();
 	return ray_dir;
 }

@@ -534,7 +534,7 @@ void *RenderThread::Entry()
    
    while (canvas->PopTile(working_tile) && !break_thread)
    {
-	   world->camera_ptr->render_scene(*world,
+	   world->camera_ptr->RenderScene(*world,
 		   working_tile, this);
    }
 

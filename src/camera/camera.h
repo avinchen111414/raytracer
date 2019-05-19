@@ -15,17 +15,17 @@ public:
 	Camera(const Camera& camera);
 	virtual ~Camera();
 
-	virtual void render_scene(const World& w, const RenderTile& tile,
+	virtual void RenderScene(const World& w, const RenderTile& tile,
 		RenderThread* paint_thread) = 0;
 
-	void compute_uvw();
+	void ComputeUvw();
 
 public:
-	Point3D eye;
-	Point3D lookat;
-	Vector3D up;
-	Vector3D u, v, w;
-	float exposure_time;
+	Point3D m_eye;
+	Point3D m_lookat;
+	Vector3D m_up;
+	Vector3D m_u, m_v, m_w;
+	float m_exposure_time;
 };
 
 #endif

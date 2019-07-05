@@ -16,11 +16,11 @@ public:
 						
 	void 													
 	SetHres(const int h_res);
-	inline int GetHres() { return m_hres; };
+	inline int GetHres() const { return m_hres; };
 		
 	void 													
 	SetVres(const int v_res);
-	inline int GetVres() { return m_vres; };
+	inline int GetVres() const { return m_vres; };
 				
 	void
 	SetPixelSize(const float size);
@@ -28,18 +28,22 @@ public:
 		
 	void
 	SetGamma(const float g);
-	inline float GetGamma() { return m_gamma; };
+	inline float GetGamma() const { return m_gamma; };
+	inline float GetInvGamma() const { return m_inv_gamma; };
 		
 	void
 	SetGamutDisplay(const bool show);
-	inline bool GetGamutDisplay() { return m_show_out_of_gamut; };
+	inline bool GetGamutDisplay() const { return m_show_out_of_gamut; };
 		
 	void
 	SetSamples(const int n);
+	inline int GetNumSamples() { return m_num_samples; };
+
 	void SetSampler(Sampler* sp);
+	inline Sampler* GetSampler() { return m_sampler_ptr; };
 
 	void SetMaxDepth(int max_depth);
-	inline int GetMaxDepth() { return m_max_depth; };
+	inline int GetMaxDepth() const { return m_max_depth; };
 
 private:
 	int 			m_hres;   					// horizontal image resolution 

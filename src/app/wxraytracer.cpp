@@ -432,17 +432,17 @@ void RenderCanvas::renderStart(void)
 void RenderCanvas::GenerateTiles()
 {
 	tiles.clear();
-	if (!w->vp.m_vres || !w->vp.m_hres)
+	if (!w->vp.GetVres() || !w->vp.GetHres())
 		return;
 
 	const int tile_size = 32;
 
-	for (int v = 0; v < w->vp.m_vres; v += tile_size)	// vertical
+	for (int v = 0; v < w->vp.GetVres(); v += tile_size)	// vertical
 	{
-		for (int h = 0; h < w->vp.m_hres; h += tile_size)	// horizontal
+		for (int h = 0; h < w->vp.GetHres(); h += tile_size)	// horizontal
 		{
-			int left = h, right = std::min(h + tile_size, w->vp.m_hres);
-			int bottom = v, top = std::min(v + tile_size, w->vp.m_vres);
+			int left = h, right = std::min(h + tile_size, w->vp.GetHres());
+			int bottom = v, top = std::min(v + tile_size, w->vp.GetVres());
 			tiles.push_back(RenderTile(left, bottom, right, top));
 		}
 	}

@@ -23,7 +23,7 @@ AreaLighting::~AreaLighting()
 
 RGBColor AreaLighting::trace_ray(const Ray& ray, const int depth) const
 {
-	if (depth > world_ptr->vp.m_max_depth)
+	if (depth > world_ptr->vp.GetMaxDepth())
 		return world_ptr->background_color;
 
 	ShadeRec sr(world_ptr->HitObject(ray));
@@ -42,7 +42,7 @@ RGBColor AreaLighting::trace_ray(const Ray& ray, const int depth) const
 
 RGBColor AreaLighting::trace_ray(const Ray& ray, float& tmin, const int depth) const
 {
-	if (depth > world_ptr->vp.m_max_depth)
+	if (depth > world_ptr->vp.GetMaxDepth())
 		return world_ptr->background_color;
 
 	ShadeRec sr(world_ptr->HitObject(ray));

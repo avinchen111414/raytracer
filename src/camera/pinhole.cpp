@@ -29,10 +29,10 @@ void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* 
 	Ray			ray;
 	int 		depth = 0;  
 	Point2D 	pp;		// sample point on a pixel
-	int n = (int)sqrt((float)vp.num_samples);
+	int n = (int)sqrt((float)vp.m_num_samples);
 	Point2D		sp;
 
-	vp.s /= m_zoom;
+	vp.m_s /= m_zoom;
 	ray.o = m_eye;
 
 	for (int r = tile.bottom; r < tile.top; r++)			// up
@@ -49,19 +49,19 @@ void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* 
 
 			L = RGBColor(0.0f); 
 
-			for (int i = 0; i != vp.num_samples; i++)
+			for (int i = 0; i != vp.m_num_samples; i++)
 			{
 				if (w.quit_render_tag)
 					break;
 
-				sp = vp.sampler_ptr->sample_unit_square();
-				pp.x = (float)(vp.s * (c - 0.5 * (vp.hres - 1) + sp.x));
-				pp.y = (float)(vp.s * (r - 0.5 * (vp.vres - 1) + sp.y));
+				sp = vp.m_sampler_ptr->sample_unit_square();
+				pp.x = (float)(vp.m_s * (c - 0.5 * (vp.m_hres - 1) + sp.x));
+				pp.y = (float)(vp.m_s * (r - 0.5 * (vp.m_vres - 1) + sp.y));
 
 				ray.d = RayDirection(pp);
 				L += w.tracer_ptr->trace_ray(ray, 0);
 			}
-			L /= (float)vp.num_samples;
+			L /= (float)vp.m_num_samples;
 			L *= m_exposure_time;
 			w.DisplayPixel(r, c, L, paint_thread);
 		}

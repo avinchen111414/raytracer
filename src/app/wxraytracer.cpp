@@ -399,10 +399,10 @@ void RenderCanvas::renderStart(void)
 	wxGetApp().SetStatusText( wxT( "Rendering..." ) );
    
 	pixelsRendered = 0;
-	pixelsToRender = w->vp.hres * w->vp.vres;
+	pixelsToRender = w->vp.m_hres * w->vp.m_vres;
    
 	//set the background
-	wxBitmap bitmap(w->vp.hres, w->vp.vres, -1);
+	wxBitmap bitmap(w->vp.m_hres, w->vp.m_vres, -1);
 	wxMemoryDC dc;
 	dc.SelectObject(bitmap);
 	dc.SetBackground(*wxGREY_BRUSH);
@@ -410,9 +410,9 @@ void RenderCanvas::renderStart(void)
    
 	wxBitmap tile(bg_xpm);
 
-	for(int x = 0; x < w->vp.hres; x += 16)
+	for(int x = 0; x < w->vp.m_hres; x += 16)
 	{
-		for(int y = 0; y < w->vp.vres; y += 16)
+		for(int y = 0; y < w->vp.m_vres; y += 16)
 			dc.DrawBitmap(tile, x, y, FALSE);
 	}
    
@@ -432,17 +432,17 @@ void RenderCanvas::renderStart(void)
 void RenderCanvas::GenerateTiles()
 {
 	tiles.clear();
-	if (!w->vp.vres || !w->vp.hres)
+	if (!w->vp.m_vres || !w->vp.m_hres)
 		return;
 
 	const int tile_size = 32;
 
-	for (int v = 0; v < w->vp.vres; v += tile_size)	// vertical
+	for (int v = 0; v < w->vp.m_vres; v += tile_size)	// vertical
 	{
-		for (int h = 0; h < w->vp.hres; h += tile_size)	// horizontal
+		for (int h = 0; h < w->vp.m_hres; h += tile_size)	// horizontal
 		{
-			int left = h, right = std::min(h + tile_size, w->vp.hres);
-			int bottom = v, top = std::min(v + tile_size, w->vp.vres);
+			int left = h, right = std::min(h + tile_size, w->vp.m_hres);
+			int bottom = v, top = std::min(v + tile_size, w->vp.m_vres);
 			tiles.push_back(RenderTile(left, bottom, right, top));
 		}
 	}

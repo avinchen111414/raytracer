@@ -24,7 +24,7 @@ Whitte::~Whitte()
 
 RGBColor Whitte::trace_ray(const Ray& ray, const int depth) const
 {
-	if (depth > world_ptr->vp.max_depth)
+	if (depth > world_ptr->vp.m_max_depth)
 		return world_ptr->background_color;
 
 	ShadeRec sr(world_ptr->HitObject(ray));

@@ -6,16 +6,16 @@ class Sampler;
 class ViewPlane
 {
 public:
-	int 			hres;   					// horizontal image resolution 
-	int 			vres;   					// vertical image resolution
-	float			s;							// pixel size
-	int				num_samples;				// number of samples per pixel
-	Sampler*		sampler_ptr;				// pointer to some sampler	
+	int 			m_hres;   					// horizontal image resolution 
+	int 			m_vres;   					// vertical image resolution
+	float			m_s;							// pixel size
+	int				m_num_samples;				// number of samples per pixel
+	Sampler*		m_sampler_ptr;				// pointer to some sampler	
 
-	float			gamma;						// gamma correction factor
-	float			inv_gamma;					// the inverse of the gamma correction factor
-	bool			show_out_of_gamut;			// display red if RGBColor out of gamut
-	int				max_depth;					// max recursive depth
+	float			m_gamma;						// gamma correction factor
+	float			m_inv_gamma;					// the inverse of the gamma correction factor
+	bool			m_show_out_of_gamut;			// display red if RGBColor out of gamut
+	int				m_max_depth;					// max recursive depth
 
 public:
 	ViewPlane();   								// default Constructor
@@ -27,71 +27,71 @@ public:
 	~ViewPlane();   							// destructor
 						
 	void 													
-	set_hres(const int h_res);
+	SetHres(const int h_res);
 		
 	void 													
-	set_vres(const int v_res);
+	SetVres(const int v_res);
 				
 	void
-	set_pixel_size(const float size);
+	SetPixelSize(const float size);
 		
 	void
-	set_gamma(const float g);
+	SetGamma(const float g);
 		
 	void
-	set_gamut_display(const bool show);	
+	SetGamutDisplay(const bool show);	
 		
 	void
-	set_samples(const int n);
+	SetSamples(const int n);
 
-	void set_sampler(Sampler* sp);
+	void SetSampler(Sampler* sp);
 
-	void set_max_depth(int max_depth);
+	void SetMaxDepth(int max_depth);
 };
 
 inline void
-ViewPlane::set_max_depth(int max_depth) {
-	this->max_depth = max_depth;
+ViewPlane::SetMaxDepth(int max_depth) {
+	this->m_max_depth = max_depth;
 }
 
 // ------------------------------------------------------------------------------ set_hres
 
 inline void 													
-ViewPlane::set_hres(const int h_res) {
-	hres = h_res;
+ViewPlane::SetHres(const int h_res) {
+	m_hres = h_res;
 }
 
 
 // ------------------------------------------------------------------------------ set_vres
 
 inline void 													
-ViewPlane::set_vres(const int v_res) {
-	vres = v_res;
+ViewPlane::SetVres(const int v_res) {
+	m_vres = v_res;
 }
 
 
 // ------------------------------------------------------------------------------ set_pixel_size
 
 inline void 													
-ViewPlane::set_pixel_size(const float size) {
-	s = size;
+ViewPlane::SetPixelSize(const float size) {
+	m_s = size;
 }
 
 
 // ------------------------------------------------------------------------------ set_gamma
 
 inline void
-ViewPlane::set_gamma(const float g) {
-	gamma = g;
-	inv_gamma = (float)1.0 / gamma;
+ViewPlane::SetGamma(const float g) {
+	m_gamma = g;
+	m_inv_gamma = (float)1.0 / m_gamma;
 }
 
 
 // ------------------------------------------------------------------------------ set_gamut_display
 
 inline void
-ViewPlane::set_gamut_display(const bool show) {
-	show_out_of_gamut = show;
+ViewPlane::SetGamutDisplay(const bool show) {
+	m_show_out_of_gamut = show;
 }
 
 #endif

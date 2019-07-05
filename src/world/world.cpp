@@ -55,17 +55,17 @@ void World::DisplayPixel(const int row, const int column, const RGBColor& raw_co
 							  RenderThread* paint_thread) const
 {
 	RGBColor mapped_color = raw_color;
-	if (vp.show_out_of_gamut)
+	if (vp.m_show_out_of_gamut)
 		mapped_color = ClampToColor(raw_color);
 	else
 		mapped_color = MaxToOne(raw_color);
 
-	if (vp.gamma != 1.0)
-		mapped_color = mapped_color.powc(vp.inv_gamma);
+	if (vp.m_gamma != 1.0)
+		mapped_color = mapped_color.powc(vp.m_inv_gamma);
 
 	//have to start from max y coordinate to convert to screen coordinates
 	int x = column;
-	int y = vp.vres - row - 1;
+	int y = vp.m_vres - row - 1;
 
 	paint_thread->setPixel(x, y, (int)(mapped_color.r * 255),
 		(int)(mapped_color.g * 255),
@@ -108,7 +108,7 @@ void World::Build()
 	//this->build_triangle_mesh_test_scene();
 	//this->build_reflective_test_scene();
 	//this->build_global_test_scene();
-	this->build_transparent_test_scene();
+	this->BuildTransparentTestScene();
 }
 
 ShadeRec World::HitBareBonesObjects(const Ray& ray)

@@ -28,13 +28,13 @@
 #include "utilities/mesh.h"
 #include "utilities/utility.h"
 
-void World::build_ao_scene()
+void World::BuildAoScene()
 {
 	int num_samples = 256;
 
-	vp.set_hres(400);
-	vp.set_vres(400);
-	vp.set_samples(num_samples);
+	vp.SetHres(400);
+	vp.SetVres(400);
+	vp.SetSamples(num_samples);
 
 	tracer_ptr = new RayCast(this);
 
@@ -72,13 +72,13 @@ void World::build_ao_scene()
 	AddObject(plane);
 }
 
-void World::build_area_lights_scene()
+void World::BuildAreaLightsScene()
 {
 	int num_samples = 16;
 
-	vp.set_hres(400);
-	vp.set_vres(400);
-	vp.set_samples(num_samples);
+	vp.SetHres(400);
+	vp.SetVres(400);
+	vp.SetSamples(num_samples);
 
 	tracer_ptr = new AreaLighting(this);
 
@@ -139,9 +139,9 @@ void World::build_area_lights_scene()
 	AddObject(box);
 }
 
-void World::build_env_light_scene()
+void World::BuildEnvLightScene()
 {
-	build_area_lights_scene();
+	BuildAreaLightsScene();
 
 	Emissive* env_emissive_mtl = new Emissive;
 	env_emissive_mtl->set_ce(RGBColor(0.8f, 0.3f, 0.1f));
@@ -153,13 +153,13 @@ void World::build_env_light_scene()
 	AddLight(env_light);
 }
 
-void World::build_instance_test_scene()
+void World::BuildInstanceTestScene()
 {
 	int num_samples = 16;
 
-	vp.set_hres(400);
-	vp.set_vres(400);
-	vp.set_samples(num_samples);
+	vp.SetHres(400);
+	vp.SetVres(400);
+	vp.SetSamples(num_samples);
 
 	tracer_ptr = new AreaLighting(this);
 
@@ -190,13 +190,13 @@ void World::build_instance_test_scene()
 	AddObject(ellipsoid);
 }
 
-void World::build_grid_test_scene()
+void World::BuildGridTestScene()
 {
 	int num_samples = 16;
 
-	vp.set_hres(400);
-	vp.set_vres(400);
-	vp.set_samples(num_samples);
+	vp.SetHres(400);
+	vp.SetVres(400);
+	vp.SetSamples(num_samples);
 
 	tracer_ptr = new AreaLighting(this);
 
@@ -237,13 +237,13 @@ void World::build_grid_test_scene()
 	AddObject(grid);
 }
 
-void World::build_triangle_mesh_test_scene()
+void World::BuildTriangleMeshTestScene()
 {
 	int num_samples = 16;
 
-	vp.set_hres(400);
-	vp.set_vres(400);
-	vp.set_samples(num_samples);
+	vp.SetHres(400);
+	vp.SetVres(400);
+	vp.SetSamples(num_samples);
 
 	tracer_ptr = new AreaLighting(this);
 
@@ -329,14 +329,14 @@ void World::build_triangle_mesh_test_scene()
 	
 }
 
-void World::build_reflective_test_scene()
+void World::BuildReflectiveTestScene()
 {
 	int num_samples = 36;
 
-	vp.set_hres(400);
-	vp.set_vres(400);
-	vp.set_max_depth(5);
-	vp.set_samples(num_samples);
+	vp.SetHres(400);
+	vp.SetVres(400);
+	vp.SetMaxDepth(5);
+	vp.SetSamples(num_samples);
 
 	tracer_ptr = new AreaLighting(this);
 
@@ -435,17 +435,17 @@ void World::build_reflective_test_scene()
 	AddObject(plane_ptr1);
 }
 
-void World::build_global_test_scene()
+void World::BuildGlobalTestScene()
 {
 	//    int num_samples = 1;		// for Figure 26.7(a)
 	//	int num_samples = 100;		// for Figure 26.7(b)
 	//	int num_samples = 1000;		// for Figure 26.7(c)
 		int num_samples = 10000;	// for Figure 26.7(d)
 
-	vp.set_hres(300);	  		
-	vp.set_vres(300);
-	vp.set_samples(num_samples); 
-	vp.set_max_depth(5);
+	vp.SetHres(300);	  		
+	vp.SetVres(300);
+	vp.SetSamples(num_samples); 
+	vp.SetMaxDepth(5);
 
 	tracer_ptr = new GlobalTracer(this);
 
@@ -577,14 +577,14 @@ void World::build_global_test_scene()
 	AddObject(ceiling_ptr);
 }
 
-void World::build_transparent_test_scene()
+void World::BuildTransparentTestScene()
 {
 	int num_samples = 16;
 
-	vp.set_hres(600);	  		
-	vp.set_vres(600);
-	vp.set_samples(num_samples);		
-	vp.set_max_depth(5);		
+	vp.SetHres(600);	  		
+	vp.SetVres(600);
+	vp.SetSamples(num_samples);		
+	vp.SetMaxDepth(5);		
 
 	background_color = RGBColor(0.0, 0.3, 0.25);
 

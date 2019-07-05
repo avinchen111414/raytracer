@@ -92,7 +92,7 @@ Vector3D::operator= (const Point3D& rhs) {
 // length of the vector
 
 double													
-Vector3D::length(void) const {
+Vector3D::Length(void) const {
 	return (sqrt(x * x + y * y + z * z));
 }
 
@@ -101,7 +101,7 @@ Vector3D::length(void) const {
 // converts the vector to a unit vector
 
 void 													
-Vector3D::normalize(void) {	
+Vector3D::Normalize(void) {	
 	double length = sqrt(x * x + y * y + z * z);
 	x /= length; y /= length; z /= length;
 }
@@ -111,7 +111,7 @@ Vector3D::normalize(void) {
 // converts the vector to a unit vector and returns the vector
 
 Vector3D& 													
-Vector3D::hat(void) {	
+Vector3D::Hat(void) {	
 	double length = sqrt(x * x + y * y + z * z);
 	x /= length; y /= length; z /= length;
 	return (*this);

@@ -86,7 +86,7 @@ Matrix::operator/ (const double d) {
 // set matrix to the identity matrix
 
 void											
-Matrix::set_identity(void) {
+Matrix::SetIDentity(void) {
     for (int x = 0; x < 4; x++)
 		for (int y = 0; y < 4; y++) {
 			if (x == y)

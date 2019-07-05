@@ -111,7 +111,7 @@ void MeshTriangle::ComputeNormal(const bool reverse_normal)
 	Vector3D v2 = m_mesh->vertices[m_index2] - m_mesh->vertices[m_index0];
 
 	m_normal = v1 ^ v2;
-	m_normal.normalize();
+	m_normal.Normalize();
 
 	if (reverse_normal)
 		m_normal = -m_normal;

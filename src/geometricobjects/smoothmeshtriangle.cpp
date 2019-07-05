@@ -70,7 +70,7 @@ Normal SmoothMeshTriangle::InterpolateNormal(const float beta, const float gamma
 	Normal normal((1 - beta - gamma) * m_mesh->normals[m_index0] 
 	+ beta * m_mesh->normals[m_index1] 
 	+ gamma * m_mesh->normals[m_index2]);
-	normal.normalize();
+	normal.Normalize();
 
 	return(normal);
 }

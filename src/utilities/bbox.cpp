@@ -39,7 +39,7 @@ BBox& BBox::operator= (const BBox& rhs)
 BBox::~BBox()
 {}
 
-bool BBox::hit(const Ray& ray) const
+bool BBox::Hit(const Ray& ray) const
 {
 	double ox = ray.o.x; double dx = ray.d.x;
 	double tx_min, tx_max;
@@ -96,7 +96,7 @@ bool BBox::hit(const Ray& ray) const
 	return (t0 < t1 && t1 > kEpsilon);
 }
 
-bool BBox::inside(const Point3D& point) const
+bool BBox::Inside(const Point3D& point) const
 {
 	return x0 < point.x && point.x < x1 &&
 		y0 < point.y && point.y < y1 &&

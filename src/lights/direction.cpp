@@ -46,7 +46,7 @@ Light* Direction::clone() const
 Vector3D Direction::get_direction(ShadeRec& sr)
 {
 	Vector3D dir = direction;
-	return -dir.hat();
+	return -dir.Hat();
 }
 
 RGBColor Direction::L(ShadeRec& sr)

@@ -100,20 +100,20 @@ bool Grid::Hit(const Ray& ray, double& tmin, ShadeRec& s) const
 	int ix, iy, iz;
 	
 	// Ray starts inside the grid
-	if (m_bbox.inside(ray.o))
+	if (m_bbox.Inside(ray.o))
 	{
-		ix = clamp((ox - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
-		iy = clamp((oy - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
-		iz = clamp((oz - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
+		ix = Clamp((ox - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
+		iy = Clamp((oy - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
+		iz = Clamp((oz - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
 	}
 	// Ray starts outside the grid
 	else
 	{
 		// t0 is the ray parameter entering the grid
 		Point3D p = ray.o + t0 * ray.d;
-		ix = clamp((p.x - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
-		iy = clamp((p.y - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
-		iz = clamp((p.z - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
+		ix = Clamp((p.x - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
+		iy = Clamp((p.y - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
+		iz = Clamp((p.z - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
 	}
 
 	// ray parameter increments per cell in the x, y, and z directions
@@ -306,20 +306,20 @@ bool Grid::ShadowHit(const Ray& ray, float& tmin) const
 	int ix, iy, iz;
 
 	// Ray starts inside the grid
-	if (m_bbox.inside(ray.o))
+	if (m_bbox.Inside(ray.o))
 	{
-		ix = clamp((ox - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
-		iy = clamp((oy - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
-		iz = clamp((oz - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
+		ix = Clamp((ox - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
+		iy = Clamp((oy - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
+		iz = Clamp((oz - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
 	}
 	// Ray starts outside the grid
 	else
 	{
 		// t0 is the ray parameter entering the grid
 		Point3D p = ray.o + t0 * ray.d;
-		ix = clamp((p.x - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
-		iy = clamp((p.y - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
-		iz = clamp((p.z - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
+		ix = Clamp((p.x - x0) / (x1 - x0) * m_nx, 0, m_nx - 1);
+		iy = Clamp((p.y - y0) / (y1 - y0) * m_ny, 0, m_ny - 1);
+		iz = Clamp((p.z - z0) / (z1 - z0) * m_nz, 0, m_nz - 1);
 	}
 
 	// ray parameter increments per cell in the x, y, and z directions
@@ -469,17 +469,17 @@ void Grid::SetupCells()
 		const BBox* obj_bbox = m_objects[idx]->GetBoundingBox();
 		if (!obj_bbox)
 			continue;
-		int ixmin = clamp((obj_bbox->x0 - p0.x) / (p1.x - p0.x) * m_nx, 
+		int ixmin = Clamp((obj_bbox->x0 - p0.x) / (p1.x - p0.x) * m_nx, 
 			0.0, m_nx - 1);
-		int iymin = clamp((obj_bbox->y0 - p0.y) / (p1.y - p0.y) * m_ny,
+		int iymin = Clamp((obj_bbox->y0 - p0.y) / (p1.y - p0.y) * m_ny,
 			0.0, m_ny - 1);
-		int izmin = clamp((obj_bbox->z0 - p0.z) / (p1.z - p0.z) * m_nz,
+		int izmin = Clamp((obj_bbox->z0 - p0.z) / (p1.z - p0.z) * m_nz,
 			0.0, m_nz - 1);
-		int ixmax = clamp((obj_bbox->x1 - p0.x) / (p1.x - p0.x) * m_nx, 
+		int ixmax = Clamp((obj_bbox->x1 - p0.x) / (p1.x - p0.x) * m_nx, 
 			0.0, m_nx - 1);
-		int iymax = clamp((obj_bbox->y1 - p0.y) / (p1.y - p0.y) * m_ny,
+		int iymax = Clamp((obj_bbox->y1 - p0.y) / (p1.y - p0.y) * m_ny,
 			0.0, m_ny - 1);
-		int izmax = clamp((obj_bbox->z1 - p0.z) / (p1.z - p0.z) * m_nz,
+		int izmax = Clamp((obj_bbox->z1 - p0.z) / (p1.z - p0.z) * m_nz,
 			0.0, m_nz - 1);
 
 		for (int iz = izmin; iz <= izmax; iz++)

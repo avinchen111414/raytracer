@@ -76,9 +76,9 @@ RGBColor GlossySpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3
 	Vector3D r = -wo + 2.0 * sr.normal * ndotwo;
 
 	Vector3D w = r;
-	w.normalize();
+	w.Normalize();
 	Vector3D u = Vector3D(0.00424, 1, 0.00764) ^ w; 
-	u.normalize();
+	u.Normalize();
 	Vector3D v = u ^ w;
 
 	Point3D sp = m_sampler_ptr->sample_hemisphere();

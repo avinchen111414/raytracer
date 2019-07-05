@@ -59,13 +59,13 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 		{
 			// reflected ray is inside
 			Lr = sr.w.tracer_ptr->trace_ray(reflected_ray, tmin, sr.depth + 1);
-			L += cf_in.powc(tmin) * Lr;
+			L += cf_in.PowC(tmin) * Lr;
 		}
 		else
 		{
 			// otherwise
 			Lr = sr.w.tracer_ptr->trace_ray(reflected_ray, tmin, sr.depth + 1);
-			L += cf_out.powc(tmin) * Lr;
+			L += cf_out.PowC(tmin) * Lr;
 		}
 	}
 	else
@@ -80,12 +80,12 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 			// reflected ray is inside
 			Lr = fr * sr.w.tracer_ptr->trace_ray(reflected_ray, tmin, sr.depth + 1) *
 				fabs(ndotwi);
-			L += cf_in.powc(tmin) * Lr;
+			L += cf_in.PowC(tmin) * Lr;
 
 			// transmitted ray is outside
 			Lt = ft * sr.w.tracer_ptr->trace_ray(transmitted_ray, tmin, sr.depth + 1) *
 				fabs(ndotwt);
-			L += cf_out.powc(tmin) * Lt;
+			L += cf_out.PowC(tmin) * Lt;
 
 		}
 		else
@@ -93,12 +93,12 @@ RGBColor Dielectric::area_light_shade(ShadeRec& sr)
 			// otherwise
 			Lr = fr * sr.w.tracer_ptr->trace_ray(reflected_ray, tmin, sr.depth + 1) *
 				fabs(ndotwi);
-			L += cf_out.powc(tmin) * Lr;
+			L += cf_out.PowC(tmin) * Lr;
 
 			// transmitted ray is outside
 			Lt = ft * sr.w.tracer_ptr->trace_ray(transmitted_ray, tmin, sr.depth + 1) *
 				fabs(ndotwt);
-			L += cf_in.powc(tmin) * Lt;
+			L += cf_in.PowC(tmin) * Lt;
 		}
 	}
 

@@ -30,7 +30,7 @@ class Matrix {
 		operator/ (const double d);
 
 		void											// set to the identity matrix
-		set_identity(void);	
+		SetIDentity(void);	
 };
 
 

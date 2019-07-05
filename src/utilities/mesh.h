@@ -13,7 +13,7 @@ public:
 	Mesh(const Mesh& other);
 	~Mesh();
 	Mesh& operator= (const Mesh& rhs);
-	Mesh* clone() const;
+	Mesh* Clone() const;
 
 	std::vector<Point3D> vertices;
 	std::vector<Normal> normals;

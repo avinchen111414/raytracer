@@ -52,7 +52,7 @@ class Normal
 		operator* (const double a) const;
 				
 		void 												// convert normal to a unit normal
-		normalize(void); 									 		
+		Normalize(void); 									 		
 };
 
 

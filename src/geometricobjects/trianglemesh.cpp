@@ -145,7 +145,7 @@ void TriangleMesh::ComputeMeshNormals()
 		if (normal.x == 0.0 && normal.y == 0.0 && normal.z == 0.0)
 			normal.y = 1.0f;
 		else
-			normal.normalize();
+			normal.Normalize();
 
 		m_mesh->normals.push_back(normal);
 	}

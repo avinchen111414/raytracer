@@ -57,7 +57,7 @@ Point3D::operator= (const Point3D& rhs) {
 // distance between two points
 
 double
-Point3D::distance(const Point3D& p) const {
+Point3D::Distance(const Point3D& p) const {
 	return (sqrt(		(x - p.x) * (x - p.x) 
 					+ 	(y - p.y) * (y - p.y)
 					+	(z - p.z) * (z - p.z) ));

@@ -36,7 +36,7 @@ Mesh& Mesh::operator= (const Mesh& rhs)
 	return *this;
 }
 
-Mesh* Mesh::clone() const
+Mesh* Mesh::Clone() const
 {
 	return new Mesh(*this);
 }

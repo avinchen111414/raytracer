@@ -57,11 +57,11 @@ RGBColor::operator= (const RGBColor& rhs) {
 // used for color filtering in Chapter 28
 
 RGBColor
-RGBColor::powc(float p) const {
+RGBColor::PowC(float p) const {
 	return (RGBColor(pow(r, p), pow(g, p), pow(b, p)));
 }
 
-void RGBColor::clamp(const RGBColor& clr)
+void RGBColor::Clamp(const RGBColor& clr)
 {
 	r = std::min(r, clr.r);
 	g = std::min(g, clr.g);

@@ -86,7 +86,7 @@ Normal::operator= (const Point3D& rhs) {
 // ------------------------------------------------------------ normalize
 
 void 													
-Normal::normalize(void) {	
+Normal::Normalize(void) {	
 	double length = sqrt(x * x + y * y + z * z);
 	x /= length; y /= length; z /= length;
 }

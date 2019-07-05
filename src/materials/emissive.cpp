@@ -44,7 +44,7 @@ RGBColor Emissive::area_light_shade(ShadeRec& sr)
 	if (sr.normal * -sr.ray.d > 0.0)
 	{
 		RGBColor ret = ls * ce;
-		ret.clamp(1.0f);	
+		ret.Clamp(1.0f);	
 		return ret;
 	}
 	else

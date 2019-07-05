@@ -38,10 +38,10 @@ class Point3D {
 		operator* (const double a) const;
 		
 		double														// square of distance bertween two points
-		d_squared(const Point3D& p) const;
+		DidSquared(const Point3D& p) const;
 		
 		double														// distance bewteen two points
-		distance(const Point3D& p) const;
+		Distance(const Point3D& p) const;
 };
 
 
@@ -97,7 +97,7 @@ Point3D::operator* (const double a) const {
 // the square of the distance between the two points as a member function
 
 inline double
-Point3D::d_squared(const Point3D& p) const {
+Point3D::DidSquared(const Point3D& p) const {
 	return (	(x - p.x) * (x - p.x) 
 			+ 	(y - p.y) * (y - p.y)
 			+	(z - p.z) * (z - p.z) );

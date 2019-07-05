@@ -52,12 +52,12 @@ RGBColor Lambertian::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3D& w
 {
 	Vector3D w = sr.normal;
 	Vector3D v = Vector3D(0.0034, 1, 0.0071) ^ w;
-	v.normalize();
+	v.Normalize();
 	Vector3D u = v ^ w;
 
 	Point3D sp = m_sampler_ptr->sample_hemisphere();  
 	wi = sp.x * u + sp.y * v + sp.z * w;
-	wi.normalize(); 	
+	wi.Normalize(); 	
 
 	pdf = sr.normal * wi * invPI;
 

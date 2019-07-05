@@ -73,7 +73,7 @@ Vector3D AreaLight::get_direction(ShadeRec& sr)
 	sample_point = object_ptr->Sample();
 	light_normal = object_ptr->GetNormal(sample_point);
 	wi = sample_point - sr.hit_point;
-	wi.normalize();
+	wi.Normalize();
 	return wi;
 }
 
@@ -107,7 +107,7 @@ float AreaLight::G(const ShadeRec& sr) const
 {
 	// (NOTE) *
 	float ndotd = static_cast<float>(-light_normal * wi);
-	float d2 = static_cast<float>(sample_point.d_squared(sr.hit_point));
+	float d2 = static_cast<float>(sample_point.DidSquared(sr.hit_point));
 	return ndotd / d2;
 }
 

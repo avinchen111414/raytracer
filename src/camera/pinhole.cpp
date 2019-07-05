@@ -71,6 +71,6 @@ void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* 
 Vector3D PinHole::RayDirection(const Point2D& p) const
 {
 	Vector3D ray_dir = p.x * m_u + p.y * m_v - m_d * m_w;
-	ray_dir.normalize();
+	ray_dir.Normalize();
 	return ray_dir;
 }

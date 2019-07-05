@@ -40,10 +40,10 @@ class Vector3D {
 		operator- (void) const;									
 				
 		double													// length
-		length(void) const;
+		Length(void) const;
 		
 		double													// square of the length
-		len_squared(void) const;
+		LenSquared(void) const;
 		
 		Vector3D												// multiplication by a double on the right
 		operator* (const double a) const;
@@ -67,10 +67,10 @@ class Vector3D {
 		operator^ (const Vector3D& v) const;
 		
 		void 													// convert vector to a unit vector
-		normalize(void); 
+		Normalize(void); 
 		
 		Vector3D& 												// return a unit vector, and normalize the vector												
-		hat(void);
+		Hat(void);
 };
 
 
@@ -91,7 +91,7 @@ Vector3D::operator- (void) const {
 // the square of the length
 
 inline double													
-Vector3D::len_squared(void) const {	
+Vector3D::LenSquared(void) const {	
 	return (x * x + y * y + z * z);
 }
 

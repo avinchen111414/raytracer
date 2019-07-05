@@ -14,8 +14,8 @@ public:
 	BBox& operator= (const BBox& rhs);
 	~BBox();
 
-	bool hit (const Ray& ray) const;
-	bool inside (const Point3D& point) const;
+	bool Hit (const Ray& ray) const;
+	bool Inside (const Point3D& point) const;
 	void Merge (const BBox& other);
 
 public:

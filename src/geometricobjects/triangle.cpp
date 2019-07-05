@@ -8,7 +8,7 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2)
 	: GeometricObject(), v0(_v0), v1(_v1), v2(_v2)
 {
 	normal = (v1 - v0) ^ (v2 - v0);
-	normal.normalize();
+	normal.Normalize();
 	UpdateBbox();
 }
 

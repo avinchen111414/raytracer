@@ -79,7 +79,7 @@ Vector3D EnvironmentLight::get_direction(ShadeRec& rc)
 	Vector3D u, v, w;
 	w = rc.normal;
 	v = w ^ Vector3D(0.0072f, 1.0f, 0.0034f);
-	v.normalize();
+	v.Normalize();
 	u = v ^ w;
 	
 	Point3D p = sampler_ptr->sample_hemisphere();

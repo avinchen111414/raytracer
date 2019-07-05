@@ -26,13 +26,13 @@ Rectangle::Rectangle(const Point3D& _p0, const Vector3D& _a,
 	const Vector3D& _b):
 GeometricObject(),
 	m_p0(_p0), m_a(_a), m_b(_b),
-	m_a_len_squared(_a.len_squared()), m_b_len_squared(_b.len_squared()),
-	m_area(_a.length() * _b.length()),
-	m_inv_area(1.0f / (_a.length() * _b.length())),
+	m_a_len_squared(_a.LenSquared()), m_b_len_squared(_b.LenSquared()),
+	m_area(_a.Length() * _b.Length()),
+	m_inv_area(1.0f / (_a.Length() * _b.Length())),
 	m_sampler_ptr(nullptr)
 {
 	m_normal = m_a ^ m_b;
-	m_normal.normalize();
+	m_normal.Normalize();
 }
 
 Rectangle::Rectangle(const Rectangle& other)

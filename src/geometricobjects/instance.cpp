@@ -13,8 +13,8 @@ Instance::Instance()
 	m_object(nullptr),
 	m_bbox(Point3D(0), Point3D(0))
 {
-	m_inv_matrix.set_identity();
-	m_forward_matrix.set_identity();
+	m_inv_matrix.SetIDentity();
+	m_forward_matrix.SetIDentity();
 	m_material = nullptr;
 }
 
@@ -23,8 +23,8 @@ Instance::Instance(GeometricObject* object)
 	m_object(object),
 	m_bbox(Point3D(0), Point3D(0))
 {
-	m_inv_matrix.set_identity();
-	m_forward_matrix.set_identity();
+	m_inv_matrix.SetIDentity();
+	m_forward_matrix.SetIDentity();
 	if (object)
 		m_material = object->GetMaterial();
 }
@@ -87,7 +87,7 @@ bool Instance::Hit(const Ray& ray, double& t, ShadeRec& s) const
 	if (m_object->Hit(inv_ray, t, s))
 	{
 		s.normal = m_inv_matrix * s.normal;
-		s.normal.normalize();
+		s.normal.Normalize();
 		s.local_hit_point = ray.o + t * ray.d;
 		return true;
 	}

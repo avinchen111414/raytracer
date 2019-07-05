@@ -2,7 +2,7 @@
 #define __UTILITY_H__
 
 // rand from [0,1]
-float rand_float();
+float RandFloat();
 
 const double 	PI 			= 3.1415926535897932384;
 const double 	TWO_PI 		= 6.2831853071795864769;
@@ -13,7 +13,7 @@ const float		kEpsilon	= 0.001f;
 
 #define FLT_MAX         3.402823466e+38F
 
-inline double clamp(double value, double min, double max)
+inline double Clamp(double value, double min, double max)
 {
 	if (value < min)
 		return min;

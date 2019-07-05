@@ -48,12 +48,12 @@ class RGBColor {
 		operator== (const RGBColor& c) const;				
 
 		RGBColor											// raise components to a power
-		powc(float p) const;
+		PowC(float p) const;
 		
 		float												// the average of the components
-		average(void) const;
+		Average(void) const;
 
-		void clamp(const RGBColor& clr);
+		void Clamp(const RGBColor& clr);
 };
 
 
@@ -140,7 +140,7 @@ RGBColor::operator== (const RGBColor& c) const {
 // the average of the three components
 
 inline float											
-RGBColor::average(void) const {
+RGBColor::Average(void) const {
 	return (float)(0.333333333333 * (r + g + b));
 }
 

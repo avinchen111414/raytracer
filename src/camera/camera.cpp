@@ -28,9 +28,9 @@ Camera::~Camera() {}
 void Camera::ComputeUvw()
 {
 	m_w = m_eye - m_lookat;
-	m_w.normalize();
+	m_w.Normalize();
 	m_u = m_up ^ m_w;
-	m_u.normalize();
+	m_u.Normalize();
 	m_v = m_w ^ m_u;
 
 	if (m_eye.x == m_lookat.x && m_eye.z == m_lookat.z && m_eye.y > m_lookat.y) { // camera looking vertically down

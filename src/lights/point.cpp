@@ -46,7 +46,7 @@ Light* Point::clone() const
 Vector3D Point::get_direction(ShadeRec& sr)
 {
 	Vector3D dir = location - sr.hit_point;
-	dir.normalize();
+	dir.Normalize();
 	return dir;
 }
 
@@ -59,7 +59,7 @@ bool Point::in_shadow(const Ray& ray, const ShadeRec& sr)
 {
 	float t;
 	int num_objects = sr.w.objects.size();
-	float d = static_cast<float>(location.distance(ray.o));
+	float d = static_cast<float>(location.Distance(ray.o));
 
 	for (int j = 0; j != num_objects; j++)
 	{

@@ -61,7 +61,7 @@ void World::DisplayPixel(const int row, const int column, const RGBColor& raw_co
 		mapped_color = MaxToOne(raw_color);
 
 	if (vp.m_gamma != 1.0)
-		mapped_color = mapped_color.powc(vp.m_inv_gamma);
+		mapped_color = mapped_color.PowC(vp.m_inv_gamma);
 
 	//have to start from max y coordinate to convert to screen coordinates
 	int x = column;

@@ -63,7 +63,7 @@ void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* 
 			}
 			L /= (float)vp.num_samples;
 			L *= m_exposure_time;
-			w.display_pixel(r, c, L, paint_thread);
+			w.DisplayPixel(r, c, L, paint_thread);
 		}
 	}
 }

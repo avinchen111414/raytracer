@@ -27,7 +27,7 @@ RGBColor RayCast::trace_ray(const Ray& ray) const
 
 RGBColor RayCast::trace_ray(const Ray& ray, const int depth) const
 {
-	ShadeRec sr(world_ptr->hit_object(ray));
+	ShadeRec sr(world_ptr->HitObject(ray));
 	if (sr.hit_an_object) {
 		sr.ray = ray;
 		return (sr.material_ptr->shade(sr));

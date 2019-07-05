@@ -26,7 +26,7 @@ RGBColor GlobalTracer::trace_ray(const Ray& ray, const int depth) const
 	if (depth > world_ptr->vp.max_depth)
 		return world_ptr->background_color;
 
-	ShadeRec sr(world_ptr->hit_object(ray));
+	ShadeRec sr(world_ptr->HitObject(ray));
 
 	if (sr.hit_an_object)
 	{

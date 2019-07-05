@@ -32,24 +32,23 @@ public:
 	World();
 	~World();
 
-	void add_object(GeometricObject* object_ptr);
-	void add_light(Light* light_ptr);
-	void set_ambient_light(Light* ambient_light_ptr);
-	void set_camera(Camera* camera_ptr);
-	void build();
-	void open_window(const int hres, const int vres) const;
+	void AddObject(GeometricObject* object_ptr);
+	void AddLight(Light* light_ptr);
+	void SetAmbientLight(Light* ambient_light_ptr);
+	void SetCamera(Camera* camera_ptr);
+	void Build();
 
-	void display_pixel(const int row, const int col,
+	void DisplayPixel(const int row, const int col,
 		const RGBColor& pixel_c, RenderThread* paint_thread) const;
 
-	void quit_render() {quit_render_tag = true;};
+	void QuitRender() {quit_render_tag = true;};
 	
-	RGBColor max_to_one(const RGBColor& c) const;
-	RGBColor clamp_to_color(const RGBColor& c) const;
+	RGBColor MaxToOne(const RGBColor& c) const;
+	RGBColor ClampToColor(const RGBColor& c) const;
 
-	ShadeRec hit_bare_bones_objects(const Ray& ray);
+	ShadeRec HitBareBonesObjects(const Ray& ray);
 	
-	ShadeRec hit_object(const Ray& ray);
+	ShadeRec HitObject(const Ray& ray);
 
 	// -- build samples --
 protected:
@@ -65,29 +64,29 @@ protected:
 	// -- --
 
 private:
-	void del_objects();
-	void del_lights();
+	void DelObjects();
+	void DelLights();
 };
 
 
 inline void 
-World::add_object(GeometricObject* object_ptr) {  
+World::AddObject(GeometricObject* object_ptr) {  
 	objects.push_back(object_ptr);	
 }
 
 
 inline void 
-World::add_light(Light* light_ptr) {  
+World::AddLight(Light* light_ptr) {  
 	lights.push_back(light_ptr);
 }
 
 inline void
-World::set_ambient_light(Light* light_ptr) {
+World::SetAmbientLight(Light* light_ptr) {
 	ambient_ptr = light_ptr;
 }
 
 inline void
-World::set_camera(Camera* c_ptr) {
+World::SetCamera(Camera* c_ptr) {
 	camera_ptr = c_ptr;
 }
 

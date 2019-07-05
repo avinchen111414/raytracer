@@ -394,7 +394,7 @@ void RenderCanvas::renderStart(void)
    
 	wxGetApp().SetStatusText( wxT( "Building world..." ) );
    
-	w->build();
+	w->Build();
    
 	wxGetApp().SetStatusText( wxT( "Rendering..." ) );
    
@@ -544,5 +544,5 @@ void *RenderThread::Entry()
 void RenderThread::breakThread()
 {
 	break_thread = true;
-	world->quit_render();
+	world->QuitRender();
 }

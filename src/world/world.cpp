@@ -51,14 +51,14 @@ World::~World(void) {
 	}				
 }
 
-void World::display_pixel(const int row, const int column, const RGBColor& raw_color,
+void World::DisplayPixel(const int row, const int column, const RGBColor& raw_color,
 							  RenderThread* paint_thread) const
 {
 	RGBColor mapped_color = raw_color;
 	if (vp.show_out_of_gamut)
-		mapped_color = clamp_to_color(raw_color);
+		mapped_color = ClampToColor(raw_color);
 	else
-		mapped_color = max_to_one(raw_color);
+		mapped_color = MaxToOne(raw_color);
 
 	if (vp.gamma != 1.0)
 		mapped_color = mapped_color.powc(vp.inv_gamma);
@@ -73,7 +73,7 @@ void World::display_pixel(const int row, const int column, const RGBColor& raw_c
 }
 
 RGBColor
-World::max_to_one(const RGBColor& c) const  {
+World::MaxToOne(const RGBColor& c) const  {
 	float max_value = std::max(c.r, std::max(c.g, c.b));
 	
 	if (max_value > 1.0)
@@ -87,7 +87,7 @@ World::max_to_one(const RGBColor& c) const  {
 // Set color to red if any component is greater than one
 
 RGBColor
-World::clamp_to_color(const RGBColor& raw_color) const {
+World::ClampToColor(const RGBColor& raw_color) const {
 	RGBColor c(raw_color);
 	
 	if (raw_color.r > 1.0 || raw_color.g > 1.0 || raw_color.b > 1.0) {
@@ -97,7 +97,7 @@ World::clamp_to_color(const RGBColor& raw_color) const {
 	return (c);
 }
 
-void World::build()
+void World::Build()
 {
 	srand((int)time(0));
 	//this->build_ao_scene();
@@ -111,7 +111,7 @@ void World::build()
 	this->build_transparent_test_scene();
 }
 
-ShadeRec World::hit_bare_bones_objects(const Ray& ray)
+ShadeRec World::HitBareBonesObjects(const Ray& ray)
 {
 	ShadeRec sr(*this);
 	double t;
@@ -135,7 +135,7 @@ ShadeRec World::hit_bare_bones_objects(const Ray& ray)
 	return sr;
 }
 
-ShadeRec World::hit_object(const Ray& ray)
+ShadeRec World::HitObject(const Ray& ray)
 {
 	ShadeRec sr(*this);
 	double t;

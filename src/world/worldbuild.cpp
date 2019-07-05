@@ -44,14 +44,14 @@ void World::build_ao_scene()
 	occluder->set_color(1.0f);
 	occluder->set_min_amount(0.0f);
 	occluder->set_sampler(sampler_ptr);
-	set_ambient_light(occluder);
+	SetAmbientLight(occluder);
 
 	PinHole* camera = new PinHole;
 	camera->m_eye = Point3D(25, 20, 45);
 	camera->m_lookat = Point3D(0, 1, 0);
 	camera->m_d = 5000;
 	camera->ComputeUvw();
-	set_camera(camera);
+	SetCamera(camera);
 
 	Matte* matte_ptr0 = new Matte;
 	matte_ptr0->set_ka(0.75);
@@ -60,7 +60,7 @@ void World::build_ao_scene()
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
 	sphere0->SetMaterial(matte_ptr0);
-	add_object(sphere0);
+	AddObject(sphere0);
 
 	Matte* matte_ptr1 = new Matte;
 	matte_ptr1->set_ka(0.75);
@@ -69,7 +69,7 @@ void World::build_ao_scene()
 
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
 	plane->SetMaterial(matte_ptr1);
-	add_object(plane);
+	AddObject(plane);
 }
 
 void World::build_area_lights_scene()
@@ -88,7 +88,7 @@ void World::build_area_lights_scene()
 	occluder->set_color(1.0f);
 	occluder->set_min_amount(0.0f);
 	occluder->set_sampler(sampler_ptr);
-	set_ambient_light(occluder);
+	SetAmbientLight(occluder);
 
 	Emissive* emmisvie_ptr = new Emissive;
 	emmisvie_ptr->set_ls(5.0f);
@@ -100,19 +100,19 @@ void World::build_area_lights_scene()
 	rectangle_ptr->SetMaterial(emmisvie_ptr);
 	rectangle_ptr->SetSampler(rectangle_sampler_ptr);
 	rectangle_ptr->EnableShadow(false);
-	add_object(rectangle_ptr);
+	AddObject(rectangle_ptr);
 
 	AreaLight* area_light_ptr = new AreaLight;
 	area_light_ptr->set_object(rectangle_ptr);
 	area_light_ptr->set_cast_shadow(true);
-	add_light(area_light_ptr);
+	AddLight(area_light_ptr);
 
 	PinHole* camera = new PinHole;
 	camera->m_eye = Point3D(50, 40, 90);
 	camera->m_lookat = Point3D(0, 1, 0);
 	camera->m_d = 5000;
 	camera->ComputeUvw();
-	set_camera(camera);
+	SetCamera(camera);
 
 	
 	Matte* matte_ptr0 = new Matte;
@@ -122,7 +122,7 @@ void World::build_area_lights_scene()
 
 	Sphere* sphere0 = new Sphere(Point3D(0, 1, 0), 1);
 	sphere0->SetMaterial(matte_ptr0);
-	add_object(sphere0);
+	AddObject(sphere0);
 	
 	
 	Matte* matte_ptr1 = new Matte;
@@ -132,11 +132,11 @@ void World::build_area_lights_scene()
 
 	Plane* plane = new Plane(Point3D(0), Normal(0, 1, 0));
 	plane->SetMaterial(matte_ptr1);
-	add_object(plane);
+	AddObject(plane);
 
 	Box* box = new Box(Point3D(1, 0, 1), Point3D(2, 1, 2));
 	box->SetMaterial(matte_ptr1);
-	add_object(box);
+	AddObject(box);
 }
 
 void World::build_env_light_scene()
@@ -150,7 +150,7 @@ void World::build_env_light_scene()
 	EnvironmentLight* env_light = new EnvironmentLight;
 	env_light->set_sampler(new Jittered(256));
 	env_light->set_material(env_emissive_mtl);
-	add_light(env_light);
+	AddLight(env_light);
 }
 
 void World::build_instance_test_scene()
@@ -168,12 +168,12 @@ void World::build_instance_test_scene()
 	camera->m_lookat = Point3D(0, 0, 0);
 	camera->m_d = 8000;
 	camera->ComputeUvw();
-	set_camera(camera);
+	SetCamera(camera);
 
 	Point* point_light = new Point();
 	point_light->set_location(Point3D(50.0, 50.0, 1.0));
 	point_light->scale_radiance(3.0f);
-	add_light(point_light);
+	AddLight(point_light);
 
 	Phong* phong = new Phong;
 	phong->set_cd(0.75);
@@ -187,7 +187,7 @@ void World::build_instance_test_scene()
 	ellipsoid->Scale(2, 3, 1);
 	ellipsoid->RotateX(-45);
 	ellipsoid->Translate(0, 1, 0);
-	add_object(ellipsoid);
+	AddObject(ellipsoid);
 }
 
 void World::build_grid_test_scene()
@@ -205,13 +205,13 @@ void World::build_grid_test_scene()
 	camera->m_lookat = Point3D(0, 0, 0);
 	camera->m_d = 8000;
 	camera->ComputeUvw();
-	set_camera(camera);
+	SetCamera(camera);
 
 	Direction* dir = new Direction;
 	dir->set_direction(Vector3D(-1.0f, -1.0f, -1.0f));
 	dir->set_color(1.0f);
 	dir->scale_radiance(1.0f);
-	add_light(dir);
+	AddLight(dir);
 
 	Phong* phong = new Phong;
 	phong->set_cd(0.75);
@@ -234,7 +234,7 @@ void World::build_grid_test_scene()
 	}
 	
 	grid->SetupCells();
-	add_object(grid);
+	AddObject(grid);
 }
 
 void World::build_triangle_mesh_test_scene()
@@ -252,7 +252,7 @@ void World::build_triangle_mesh_test_scene()
 	pinhole_ptr->m_lookat = Point3D(0, -0.5, 0);
 	pinhole_ptr->m_d = 16000;  	
 	pinhole_ptr->ComputeUvw();     
-	set_camera(pinhole_ptr);
+	SetCamera(pinhole_ptr);
 
 	Jittered* sampler_ptr = new Jittered(num_samples);
 	AmbientOccluder* occluder = new AmbientOccluder;
@@ -260,13 +260,13 @@ void World::build_triangle_mesh_test_scene()
 	occluder->set_color(1.0f);
 	occluder->set_min_amount(0.5f);
 	occluder->set_sampler(sampler_ptr);
-	set_ambient_light(occluder);
+	SetAmbientLight(occluder);
 
 	Direction* directional_ptr = new Direction;
 	directional_ptr->set_direction(Vector3D(-0.75, -1, 0.15));     
 	directional_ptr->scale_radiance(4.5);  
 	directional_ptr->set_cast_shadow(true);
-	add_light(directional_ptr);
+	AddLight(directional_ptr);
 
 	Matte* matte_ptr1 = new Matte;			
 	matte_ptr1->set_ka(0.1); 
@@ -290,7 +290,7 @@ void World::build_triangle_mesh_test_scene()
 	mesh->SetMaterial(phong);
 	mesh->SetupCells();
 	mesh->EnableShadow(true);
-	add_object(mesh);
+	AddObject(mesh);
 
 	/*
 	Grid* grid = new Grid;
@@ -325,7 +325,7 @@ void World::build_triangle_mesh_test_scene()
 	Plane* plane_ptr1 = new Plane(Point3D(0, -0.83, 0), Normal(0, 1, 0));  
 	plane_ptr1->SetMaterial(matte_ptr2);
 	plane_ptr1->EnableShadow(true);
-	add_object(plane_ptr1);
+	AddObject(plane_ptr1);
 	
 }
 
@@ -345,7 +345,7 @@ void World::build_reflective_test_scene()
 	pinhole_ptr->m_lookat = Point3D(0, -0.5, 0);
 	pinhole_ptr->m_d = 16000;  	
 	pinhole_ptr->ComputeUvw();     
-	set_camera(pinhole_ptr);
+	SetCamera(pinhole_ptr);
 
 	Jittered* sampler_ptr = new Jittered(num_samples);
 	AmbientOccluder* occluder = new AmbientOccluder;
@@ -353,13 +353,13 @@ void World::build_reflective_test_scene()
 	occluder->set_color(1.0f);
 	occluder->set_min_amount(0.5f);
 	occluder->set_sampler(sampler_ptr);
-	set_ambient_light(occluder);
+	SetAmbientLight(occluder);
 
 	Direction* directional_ptr = new Direction;
 	directional_ptr->set_direction(Vector3D(-0.75, -1, 0.15));     
 	directional_ptr->scale_radiance(4.5);  
 	directional_ptr->set_cast_shadow(true);
-	add_light(directional_ptr);
+	AddLight(directional_ptr);
 
 	Reflective* reflective = new Reflective;
 	reflective->set_cr(1);
@@ -411,7 +411,7 @@ void World::build_reflective_test_scene()
 	mesh->SetMaterial(phong);
 	mesh->SetupCells();
 	mesh->EnableShadow(true);
-	add_object(mesh);
+	AddObject(mesh);
 	
 	//raytracer::Rectangle* rect = new raytracer::Rectangle(Point3D(0, -0.83, -2), Vector3D(3, 0, 0), Vector3D(0, 3, 0));
 	//rect->set_material(reflective);
@@ -421,7 +421,7 @@ void World::build_reflective_test_scene()
 	//sphere0->set_material(reflective);
 	//sphere0->set_material(glossy_reflective);
 	sphere0->SetMaterial(transparent);
-	add_object(sphere0);
+	AddObject(sphere0);
 
 	Matte* matte_ptr2 = new Matte;			
 	matte_ptr2->set_cd(RGBColor(1, 0.9, 0.6));
@@ -432,7 +432,7 @@ void World::build_reflective_test_scene()
 	Plane* plane_ptr1 = new Plane(Point3D(0, -0.83, 0), Normal(0, 1, 0));  
 	plane_ptr1->SetMaterial(matte_ptr2);
 	plane_ptr1->EnableShadow(true);
-	add_object(plane_ptr1);
+	AddObject(plane_ptr1);
 }
 
 void World::build_global_test_scene()
@@ -454,14 +454,14 @@ void World::build_global_test_scene()
 	occluder->set_color(1.0f);
 	occluder->set_min_amount(0.0f);
 	occluder->set_sampler(new Hammersley(num_samples));
-	set_ambient_light(occluder);
+	SetAmbientLight(occluder);
 
 	PinHole* pinhole_ptr = new PinHole;
 	pinhole_ptr->m_eye = Point3D(27.6, 27.4, -80.0);
 	pinhole_ptr->m_lookat = Point3D(27.6, 27.4, 0.0);
 	pinhole_ptr->m_d = (400);      
 	pinhole_ptr->ComputeUvw();     
-	set_camera(pinhole_ptr);
+	SetCamera(pinhole_ptr);
 
 
 	Point3D p0;
@@ -489,12 +489,12 @@ void World::build_global_test_scene()
 	raytracer::Rectangle* light_ptr = new raytracer::Rectangle(p0, b, a);
 	light_ptr->SetMaterial(emissive_ptr);
 	light_ptr->SetSampler(rectangle_sampler_ptr);
-	add_object(light_ptr);
+	AddObject(light_ptr);
 
 	AreaLight* area_light_ptr = new AreaLight;
 	area_light_ptr->set_object(light_ptr);
 	area_light_ptr->set_cast_shadow(true);
-	add_light(area_light_ptr);
+	AddLight(area_light_ptr);
 
 
 	// left wall
@@ -513,7 +513,7 @@ void World::build_global_test_scene()
 	raytracer::Rectangle* left_wall_ptr = new raytracer::Rectangle(p0, a, b);
 	left_wall_ptr->SetMaterial(matte_ptr1);
 	left_wall_ptr->SetSampler(rectangle_sampler_ptr);
-	add_object(left_wall_ptr);
+	AddObject(left_wall_ptr);
 
 
 	// right wall
@@ -532,7 +532,7 @@ void World::build_global_test_scene()
 	raytracer::Rectangle* right_wall_ptr = new raytracer::Rectangle(p0, b, a);
 	right_wall_ptr->SetMaterial(matte_ptr2);
 	right_wall_ptr->SetSampler(rectangle_sampler_ptr);
-	add_object(right_wall_ptr);
+	AddObject(right_wall_ptr);
 
 
 	// back wall
@@ -550,7 +550,7 @@ void World::build_global_test_scene()
 	raytracer::Rectangle* back_wall_ptr = new raytracer::Rectangle(p0, b, a);
 	back_wall_ptr->SetMaterial(matte_ptr3);
 	back_wall_ptr->SetSampler(new Hammersley(num_samples));
-	add_object(back_wall_ptr);
+	AddObject(back_wall_ptr);
 
 
 	// floor
@@ -562,7 +562,7 @@ void World::build_global_test_scene()
 	raytracer::Rectangle* floor_ptr = new raytracer::Rectangle(p0, a, b);
 	floor_ptr->SetMaterial(matte_ptr3);
 	floor_ptr->SetSampler(new Hammersley(num_samples));
-	add_object(floor_ptr);
+	AddObject(floor_ptr);
 
 
 	// ceiling
@@ -574,7 +574,7 @@ void World::build_global_test_scene()
 	raytracer::Rectangle* ceiling_ptr = new raytracer::Rectangle(p0, b, a);
 	ceiling_ptr->SetMaterial(matte_ptr3);
 	ceiling_ptr->SetSampler(new Hammersley(num_samples));
-	add_object(ceiling_ptr);
+	AddObject(ceiling_ptr);
 }
 
 void World::build_transparent_test_scene()
@@ -592,14 +592,14 @@ void World::build_transparent_test_scene()
 
 	Ambient* ambient_ptr = new Ambient;
 	ambient_ptr->scale_radiance(0.25);
-	set_ambient_light(ambient_ptr);
+	SetAmbientLight(ambient_ptr);
 
 	PinHole* pinhole_ptr = new PinHole;
 	pinhole_ptr->m_eye = Point3D(-8, 5.5, 40);   
 	pinhole_ptr->m_lookat = Point3D(1, 4, 0);    
 	pinhole_ptr->m_d = (2400.0);  
 	pinhole_ptr->ComputeUvw();     
-	set_camera(pinhole_ptr);
+	SetCamera(pinhole_ptr);
 
 
 	// point light 
@@ -608,7 +608,7 @@ void World::build_transparent_test_scene()
 	light_ptr1->set_location(Point3D(40, 50, 0)); 
 	light_ptr1->scale_radiance(4.5);
 	light_ptr1->set_cast_shadow(true);
-	add_light(light_ptr1);
+	AddLight(light_ptr1);
 
 
 	// point light 
@@ -617,7 +617,7 @@ void World::build_transparent_test_scene()
 	light_ptr2->set_location(Point3D(-10, 20, 10)); 
 	light_ptr2->scale_radiance(4.5);
 	light_ptr2->set_cast_shadow(true);
-	add_light(light_ptr2);
+	AddLight(light_ptr2);
 
 
 	// directional light 
@@ -626,7 +626,7 @@ void World::build_transparent_test_scene()
 	light_ptr3->set_direction(Vector3D(-1, 0, 0)); 
 	light_ptr3->scale_radiance(4.5);
 	light_ptr3->set_cast_shadow(true);
-	add_light(light_ptr3);
+	AddLight(light_ptr3);
 
 
 	// transparent sphere
@@ -646,7 +646,7 @@ void World::build_transparent_test_scene()
 	Sphere* sphere_ptr1 = new Sphere(Point3D(0.0, 4.5, 0.0), 3.0);
 	//sphere_ptr1->set_material(glass_ptr);
 	sphere_ptr1->SetMaterial(dielectirc);
-	add_object(sphere_ptr1);
+	AddObject(sphere_ptr1);
 
 
 	// red sphere
@@ -661,7 +661,7 @@ void World::build_transparent_test_scene()
 
 	Sphere* sphere_ptr2 = new Sphere(Point3D(4, 4, -6), 3);
 	sphere_ptr2->SetMaterial(reflective_ptr);
-	add_object(sphere_ptr2);
+	AddObject(sphere_ptr2);
 
 	// rectangle
 	Matte* matte_ptr2 = new Matte;			
@@ -672,5 +672,5 @@ void World::build_transparent_test_scene()
 
 	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-20, -0.001, -100), Vector3D(0, 0, 120), Vector3D(40, 0, 0)); 
 	rectangle_ptr->SetMaterial(matte_ptr2);
-	add_object(rectangle_ptr);		
+	AddObject(rectangle_ptr);		
 }

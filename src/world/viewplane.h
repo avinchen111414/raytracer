@@ -6,18 +6,6 @@ class Sampler;
 class ViewPlane
 {
 public:
-	int 			m_hres;   					// horizontal image resolution 
-	int 			m_vres;   					// vertical image resolution
-	float			m_s;							// pixel size
-	int				m_num_samples;				// number of samples per pixel
-	Sampler*		m_sampler_ptr;				// pointer to some sampler	
-
-	float			m_gamma;						// gamma correction factor
-	float			m_inv_gamma;					// the inverse of the gamma correction factor
-	bool			m_show_out_of_gamut;			// display red if RGBColor out of gamut
-	int				m_max_depth;					// max recursive depth
-
-public:
 	ViewPlane();   								// default Constructor
 				
 	ViewPlane(const ViewPlane& vp);				// copy constructor
@@ -28,25 +16,42 @@ public:
 						
 	void 													
 	SetHres(const int h_res);
+	inline int GetHres() { return m_hres; };
 		
 	void 													
 	SetVres(const int v_res);
+	inline int GetVres() { return m_vres; };
 				
 	void
 	SetPixelSize(const float size);
+	inline int GetPixelSize() { return m_s; };
 		
 	void
 	SetGamma(const float g);
+	inline float GetGamma() { return m_gamma; };
 		
 	void
-	SetGamutDisplay(const bool show);	
+	SetGamutDisplay(const bool show);
+	inline bool GetGamutDisplay() { return m_show_out_of_gamut; };
 		
 	void
 	SetSamples(const int n);
-
 	void SetSampler(Sampler* sp);
 
 	void SetMaxDepth(int max_depth);
+	inline int GetMaxDepth() { return m_max_depth; };
+
+private:
+	int 			m_hres;   					// horizontal image resolution 
+	int 			m_vres;   					// vertical image resolution
+	float			m_s;							// pixel size
+	int				m_num_samples;				// number of samples per pixel
+	Sampler*		m_sampler_ptr;				// pointer to some sampler	
+
+	float			m_gamma;						// gamma correction factor
+	float			m_inv_gamma;					// the inverse of the gamma correction factor
+	bool			m_show_out_of_gamut;			// display red if RGBColor out of gamut
+	int				m_max_depth;					// max recursive depth
 };
 
 inline void

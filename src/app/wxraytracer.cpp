@@ -399,10 +399,10 @@ void RenderCanvas::renderStart(void)
 	wxGetApp().SetStatusText( wxT( "Rendering..." ) );
    
 	pixelsRendered = 0;
-	pixelsToRender = w->vp.m_hres * w->vp.m_vres;
+	pixelsToRender = w->vp.GetHres() * w->vp.GetVres();
    
 	//set the background
-	wxBitmap bitmap(w->vp.m_hres, w->vp.m_vres, -1);
+	wxBitmap bitmap(w->vp.GetHres(), w->vp.GetVres(), -1);
 	wxMemoryDC dc;
 	dc.SelectObject(bitmap);
 	dc.SetBackground(*wxGREY_BRUSH);
@@ -410,9 +410,9 @@ void RenderCanvas::renderStart(void)
    
 	wxBitmap tile(bg_xpm);
 
-	for(int x = 0; x < w->vp.m_hres; x += 16)
+	for(int x = 0; x < w->vp.GetHres(); x += 16)
 	{
-		for(int y = 0; y < w->vp.m_vres; y += 16)
+		for(int y = 0; y < w->vp.GetVres(); y += 16)
 			dc.DrawBitmap(tile, x, y, FALSE);
 	}
    

@@ -24,7 +24,7 @@ public:
 				
 	void
 	SetPixelSize(const float size);
-	inline int GetPixelSize() { return m_s; };
+	inline float GetPixelSize() { return m_s; };
 		
 	void
 	SetGamma(const float g);

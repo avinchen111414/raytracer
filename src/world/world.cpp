@@ -107,8 +107,8 @@ void World::Build()
 	//this->build_grid_test_scene();
 	//this->build_triangle_mesh_test_scene();
 	//this->build_reflective_test_scene();
-	//this->build_global_test_scene();
-	this->BuildTransparentTestScene();
+	this->BuildGlobalTestScene();
+	//this->BuildTransparentTestScene();
 }
 
 ShadeRec World::HitBareBonesObjects(const Ray& ray)

@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "meshtriangle.h"
 #include "utilities/mesh.h"
 #include "utilities/ray.h"

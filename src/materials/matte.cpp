@@ -152,7 +152,7 @@ RGBColor Matte::global_shade(ShadeRec& sr)
 	Vector3D wi;
 	float pdf;
 	RGBColor f = diffuse_brdf->SampleF(sr, wo, wi, pdf);
-	float ndotwi = sr.normal * wi;
+	float ndotwi = static_cast<float>(sr.normal * wi);
 	Ray reflected_ray(sr.hit_point, wi);
 	L += f * sr.w.tracer_ptr->trace_ray(reflected_ray, sr.depth + 1)
 		* ndotwi / pdf;

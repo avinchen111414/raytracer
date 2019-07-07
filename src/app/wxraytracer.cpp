@@ -11,6 +11,8 @@
 #include "world/world.h"
 #include "bg.xpm"
 
+#include "threadcontext.h"
+
 BEGIN_EVENT_TABLE(wxraytracerapp, wxApp)
 END_EVENT_TABLE()
 
@@ -472,6 +474,7 @@ void RenderCanvas::CreatePainters()
 		painter->Create();
 		painter->SetPriority(20);
 		painters.push_back(painter);
+		ThreadContext::Instance().RegisterThread(painter->GetId(), index);
 	}
 
 	num_task_completed = 0;

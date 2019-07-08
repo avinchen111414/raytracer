@@ -43,7 +43,7 @@ Rectangle::Rectangle(const Rectangle& other)
 	m_normal(other.m_normal)
 {
 	if (other.m_sampler_ptr)
-		m_sampler_ptr = other.m_sampler_ptr->clone();
+		m_sampler_ptr = other.m_sampler_ptr->Clone();
 	else
 		m_sampler_ptr = nullptr;
 }
@@ -104,7 +104,7 @@ bool Rectangle::ShadowHit(const Ray& ray, float& tmin) const
 
 Point3D Rectangle::Sample()
 {
-	Point2D sample_point = m_sampler_ptr->sample_unit_square();
+	Point2D sample_point = m_sampler_ptr->SampleUnitSquare();
 	return (m_p0 + sample_point.x * m_a + sample_point.y * m_b);
 }
 

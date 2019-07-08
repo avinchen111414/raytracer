@@ -22,17 +22,20 @@ PinHole::PinHole(const PinHole& c)
 
 PinHole::~PinHole() {}
 
-void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* paint_thread)
+void PinHole::RenderScene(World& w, const RenderTile& tile, RenderThread* paint_thread)
 {
 	RGBColor	L;
-	ViewPlane	vp(w.vp);	 								
+	//ViewPlane	vp(w.vp);	 								
+	ViewPlane& vp = w.vp;
 	Ray			ray;
 	int 		depth = 0;  
 	Point2D 	pp;		// sample point on a pixel
 	int n = (int)sqrt((float)vp.GetNumSamples());
 	Point2D		sp;
 
-	vp.SetPixelSize(vp.GetPixelSize() / m_zoom);
+	float pixel_size = vp.GetPixelSize();
+	pixel_size /= m_zoom;
+
 	ray.o = m_eye;
 
 	for (int r = tile.bottom; r < tile.top; r++)			// up
@@ -55,9 +58,9 @@ void PinHole::RenderScene(const World& w, const RenderTile& tile, RenderThread* 
 				if (w.quit_render_tag)
 					break;
 
-				sp = vp.GetSampler()->sample_unit_square();
-				pp.x = (float)(vp.GetPixelSize() * (c - 0.5 * (vp.GetHres() - 1) + sp.x));
-				pp.y = (float)(vp.GetPixelSize() * (r - 0.5 * (vp.GetVres() - 1) + sp.y));
+				sp = vp.GetSampler()->SampleUnitSquare();
+				pp.x = (float)(pixel_size * (c - 0.5 * (vp.GetHres() - 1) + sp.x));
+				pp.y = (float)(pixel_size * (r - 0.5 * (vp.GetVres() - 1) + sp.y));
 
 				ray.d = RayDirection(pp);
 				L += w.tracer_ptr->trace_ray(ray, 0);

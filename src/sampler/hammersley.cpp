@@ -4,25 +4,25 @@
 Hammersley::Hammersley()
 	: Sampler()
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Hammersley::Hammersley(const int ns)
 	: Sampler(ns)
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Hammersley::Hammersley(const int ns, const int n_sets)
 	: Sampler(ns, n_sets)
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Hammersley::Hammersley(const Hammersley& js)
 	: Sampler(js)
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Hammersley& Hammersley::operator= (const Hammersley& rhs)
@@ -37,7 +37,7 @@ Hammersley& Hammersley::operator= (const Hammersley& rhs)
 
 Hammersley::~Hammersley() {}
 
-void Hammersley::generate_samples()
+void Hammersley::GenerateSamples()
 {
 	for (int p = 0; p != num_sets; p++)
 	{
@@ -63,7 +63,7 @@ double Hammersley::phi(int j)
 	return x;
 }
 
-Sampler* Hammersley::clone() const
+Sampler* Hammersley::Clone() const
 {
 	return new Hammersley(*this);
 }

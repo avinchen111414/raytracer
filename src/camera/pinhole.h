@@ -16,7 +16,7 @@ public:
 	PinHole(const PinHole& camera);
 	virtual ~PinHole();
 
-	virtual void RenderScene(const World& w, const RenderTile& tile,
+	virtual void RenderScene(World& w, const RenderTile& tile,
 		RenderThread* paint_thread);
 
 	Vector3D RayDirection(const Point2D& p) const;

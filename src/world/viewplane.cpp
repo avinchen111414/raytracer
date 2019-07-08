@@ -1,4 +1,5 @@
 #include "viewplane.h"
+#include "sampler/samplermt.h"
 #include "sampler/jittered.h"
 
 ViewPlane::ViewPlane()
@@ -61,7 +62,8 @@ void ViewPlane::SetSamples(const int n) {
 		m_sampler_ptr = nullptr;
 	}
 
-	m_sampler_ptr = new Jittered(m_num_samples);
+	//m_sampler_ptr = new Jittered(m_num_samples);
+	m_sampler_ptr = new SamplerMT<Jittered>(m_num_samples);
 }
 
 void ViewPlane::SetSampler(Sampler* sp)
@@ -72,6 +74,6 @@ void ViewPlane::SetSampler(Sampler* sp)
 		m_sampler_ptr = nullptr;
 	}
 
-	m_num_samples = sp->get_num_samples();
+	m_num_samples = sp->GetNumSamples();
 	m_sampler_ptr = sp;
 }

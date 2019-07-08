@@ -65,7 +65,7 @@ void GlossySpecular::SetSampler(Sampler* sampler_ptr)
 	if (sampler_ptr)
 	{
 		this->m_sampler_ptr = sampler_ptr;
-		this->m_sampler_ptr->map_samples_to_hemisphere(m_exp);
+		this->m_sampler_ptr->MapSamplesToHemisphere(m_exp);
 	}	
 }
 
@@ -81,7 +81,7 @@ RGBColor GlossySpecular::SampleF(const ShadeRec& sr, const Vector3D& wo, Vector3
 	u.Normalize();
 	Vector3D v = u ^ w;
 
-	Point3D sp = m_sampler_ptr->sample_hemisphere();
+	Point3D sp = m_sampler_ptr->SampleHemisphere();
 	wi = sp.x * u + sp.y * v + sp.z * w;
 
 	if (sr.normal * wi < 0.0) 						// reflected ray is below tangent plane

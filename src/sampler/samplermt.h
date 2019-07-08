@@ -2,18 +2,21 @@
 #define __SAMPLERMT_H__
 
 #include <vector>
+#include <cassert>
 #include "utilities/point2d.h"
+#include "utilities/point3d.h"
 #include "app/threadcontext.h"
+#include "sampler.h"
 
-template<typename T>
-class SamplerMT
+template<class T>
+class SamplerMT: public Sampler
 {
 public:
-	SamplerMT<T>();
-	SamplerMT<T>(int num_samples);
-	SamplerMT<T>(int num_samples, int num_sets);
-	SamplerMT<T>(const SamplerMT<T>& s);
-	virtual ~SamplerMT<T>();
+	SamplerMT();
+	SamplerMT(int num_samples);
+	SamplerMT(int num_samples, int num_sets);
+	SamplerMT(const SamplerMT<T>& s);
+	virtual ~SamplerMT();
 
 public:
 	SamplerMT<T>& operator= (const SamplerMT<T>& rhs);
@@ -21,65 +24,65 @@ public:
 public:
 	virtual Point2D SampleUnitSquare();
 	virtual Point2D SampleUnitDisk();
-	virtual Point2D SampleHemisphere();
-
-protected:
+	virtual Point3D SampleHemisphere();
+	virtual void MapSamplesToUnitDisk();
+	virtual void MapSamplesToHemisphere(const float e);
+	virtual Sampler* Clone() const;
 	virtual void GenerateSamples();
 	virtual void SetupShuffledIndices();
 
 protected:
-	int m_num_samples;
-	int m_num_sets;
 	std::vector<T*> m_samplers;
 };
 
-#endif
-
-template<typename T>
+template<class T>
 inline SamplerMT<T>::SamplerMT()
 {
 	int num_processes = ThreadContext::Instance().GetNumProcesses();
 	m_samplers.resize(num_processes);
 	for (int i = 0; i < num_processes; i++)
 		m_samplers[i] = new T;
+	GenerateSamples();
 }
 
-template<typename T>
+template<class T>
 inline SamplerMT<T>::SamplerMT(int num_samples)
 {
 	int num_processes = ThreadContext::Instance().GetNumProcesses();
 	m_samplers.resize(num_processes);
 	for (int i = 0; i < num_processes; i++)
 		m_samplers[i] = new T(num_samples);
+	GenerateSamples();
 }
 
-template<typename T>
+template<class T>
 inline SamplerMT<T>::SamplerMT(int num_samples, int num_sets)
 {
 	int num_processes = ThreadContext::Instance().GetNumProcesses();
 	m_samplers.resize(num_processes);
 	for (int i = 0; i < num_processes; i++)
 		m_samplers[i] = new T(num_samples, num_sets);
+	GenerateSamples();
 }
 
-template<typename T>
+template<class T>
 inline SamplerMT<T>::SamplerMT(const SamplerMT<T>& s)
 {
 	int num_samplers = s.m_samplers.size();
 	m_samplers.resize(num_samplers);
 	for (int i = 0; i < num_samplers; i++)
-		m_samplers[i] = s.m_samplers[i]->clone();
+		m_samplers[i] = dynamic_cast<T*>(s.m_samplers[i]->Clone());
 }
 
-template<typename T>
+template<class T>
 inline SamplerMT<T>::~SamplerMT()
 {
-	for (int i = 0; i < m_samplers.size(); i++)
+	for (size_t i = 0; i < m_samplers.size(); i++)
 		delete m_samplers[i];
 	m_samplers.clear();
 }
 
-template<typename T>
+template<class T>
 inline SamplerMT<T>& SamplerMT<T>::operator=(const SamplerMT<T>& rhs)
 {
 	if (this == &rhs)
@@ -97,40 +100,65 @@ inline SamplerMT<T>& SamplerMT<T>::operator=(const SamplerMT<T>& rhs)
 	return *this;
 }
 
-template<typename T>
+template<class T>
 inline Point2D SamplerMT<T>::SampleUnitSquare()
 {
 	int index = ThreadContext::Instance().GetCurrentThreadIndex();
-	assert(index < m_samplers.size());
-	return m_samplers[index]->sample_unit_square();
+	assert(static_cast<size_t>(index) < m_samplers.size());
+	return m_samplers[index]->SampleUnitSquare();
 }
 
-template<typename T>
+template<class T>
 inline Point2D SamplerMT<T>::SampleUnitDisk()
 {
 	int index = ThreadContext::Instance().GetCurrentThreadIndex();
 	assert(index < m_samplers.size());
-	return m_samplers[index]->sample_unit_disk();
+	return m_samplers[index]->SampleUnitDisk();
 }
 
-template<typename T>
-inline Point2D SamplerMT<T>::SampleHemisphere()
+template<class T>
+inline Point3D SamplerMT<T>::SampleHemisphere()
 {
 	int index = ThreadContext::Instance().GetCurrentThreadIndex();
 	assert(index < m_samplers.size());
-	return m_samplers[index]->sample_hemisphere();
+	return m_samplers[index]->SampleHemisphere();
 }
 
-template<typename T>
+template<class T>
 inline void SamplerMT<T>::GenerateSamples()
 {
-	for (int i = 0; i < m_samplers.size(); i++)
-		m_samplers[i]->generate_samples();
+	for (size_t i = 0; i < m_samplers.size(); i++)
+		m_samplers[i]->GenerateSamples();
 }
 
-template<typename T>
+template<class T>
 inline void SamplerMT<T>::SetupShuffledIndices()
 {
-	for (int i = 0; i < m_samplers.size(); i++)
-		m_samplers[i]->setup_shuffled_indices();
+	for (size_t i = 0; i < m_samplers.size(); i++)
+		m_samplers[i]->SetupShuffledIndices();
 }
+
+template<class T>
+void SamplerMT<T>::MapSamplesToUnitDisk()
+{
+	int index = ThreadContext::Instance().GetCurrentThreadIndex();
+	assert(index < m_samplers.size());
+	return m_samplers[index]->MapSamplesToUnitDisk();
+}
+
+template<class T>
+void SamplerMT<T>::MapSamplesToHemisphere(const float e)
+{
+	int index = ThreadContext::Instance().GetCurrentThreadIndex();
+	assert(index < m_samplers.size());
+	return m_samplers[index]->MapSamplesToHemisphere(e);
+}
+
+template<class T>
+Sampler* SamplerMT<T>::Clone() const
+{
+	return new SamplerMT<T>(*this);
+}
+
+
+#endif

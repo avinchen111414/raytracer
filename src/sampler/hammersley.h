@@ -14,10 +14,10 @@ public:
 
 	virtual ~Hammersley();
 
-	virtual Sampler* clone() const;
+	virtual Sampler* Clone() const;
 
 private:
-	virtual void generate_samples();
+	virtual void GenerateSamples();
 	double phi(int j);
 };
 

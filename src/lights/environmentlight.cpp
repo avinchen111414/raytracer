@@ -13,7 +13,7 @@ EnvironmentLight::EnvironmentLight(const EnvironmentLight& env_light)
 	: Light(env_light)
 {
 	if (env_light.sampler_ptr)
-		sampler_ptr = env_light.sampler_ptr->clone();
+		sampler_ptr = env_light.sampler_ptr->Clone();
 	if (env_light.material_ptr)
 		material_ptr = env_light.material_ptr->clone();
 }
@@ -31,7 +31,7 @@ EnvironmentLight& EnvironmentLight::operator= (const EnvironmentLight& rhs)
 	}
 	if (rhs.sampler_ptr)
 	{
-		sampler_ptr = rhs.sampler_ptr->clone();
+		sampler_ptr = rhs.sampler_ptr->Clone();
 	}
 
 	if (material_ptr)
@@ -70,7 +70,7 @@ void EnvironmentLight::set_sampler(Sampler* sp)
 	if (sp)
 	{
 		sampler_ptr = sp;
-		sampler_ptr->map_samples_to_hemisphere(1);
+		sampler_ptr->MapSamplesToHemisphere(1);
 	}
 }
 
@@ -82,7 +82,7 @@ Vector3D EnvironmentLight::get_direction(ShadeRec& rc)
 	v.Normalize();
 	u = v ^ w;
 	
-	Point3D p = sampler_ptr->sample_hemisphere();
+	Point3D p = sampler_ptr->SampleHemisphere();
 	return p.x * u + p.y * v + p.z * w;
 }
 

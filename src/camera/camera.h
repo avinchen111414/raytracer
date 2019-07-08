@@ -15,7 +15,7 @@ public:
 	Camera(const Camera& camera);
 	virtual ~Camera();
 
-	virtual void RenderScene(const World& w, const RenderTile& tile,
+	virtual void RenderScene(World& w, const RenderTile& tile,
 		RenderThread* paint_thread) = 0;
 
 	void ComputeUvw();

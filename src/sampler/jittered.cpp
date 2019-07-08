@@ -6,25 +6,25 @@
 Jittered::Jittered()
 	: Sampler()
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Jittered::Jittered(const int ns)
 	: Sampler(ns)
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Jittered::Jittered(const int ns, const int n_sets)
 	: Sampler(ns, n_sets)
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Jittered::Jittered(const Jittered& js)
 	: Sampler(js)
 {
-	generate_samples();
+	GenerateSamples();
 }
 
 Jittered& Jittered::operator= (const Jittered& rhs)
@@ -39,7 +39,7 @@ Jittered& Jittered::operator= (const Jittered& rhs)
 
 Jittered::~Jittered() {}
 
-void Jittered::generate_samples()
+void Jittered::GenerateSamples()
 {
 	int n = (int) sqrt((float)num_samples); 
 	for (int p = 0; p < num_sets; p++)
@@ -50,7 +50,7 @@ void Jittered::generate_samples()
 			}
 }
 
-Sampler* Jittered::clone() const
+Sampler* Jittered::Clone() const
 {
 	return (new Jittered(*this));
 }

@@ -24,7 +24,7 @@ public:
 				
 	void
 	SetPixelSize(const float size);
-	inline float GetPixelSize() { return m_s; };
+	inline float GetPixelSize() const { return m_s; };
 		
 	void
 	SetGamma(const float g);
@@ -37,7 +37,7 @@ public:
 		
 	void
 	SetSamples(const int n);
-	inline int GetNumSamples() { return m_num_samples; };
+	inline int GetNumSamples() const { return m_num_samples; };
 
 	void SetSampler(Sampler* sp);
 	inline Sampler* GetSampler() { return m_sampler_ptr; };
@@ -50,7 +50,7 @@ private:
 	int 			m_vres;   					// vertical image resolution
 	float			m_s;							// pixel size
 	int				m_num_samples;				// number of samples per pixel
-	Sampler*		m_sampler_ptr;				// pointer to some sampler	
+	Sampler*		m_sampler_ptr;				// pointer to some sampler
 
 	float			m_gamma;						// gamma correction factor
 	float			m_inv_gamma;					// the inverse of the gamma correction factor

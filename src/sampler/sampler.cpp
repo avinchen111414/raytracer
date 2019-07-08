@@ -14,7 +14,7 @@ Sampler::Sampler()
 	jump(0) 
 {
 	samples.reserve(num_samples * num_sets);
-	setup_shuffled_indices();
+	SetupShuffledIndices();
 }
 
 Sampler::Sampler(const int ns)
@@ -24,7 +24,7 @@ Sampler::Sampler(const int ns)
 	jump(0)
 {
 	samples.reserve(num_samples * num_sets);
-	setup_shuffled_indices();
+	SetupShuffledIndices();
 }
 
 Sampler::Sampler(const int ns, const int n_sets)
@@ -34,7 +34,7 @@ Sampler::Sampler(const int ns, const int n_sets)
 	jump(0)
 {
 	samples.reserve(num_samples * num_sets);
-	setup_shuffled_indices();
+	SetupShuffledIndices();
 }
 
 Sampler::Sampler(const Sampler& s)				
@@ -66,7 +66,7 @@ Sampler::~Sampler()
 
 }
 
-void Sampler::setup_shuffled_indices(void) {
+void Sampler::SetupShuffledIndices(void) {
 		shuffled_indices.reserve(num_samples * num_sets);
 		std::vector<int> indices;
 
@@ -81,28 +81,28 @@ void Sampler::setup_shuffled_indices(void) {
 		}	
 }
 
-Point2D Sampler::sample_unit_square()
+Point2D Sampler::SampleUnitSquare()
 {
 	if (count % num_samples == 0)
 		jump = (rand() % num_sets) * num_samples;
 	return (samples[jump + shuffled_indices[jump + count++ % num_samples]]);
 }
 
-Point2D Sampler::sample_unit_disk()
+Point2D Sampler::SampleUnitDisk()
 {
 	if (count % num_samples == 0)
 		jump = (rand() % num_sets) * num_samples;
 	return (disk_samples[jump + shuffled_indices[jump + count++ % num_samples]]);
 }
 
-Point3D Sampler::sample_hemisphere()
+Point3D Sampler::SampleHemisphere()
 {
 	if (count % num_samples == 0)
 		jump = (rand() % num_sets) * num_samples;
 	return (hemisphere_samples[jump + shuffled_indices[jump + count++ % num_samples]]);
 }
 
-void Sampler::map_samples_to_unit_disk()
+void Sampler::MapSamplesToUnitDisk()
 {
 	int size = samples.size();
 	float r, phi;
@@ -147,7 +147,7 @@ void Sampler::map_samples_to_unit_disk()
 	samples.erase(samples.begin(), samples.end());
 }
 
-void Sampler::map_samples_to_hemisphere(const float e)
+void Sampler::MapSamplesToHemisphere(const float e)
 {
 	int size = samples.size();
 	hemisphere_samples.reserve(num_samples * num_sets);

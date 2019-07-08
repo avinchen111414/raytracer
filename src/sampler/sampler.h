@@ -13,19 +13,20 @@ public:
 	Sampler(const int num, const int num_sets);		
 	Sampler(const Sampler& s);
 	virtual ~Sampler(void);
+
+public:
 	Sampler& operator= (const Sampler& rhs);
+	inline int GetNumSamples() {return num_samples;};
 
-	virtual void generate_samples() = 0;
-	void setup_shuffled_indices();
-	Point2D sample_unit_square();
-	Point2D sample_unit_disk();
-	Point3D sample_hemisphere();
-
-	inline int get_num_samples() {return num_samples;};
-	void map_samples_to_unit_disk();
-	void map_samples_to_hemisphere(const float e);
-
-	virtual Sampler* clone() const = 0;
+public:
+	virtual Point2D SampleUnitSquare();
+	virtual Point2D SampleUnitDisk();
+	virtual Point3D SampleHemisphere();
+	virtual void MapSamplesToUnitDisk();
+	virtual void MapSamplesToHemisphere(const float e);
+	virtual Sampler* Clone() const = 0;
+	virtual void GenerateSamples() = 0;
+	virtual void SetupShuffledIndices();
 
 protected:
 	int num_samples;

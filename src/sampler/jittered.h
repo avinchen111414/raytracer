@@ -11,13 +11,9 @@ public:
 	Jittered(const int ns, const int n_sets);	
 	Jittered(const Jittered& js);					
 	Jittered& operator= (const Jittered& rhs);
-
 	virtual ~Jittered();
-
-	virtual Sampler* clone() const;
-
-private:
-	virtual void generate_samples();
+	virtual Sampler* Clone() const;
+	virtual void GenerateSamples();
 };
 
 #endif

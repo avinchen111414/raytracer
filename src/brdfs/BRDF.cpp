@@ -10,7 +10,7 @@ BRDF::BRDF()
 BRDF::BRDF(const BRDF& object)
 {
 	if (object.m_sampler_ptr)
-		m_sampler_ptr = object.m_sampler_ptr->clone();
+		m_sampler_ptr = object.m_sampler_ptr->Clone();
 	else
 		m_sampler_ptr = nullptr;
 }
@@ -26,7 +26,7 @@ BRDF& BRDF::operator=(const BRDF& rhs) {
 
 	if (rhs.m_sampler_ptr)
 	{
-		m_sampler_ptr = rhs.m_sampler_ptr->clone();
+		m_sampler_ptr = rhs.m_sampler_ptr->Clone();
 	}
 
 	return (*this);
@@ -46,7 +46,7 @@ void BRDF::SetSampler(Sampler* sampler_ptr)
 	if (sampler_ptr)
 	{
 		this->m_sampler_ptr = sampler_ptr;
-		this->m_sampler_ptr->map_samples_to_hemisphere(1);
+		this->m_sampler_ptr->MapSamplesToHemisphere(1);
 	}
 }
 

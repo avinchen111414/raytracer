@@ -21,7 +21,7 @@ AmbientOccluder::AmbientOccluder(const AmbientOccluder& ao):
 	color(ao.color)
 {
 	if (ao.sampler_ptr)
-		sampler_ptr = ao.sampler_ptr->clone();
+		sampler_ptr = ao.sampler_ptr->Clone();
 	else
 		sampler_ptr = nullptr;
 }
@@ -41,7 +41,7 @@ AmbientOccluder& AmbientOccluder::operator=(const AmbientOccluder& rhs)
 		delete sampler_ptr;
 	sampler_ptr = nullptr;
 	if (rhs.sampler_ptr)
-		sampler_ptr = rhs.sampler_ptr->clone();
+		sampler_ptr = rhs.sampler_ptr->Clone();
 
 	return *this;
 }
@@ -59,7 +59,7 @@ Vector3D AmbientOccluder::get_direction(ShadeRec& sr)
 	v.Normalize();
 	u = v ^ w;
 
-	Point3D p = sampler_ptr->sample_hemisphere();
+	Point3D p = sampler_ptr->SampleHemisphere();
 	return p.x * u + p.y * v + p.z * w;
 }
 
@@ -74,7 +74,7 @@ void AmbientOccluder::set_sampler(Sampler* sp)
 	if (sp)
 	{
 		sampler_ptr = sp;
-		sampler_ptr->map_samples_to_hemisphere(1);
+		sampler_ptr->MapSamplesToHemisphere(1);
 	}
 }
 

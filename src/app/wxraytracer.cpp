@@ -467,6 +467,7 @@ void RenderCanvas::CreatePainters()
 	GenerateTiles();
 
 	DWORD number_processors = GetNumberOfProcessors();
+	number_processors = 1;
 	
 	for (size_t index = 0; index < number_processors; index++)
 	{

@@ -112,7 +112,7 @@ template<class T>
 inline Point2D SamplerMT<T>::SampleUnitDisk()
 {
 	int index = ThreadContext::Instance().GetCurrentThreadIndex();
-	assert(index < m_samplers.size());
+	assert(static_cast<size_t>(index) < m_samplers.size());
 	return m_samplers[index]->SampleUnitDisk();
 }
 
@@ -120,7 +120,7 @@ template<class T>
 inline Point3D SamplerMT<T>::SampleHemisphere()
 {
 	int index = ThreadContext::Instance().GetCurrentThreadIndex();
-	assert(index < m_samplers.size());
+	assert(static_cast<size_t>(index) < m_samplers.size());
 	return m_samplers[index]->SampleHemisphere();
 }
 
@@ -141,17 +141,15 @@ inline void SamplerMT<T>::SetupShuffledIndices()
 template<class T>
 void SamplerMT<T>::MapSamplesToUnitDisk()
 {
-	int index = ThreadContext::Instance().GetCurrentThreadIndex();
-	assert(index < m_samplers.size());
-	return m_samplers[index]->MapSamplesToUnitDisk();
+	for (size_t i = 0; i < m_samplers.size(); i++)
+		m_samplers[i]->MapSamplesToUnitDisk();
 }
 
 template<class T>
 void SamplerMT<T>::MapSamplesToHemisphere(const float e)
 {
-	int index = ThreadContext::Instance().GetCurrentThreadIndex();
-	assert(index < m_samplers.size());
-	return m_samplers[index]->MapSamplesToHemisphere(e);
+	for (size_t i = 0; i < m_samplers.size(); i++)
+		m_samplers[i]->MapSamplesToHemisphere(e);
 }
 
 template<class T>

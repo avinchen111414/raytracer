@@ -11,13 +11,10 @@ public:
 	Hammersley(const int ns, const int n_sets);	
 	Hammersley(const Hammersley& js);					
 	Hammersley& operator= (const Hammersley& rhs);
-
 	virtual ~Hammersley();
-
 	virtual Sampler* Clone() const;
-
-private:
 	virtual void GenerateSamples();
+private:
 	double phi(int j);
 };
 

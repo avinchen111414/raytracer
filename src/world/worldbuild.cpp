@@ -1,6 +1,7 @@
 #include "world.h"
 #include "sampler/jittered.h"
 #include "sampler/hammersley.h"
+#include "sampler/samplermt.h"
 #include "tracer/raycast.h"
 #include "tracer/arealighting.h"
 #include "tracer/globaltracer.h"
@@ -38,7 +39,8 @@ void World::BuildAoScene()
 
 	tracer_ptr = new RayCast(this);
 
-	Jittered* sampler_ptr = new Jittered(num_samples);
+	//Jittered* sampler_ptr = new Jittered(num_samples);
+	SamplerMT<Jittered>* sampler_ptr = new SamplerMT<Jittered>(num_samples);
 	AmbientOccluder* occluder = new AmbientOccluder;
 	occluder->set_radiance(1.0f);
 	occluder->set_color(1.0f);
@@ -82,7 +84,8 @@ void World::BuildAreaLightsScene()
 
 	tracer_ptr = new AreaLighting(this);
 
-	Jittered* sampler_ptr = new Jittered(num_samples);
+	//Jittered* sampler_ptr = new Jittered(num_samples);
+	SamplerMT<Jittered>* sampler_ptr = new SamplerMT<Jittered>(num_samples);
 	AmbientOccluder* occluder = new AmbientOccluder;
 	occluder->set_radiance(0.3f);
 	occluder->set_color(1.0f);
@@ -94,7 +97,8 @@ void World::BuildAreaLightsScene()
 	emmisvie_ptr->set_ls(5.0f);
 	emmisvie_ptr->set_ce(RGBColor(1.0f));
 
-	Jittered* rectangle_sampler_ptr = new Jittered(num_samples);
+	//Jittered* rectangle_sampler_ptr = new Jittered(num_samples);
+	SamplerMT<Jittered>* rectangle_sampler_ptr = new SamplerMT<Jittered>(num_samples);
 	raytracer::Rectangle* rectangle_ptr = new raytracer::Rectangle(Point3D(-2.0f, 1.0f, -2.0f),
 		Vector3D(0.0f, 3.0f, 0.0f), Vector3D(-1.7f, 0.0f, 1.7f));
 	rectangle_ptr->SetMaterial(emmisvie_ptr);
@@ -148,7 +152,7 @@ void World::BuildEnvLightScene()
 	env_emissive_mtl->set_ls(1.0f);
 
 	EnvironmentLight* env_light = new EnvironmentLight;
-	env_light->set_sampler(new Jittered(256));
+	env_light->set_sampler(new SamplerMT<Jittered>(256));
 	env_light->set_material(env_emissive_mtl);
 	AddLight(env_light);
 }
@@ -439,8 +443,8 @@ void World::BuildGlobalTestScene()
 {
 	//    int num_samples = 1;		// for Figure 26.7(a)
 	//	int num_samples = 100;		// for Figure 26.7(b)
-	//	int num_samples = 1000;		// for Figure 26.7(c)
-		int num_samples = 10000;	// for Figure 26.7(d)
+		int num_samples = 1000;		// for Figure 26.7(c)
+	//	int num_samples = 10000;	// for Figure 26.7(d)
 
 	vp.SetHres(300);	  		
 	vp.SetVres(300);
@@ -453,7 +457,8 @@ void World::BuildGlobalTestScene()
 	occluder->set_radiance(1.0f);
 	occluder->set_color(1.0f);
 	occluder->set_min_amount(0.0f);
-	occluder->set_sampler(new Hammersley(num_samples));
+	SamplerMT<Hammersley>* sampler_pt = new SamplerMT<Hammersley>(num_samples);
+	occluder->set_sampler(sampler_pt);
 	SetAmbientLight(occluder);
 
 	PinHole* pinhole_ptr = new PinHole;
@@ -485,7 +490,7 @@ void World::BuildGlobalTestScene()
 	a = Vector3D(0.0, 0.0, 10.5);
 	b = Vector3D(13.0, 0.0, 0.0);
 	normal = Normal(0.0, -1.0, 0.0);
-	Hammersley* rectangle_sampler_ptr = new Hammersley(num_samples);
+	SamplerMT<Hammersley>* rectangle_sampler_ptr = new SamplerMT<Hammersley>(num_samples);
 	raytracer::Rectangle* light_ptr = new raytracer::Rectangle(p0, b, a);
 	light_ptr->SetMaterial(emissive_ptr);
 	light_ptr->SetSampler(rectangle_sampler_ptr);
@@ -503,13 +508,13 @@ void World::BuildGlobalTestScene()
 	matte_ptr1->set_ka(0.0);
 	matte_ptr1->set_kd(0.6); 
 	matte_ptr1->set_cd(RGBColor(.57, 0.025, 0.025));	 // red
-	matte_ptr1->set_sampler(new Hammersley(num_samples));
+	matte_ptr1->set_sampler(new SamplerMT<Hammersley>(num_samples));
 
 	p0 = Point3D(width, 0.0, 0.0);
 	a = Vector3D(0.0, 0.0, depth);
 	b = Vector3D(0.0, height, 0.0);
 	normal = Normal(-1.0, 0.0, 0.0);
-	rectangle_sampler_ptr = new Hammersley(num_samples);
+	rectangle_sampler_ptr = new SamplerMT<Hammersley>(num_samples);
 	raytracer::Rectangle* left_wall_ptr = new raytracer::Rectangle(p0, a, b);
 	left_wall_ptr->SetMaterial(matte_ptr1);
 	left_wall_ptr->SetSampler(rectangle_sampler_ptr);
@@ -522,13 +527,13 @@ void World::BuildGlobalTestScene()
 	matte_ptr2->set_ka(0.0);
 	matte_ptr2->set_kd(0.6); 
 	matte_ptr2->set_cd(RGBColor(.37, 0.59, 0.2));	 // green   from Photoshop
-	matte_ptr2->set_sampler(new Hammersley(num_samples));
+	matte_ptr2->set_sampler(new SamplerMT<Hammersley>(num_samples));
 
 	p0 = Point3D(0.0, 0.0, 0.0);
 	a = Vector3D(0.0, 0.0, depth);
 	b = Vector3D(0.0, height, 0.0);
 	normal = Normal(1.0, 0.0, 0.0);
-	rectangle_sampler_ptr = new Hammersley(num_samples);
+	rectangle_sampler_ptr = new SamplerMT<Hammersley>(num_samples);
 	raytracer::Rectangle* right_wall_ptr = new raytracer::Rectangle(p0, b, a);
 	right_wall_ptr->SetMaterial(matte_ptr2);
 	right_wall_ptr->SetSampler(rectangle_sampler_ptr);
@@ -541,7 +546,7 @@ void World::BuildGlobalTestScene()
 	matte_ptr3->set_ka(0.0);
 	matte_ptr3->set_kd(0.6); 
 	matte_ptr3->set_cd(1.0);	 // white
-	matte_ptr3->set_sampler(new Hammersley(num_samples));
+	matte_ptr3->set_sampler(new SamplerMT<Hammersley>(num_samples));
 
 	p0 = Point3D(0.0, 0.0, depth);
 	a = Vector3D(width, 0.0, 0.0);
@@ -549,7 +554,7 @@ void World::BuildGlobalTestScene()
 	normal = Normal(0.0, 0.0, -1.0);
 	raytracer::Rectangle* back_wall_ptr = new raytracer::Rectangle(p0, b, a);
 	back_wall_ptr->SetMaterial(matte_ptr3);
-	back_wall_ptr->SetSampler(new Hammersley(num_samples));
+	back_wall_ptr->SetSampler(new SamplerMT<Hammersley>(num_samples));
 	AddObject(back_wall_ptr);
 
 
@@ -561,7 +566,7 @@ void World::BuildGlobalTestScene()
 	normal = Normal(0.0, 1.0, 0.0);
 	raytracer::Rectangle* floor_ptr = new raytracer::Rectangle(p0, a, b);
 	floor_ptr->SetMaterial(matte_ptr3);
-	floor_ptr->SetSampler(new Hammersley(num_samples));
+	floor_ptr->SetSampler(new SamplerMT<Hammersley>(num_samples));
 	AddObject(floor_ptr);
 
 
@@ -573,7 +578,7 @@ void World::BuildGlobalTestScene()
 	normal = Normal(0.0, -1.0, 0.0);
 	raytracer::Rectangle* ceiling_ptr = new raytracer::Rectangle(p0, b, a);
 	ceiling_ptr->SetMaterial(matte_ptr3);
-	ceiling_ptr->SetSampler(new Hammersley(num_samples));
+	ceiling_ptr->SetSampler(new SamplerMT<Hammersley>(num_samples));
 	AddObject(ceiling_ptr);
 }
 

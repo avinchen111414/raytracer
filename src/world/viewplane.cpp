@@ -62,7 +62,6 @@ void ViewPlane::SetSamples(const int n) {
 		m_sampler_ptr = nullptr;
 	}
 
-	//m_sampler_ptr = new Jittered(m_num_samples);
 	m_sampler_ptr = new SamplerMT<Jittered>(m_num_samples);
 }
 

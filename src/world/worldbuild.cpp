@@ -442,8 +442,8 @@ void World::BuildReflectiveTestScene()
 void World::BuildGlobalTestScene()
 {
 	//  int num_samples = 1;		// for Figure 26.7(a)
-		int num_samples = 100;		// for Figure 26.7(b)
-	//	int num_samples = 1000;		// for Figure 26.7(c)
+	//	int num_samples = 100;		// for Figure 26.7(b)
+		int num_samples = 1000;		// for Figure 26.7(c)
 	//	int num_samples = 10000;	// for Figure 26.7(d)
 
 	vp.SetHres(300);	  		
@@ -459,7 +459,7 @@ void World::BuildGlobalTestScene()
 	occluder->set_min_amount(0.0f);
 	SamplerMT<Hammersley>* sampler_pt = new SamplerMT<Hammersley>(num_samples);
 	occluder->set_sampler(sampler_pt);
-	//SetAmbientLight(occluder);
+	SetAmbientLight(occluder);
 
 	PinHole* pinhole_ptr = new PinHole;
 	pinhole_ptr->m_eye = Point3D(27.6, 27.4, -80.0);
@@ -499,14 +499,7 @@ void World::BuildGlobalTestScene()
 	AreaLight* area_light_ptr = new AreaLight;
 	area_light_ptr->set_object(light_ptr);
 	area_light_ptr->set_cast_shadow(true);
-	//AddLight(area_light_ptr);
-
-	Point* light_ptr1 = new Point;
-	light_ptr1->set_location(Point3D(21.3, height - 0.001, 22.7)); 
-	light_ptr1->set_color(RGBColor(1.0, 0.73, 0.4));
-	light_ptr1->scale_radiance(4.5);
-	light_ptr1->set_cast_shadow(true);
-	AddLight(light_ptr1);
+	AddLight(area_light_ptr);
 
 
 	// left wall

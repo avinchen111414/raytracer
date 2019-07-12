@@ -29,10 +29,6 @@ private:
 	GeometricObject* object_ptr;
 	Material* material_ptr;	// an emissive material
 
-	Point3D sample_point;	// sample point on the surface
-	Normal light_normal;	// normal of the sample point
-	Vector3D wi;	//	unit vector from hit point to sample point
-
 };
 
 inline void AreaLight::set_object(GeometricObject* obj_ptr)

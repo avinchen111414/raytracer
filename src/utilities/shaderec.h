@@ -23,6 +23,10 @@ class ShadeRec {
 		Ray					ray;				// Required for specular highlights and area lights
 		int					depth;				// recursion depth
 		Vector3D			dir;				// for area lights
+		
+		Vector3D			wi;					// Vector from hit point to sample point on area light
+		Point3D				sample_point;		// Sample point on area light.
+		Normal				light_normal;		// Normal of sample point on area light.
 
 		float				t;					// ray parameter
 

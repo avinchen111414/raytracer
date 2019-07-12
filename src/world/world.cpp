@@ -99,9 +99,8 @@ World::ClampToColor(const RGBColor& raw_color) const {
 
 void World::Build()
 {
-	srand((int)time(0));
 	//this->build_ao_scene();
-	//this->build_area_lights_scene();
+	//this->BuildAreaLightsScene();
 	//this->build_env_light_scene();
 	//this->build_instance_test_scene();
 	//this->build_grid_test_scene();

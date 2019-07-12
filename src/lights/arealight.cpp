@@ -70,10 +70,11 @@ Light* AreaLight::clone() const
 
 Vector3D AreaLight::get_direction(ShadeRec& sr)
 {
-	sample_point = object_ptr->Sample();
-	light_normal = object_ptr->GetNormal(sample_point);
-	wi = sample_point - sr.hit_point;
+	sr.sample_point = object_ptr->Sample();
+	sr.light_normal = object_ptr->GetNormal(sr.sample_point);
+	Vector3D wi = sr.sample_point - sr.hit_point;
 	wi.Normalize();
+	sr.wi = wi;
 	return wi;
 }
 
@@ -81,7 +82,7 @@ RGBColor AreaLight::L(ShadeRec& sr)
 {
 	// (NOTE) cause wi is the vector from hit point to light's sample point
 	// so, light normal should be inverse. *
-	float ndotd = static_cast<float>(-light_normal * wi);
+	float ndotd = static_cast<float>(-sr.light_normal * sr.wi);
 	if (ndotd > 0.0f)
 		return material_ptr->get_le(sr);
 	else
@@ -92,7 +93,7 @@ bool AreaLight::in_shadow(const Ray& ray, const ShadeRec& sr)
 {
 	float t;
 	int num_objects = sr.w.objects.size();
-	float ts = static_cast<float>((sample_point - ray.o) * ray.d);
+	float ts = static_cast<float>((sr.sample_point - ray.o) * ray.d);
 
 	for (int j = 0; j != num_objects; j++)
 	{
@@ -106,8 +107,8 @@ bool AreaLight::in_shadow(const Ray& ray, const ShadeRec& sr)
 float AreaLight::G(const ShadeRec& sr) const
 {
 	// (NOTE) *
-	float ndotd = static_cast<float>(-light_normal * wi);
-	float d2 = static_cast<float>(sample_point.DidSquared(sr.hit_point));
+	float ndotd = static_cast<float>(-sr.light_normal * sr.wi);
+	float d2 = static_cast<float>(sr.sample_point.DidSquared(sr.hit_point));
 	return ndotd / d2;
 }
 

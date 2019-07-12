@@ -47,9 +47,6 @@ void PinHole::RenderScene(World& w, const RenderTile& tile, RenderThread* paint_
 			if (w.quit_render_tag)
 				break;
 
-			if (r == 350 && c == 200)
-				bool _break = true;
-
 			L = RGBColor(0.0f); 
 
 			int num_samples = vp.GetNumSamples();

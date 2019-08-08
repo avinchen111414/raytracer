@@ -225,8 +225,8 @@
     <ClCompile Include="..\..\src\materials\dielectric.cpp">
       <Filter>materials</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sampler\seedgenerator.cpp">
-      <Filter>sampler</Filter>
+    <ClCompile Include="..\..\src\app\threadcontext.cpp">
+      <Filter>app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -419,8 +419,8 @@
     <ClInclude Include="..\..\src\materials\dielectric.h">
       <Filter>materials</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\sampler\seedgenerator.h">
-      <Filter>sampler</Filter>
+    <ClInclude Include="..\..\src\app\threadcontext.h">
+      <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

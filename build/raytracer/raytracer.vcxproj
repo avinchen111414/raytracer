@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\app\threadcontext.cpp" />
     <ClCompile Include="..\..\src\app\wxraytracer.cpp" />
     <ClCompile Include="..\..\src\brdfs\BRDF.cpp" />
     <ClCompile Include="..\..\src\brdfs\BTDF.cpp" />
@@ -126,7 +127,6 @@
     <ClCompile Include="..\..\src\sampler\hammersley.cpp" />
     <ClCompile Include="..\..\src\sampler\jittered.cpp" />
     <ClCompile Include="..\..\src\sampler\sampler.cpp" />
-    <ClCompile Include="..\..\src\sampler\seedgenerator.cpp" />
     <ClCompile Include="..\..\src\tracer\arealighting.cpp" />
     <ClCompile Include="..\..\src\tracer\globaltracer.cpp" />
     <ClCompile Include="..\..\src\tracer\multipleobjects.cpp" />
@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\src\world\worldbuild.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\app\threadcontext.h" />
     <ClInclude Include="..\..\src\app\wxraytracer.h" />
     <ClInclude Include="..\..\src\brdfs\BRDF.h" />
     <ClInclude Include="..\..\src\brdfs\BTDF.h" />
@@ -193,7 +194,6 @@
     <ClInclude Include="..\..\src\sampler\hammersley.h" />
     <ClInclude Include="..\..\src\sampler\jittered.h" />
     <ClInclude Include="..\..\src\sampler\sampler.h" />
-    <ClInclude Include="..\..\src\sampler\seedgenerator.h" />
     <ClInclude Include="..\..\src\tracer\arealighting.h" />
     <ClInclude Include="..\..\src\tracer\globaltracer.h" />
     <ClInclude Include="..\..\src\tracer\multipleobjects.h" />
